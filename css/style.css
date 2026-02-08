@@ -1386,8 +1386,12 @@ img {
     padding: 72px 0;
   }
 
+  .nav-logo-img {
+    height: 44px;
+  }
+
   .hero-logo {
-    width: 120px;
+    width: 280px;
   }
 
   .hero-title {
