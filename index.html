@@ -60,7 +60,7 @@
     <div class="container">
       <div class="section-header fade-in">
         <h2 class="section-title">Four Apps. <span class="gold">One Mission.</span></h2>
-        <p class="section-subtitle">An integrated ecosystem of precision tools, built by reloaders for reloaders. Each app excels on its own &mdash; together, they share data seamlessly through Apple App Groups.</p>
+        <p class="section-subtitle">An integrated ecosystem where your target photos become precision measurements, measurements become scores, scores become decisions, and decisions route your entire workflow &mdash; automatically. No manual data entry between apps. No spreadsheets. No guesswork.</p>
       </div>
 
       <div class="suite-grid">
@@ -69,7 +69,7 @@
             <img src="images/icon-precisionload.png" alt="PrecisionLoad Icon">
           </div>
           <h3 class="suite-card-title"><span class="gold">Precision</span>Load</h3>
-          <p class="suite-card-desc">AI-guided 33-step load development</p>
+          <p class="suite-card-desc">33-step guided workflow with AI Brain, SAAMI/CIP specs, 34+ caliber load recommendations, chamber measurement tracking, and Expert Mode</p>
           <a href="#precisionload" class="suite-card-link">Learn more &rarr;</a>
         </div>
 
@@ -78,7 +78,7 @@
             <img src="images/icon-ballistic-analysis.png" alt="BallisticAnalysis Icon">
           </div>
           <h3 class="suite-card-title"><span class="gold">Ballistic</span>Analysis</h3>
-          <p class="suite-card-desc">Photograph targets. Analyze groups.</p>
+          <p class="suite-card-desc">Photograph targets, calibrate to real-world scale, mark shot impacts, and compute 14+ statistical measurements per group including MOA, MIL, CEP, and POA offset</p>
           <a href="#analysis" class="suite-card-link">Learn more &rarr;</a>
         </div>
 
@@ -87,7 +87,7 @@
             <img src="images/icon-ballistic-plotter.png" alt="BallisticPlotter Icon">
           </div>
           <h3 class="suite-card-title"><span class="gold">Ballistic</span>Plotter</h3>
-          <p class="suite-card-desc">Data-driven charge &amp; seating optimization</p>
+          <p class="suite-card-desc">5-component weighted scoring engine ranks every charge node, computes confidence, detects chrono spikes, optimizes seating depth, and routes your next workflow step</p>
           <a href="#plotter" class="suite-card-link">Learn more &rarr;</a>
         </div>
 
@@ -103,8 +103,31 @@
             </svg>
           </div>
           <h3 class="suite-card-title"><span class="gold">Component</span> Search</h3>
-          <p class="suite-card-desc">Compare prices across dealers</p>
+          <p class="suite-card-desc">Real-time in-stock tracking and price comparison across major dealers with brand-specific filtering</p>
           <span class="badge badge-gold">COMING SOON</span>
+        </div>
+      </div>
+
+      <!-- Data Flow -->
+      <div class="data-flow fade-in">
+        <div class="flow-node">
+          <div class="flow-node-title">PrecisionLoad</div>
+          <div class="flow-node-desc">Caliber, components, rifle, conditions, charge ladder plan</div>
+        </div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-node">
+          <div class="flow-node-title">BallisticAnalysis</div>
+          <div class="flow-node-desc">Group size, vertical/horizontal spread, mean radius, CEP, POA offset</div>
+        </div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-node">
+          <div class="flow-node-title">BallisticPlotter</div>
+          <div class="flow-node-desc">Scores, rankings, confidence, routing decisions, prefill data</div>
+        </div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-node">
+          <div class="flow-node-title">Back to PrecisionLoad</div>
+          <div class="flow-node-desc">Optimal charge, seating depth, next step &mdash; auto-filled</div>
         </div>
       </div>
 
@@ -120,7 +143,7 @@
             <line x1="19" y1="18" x2="29" y2="18" stroke="#C9A962" stroke-width="1"/>
           </svg>
         </div>
-        <p class="integration-text">All apps share data through <strong>Apple App Groups</strong> &mdash; calibration data from BallisticAnalysis flows into BallisticPlotter scores, which route your PrecisionLoad workflow. No exports, no copy-paste. Just precision.</p>
+        <p class="integration-text">All apps share data through <strong>Apple App Groups</strong> in real time. Photograph your target in BallisticAnalysis &mdash; its geometry data instantly flows to BallisticPlotter for scoring. The scoring engine computes confidence, ranks your charge nodes, and routes PrecisionLoad to the optimal next step with pre-filled data. Zero manual data entry between apps.</p>
       </div>
     </div>
   </section>
@@ -133,56 +156,158 @@
       <div class="app-header fade-in">
         <img src="images/logo-precisionload.jpg" alt="PrecisionLoad Logo" class="app-logo">
         <h2 class="app-title"><span class="gold">Precision</span>Load&trade;</h2>
-        <p class="app-subtitle">AI-Guided Load Development &mdash; From Setup to Range Day</p>
+        <p class="app-subtitle">AI-Guided Load Development &mdash; From Setup to Range Day and Beyond</p>
       </div>
 
-      <div class="features-grid fade-in">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 40 40" fill="none"><path d="M8 8h24v24H8z" stroke="#C9A962" stroke-width="2"/><path d="M12 16h16M12 20h16M12 24h12" stroke="#C9A962" stroke-width="1.5" stroke-linecap="round"/><circle cx="32" cy="32" r="6" fill="#1A1A1A" stroke="#4CAF50" stroke-width="2"/><path d="M30 32l1.5 1.5L34 31" stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </div>
-          <h4 class="feature-title">33-Step Guided Workflow</h4>
-          <p class="feature-desc">From brass selection through final validation &mdash; every step organized into logical phases with expert-level skip options.</p>
+      <!-- Stat Callouts -->
+      <div class="stat-callouts fade-in">
+        <div class="stat-callout">
+          <div class="stat-number">33</div>
+          <div class="stat-label">Guided Steps<br>7 Phases</div>
         </div>
+        <div class="stat-callout">
+          <div class="stat-number">34+</div>
+          <div class="stat-label">Caliber Load<br>Recommendations</div>
+        </div>
+        <div class="stat-callout">
+          <div class="stat-number">40+</div>
+          <div class="stat-label">Expert Knowledge<br>Entries Embedded</div>
+        </div>
+        <div class="stat-callout">
+          <div class="stat-number">AI</div>
+          <div class="stat-label">Claude-Powered Brain<br>Context-Aware</div>
+        </div>
+      </div>
 
+      <!-- Expert Mode Callout -->
+      <div class="expert-callout fade-in">
+        <div class="expert-callout-icon">&#127942;</div>
+        <div class="expert-callout-text">
+          <h4>EXPERT MODE</h4>
+          <p>Already have prepped brass and established components? Expert Mode skips all 7 Brass Prep steps (LD-08 through LD-14) &mdash; reducing the workflow from 33 to 26 steps. Individual steps also have Expert Skip buttons for experienced reloaders who know their process. Novice Mode walks you through everything with educational guidance at each step.</p>
+        </div>
+      </div>
+
+      <!-- Feature Cards -->
+      <div class="features-grid fade-in">
         <div class="feature-card">
           <div class="feature-icon">
             <svg viewBox="0 0 40 40" fill="none"><rect x="6" y="6" width="28" height="28" rx="6" stroke="#C9A962" stroke-width="2"/><circle cx="20" cy="18" r="5" stroke="#C9A962" stroke-width="1.5"/><path d="M12 30c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#C9A962" stroke-width="1.5"/><circle cx="32" cy="8" r="5" fill="#1A1A1A" stroke="#2196F3" stroke-width="2"/><path d="M30 8h4M32 6v4" stroke="#2196F3" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
-          <h4 class="feature-title">AI Assistant</h4>
-          <p class="feature-desc">Claude-powered, context-aware AI that understands your specific load, components, and progress. Ask anything.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="8" width="32" height="24" rx="4" stroke="#C9A962" stroke-width="2"/><path d="M4 16h32" stroke="#C9A962" stroke-width="1.5"/><rect x="8" y="20" width="8" height="3" rx="1" fill="#C9A962" opacity="0.5"/><rect x="8" y="25" width="12" height="3" rx="1" fill="#C9A962" opacity="0.3"/></svg>
-          </div>
-          <h4 class="feature-title">Component Library</h4>
-          <p class="feature-desc">Comprehensive inventory tracking for brass, bullets, primers, and powder with usage history and batch management.</p>
+          <h4 class="feature-title">PrecisionLoad Brain &mdash; AI That Knows Your Load</h4>
+          <p class="feature-desc">Claude-powered AI that reads your actual project data &mdash; your brass dimensions, neck turning status, bushing sizes, and sizing die settings. Ask a bushing question and it recalculates based on YOUR turned neck thickness, not factory specs. Includes web search for real-time supplemental data.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">
             <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="#C9A962" stroke-width="2"/><circle cx="20" cy="20" r="8" stroke="#C9A962" stroke-width="1" stroke-dasharray="3 3"/><circle cx="20" cy="20" r="2" fill="#C9A962"/><path d="M20 6v4M20 30v4M6 20h4M30 20h4" stroke="#C9A962" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
-          <h4 class="feature-title">Caliber Recommendations</h4>
-          <p class="feature-desc">Expert powder and charge recommendations for popular calibers, with centered middle-10 charge tables.</p>
+          <h4 class="feature-title">SAAMI/CIP Cartridge Database</h4>
+          <p class="feature-desc">Verified specifications for every cartridge: max case length, trim-to length, bullet/neck/base/rim/shoulder diameters, case capacity (gr H2O), max OAL, max pressure (PSI &amp; Bar), common twist rates, parent case, designer, effective range, and common bullet weights.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">
-            <svg viewBox="0 0 40 40" fill="none"><path d="M8 32V12l8-4 8 4 8-4v20l-8 4-8-4-8 4z" stroke="#C9A962" stroke-width="2" stroke-linejoin="round"/><path d="M16 8v20M24 12v20" stroke="#C9A962" stroke-width="1.5" stroke-dasharray="2 2"/></svg>
+            <svg viewBox="0 0 40 40" fill="none"><path d="M8 8h24v24H8z" stroke="#C9A962" stroke-width="2"/><path d="M12 16h16M12 20h16M12 24h12" stroke="#C9A962" stroke-width="1.5" stroke-linecap="round"/><circle cx="32" cy="32" r="6" fill="#1A1A1A" stroke="#4CAF50" stroke-width="2"/><path d="M30 32l1.5 1.5L34 31" stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
-          <h4 class="feature-title">Online Price Comparison</h4>
-          <p class="feature-desc">Search dealers in real-time for in-stock components with price comparison and direct purchase links.</p>
+          <h4 class="feature-title">34+ Caliber Load Recommendations</h4>
+          <p class="feature-desc">Proven component combinations organized by discipline (Benchrest, F-Class, PRS, Hunting, ELR). Each includes brass, primer, bullet, and powder picks with min/max charge weights. Accept a recommendation and it pre-populates your entire project.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">
             <svg viewBox="0 0 40 40" fill="none"><rect x="10" y="6" width="20" height="28" rx="3" stroke="#C9A962" stroke-width="2"/><path d="M14 14h12M14 18h8" stroke="#C9A962" stroke-width="1.5" stroke-linecap="round"/><path d="M10 26h20" stroke="#C9A962" stroke-width="1"/><circle cx="20" cy="30" r="2" stroke="#C9A962" stroke-width="1.5"/></svg>
           </div>
-          <h4 class="feature-title">Chamber &amp; Brass Prep</h4>
-          <p class="feature-desc">Measure chamber dimensions, track brass prep steps, neck tension, and primer pocket uniformity.</p>
+          <h4 class="feature-title">Chamber Measurement &amp; Throat Erosion Tracking</h4>
+          <p class="feature-desc">Record COAL-to-lands and CBTO-to-lands with multiple measurement methods. Track baseline vs. current measurements, compute freebore change over time, and monitor barrel round count at each measurement &mdash; your throat erosion history in one place.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="8" width="32" height="24" rx="4" stroke="#C9A962" stroke-width="2"/><path d="M4 16h32" stroke="#C9A962" stroke-width="1.5"/><rect x="8" y="20" width="8" height="3" rx="1" fill="#C9A962" opacity="0.5"/><rect x="8" y="25" width="12" height="3" rx="1" fill="#C9A962" opacity="0.3"/></svg>
+          </div>
+          <h4 class="feature-title">Component Inventory &amp; Batch Management</h4>
+          <p class="feature-desc">Track brass, bullets, primers, and powder with lot numbers, purchase prices, quantity alerts, and supplier info. Bullet entries include weight, diameter, type, G1/G7 BC, sectional density, and length. Powder entries track burn rate category and suitable calibers.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 40 40" fill="none"><path d="M8 32V12l8-4 8 4 8-4v20l-8 4-8-4-8 4z" stroke="#C9A962" stroke-width="2" stroke-linejoin="round"/><path d="M16 8v20M24 12v20" stroke="#C9A962" stroke-width="1.5" stroke-dasharray="2 2"/></svg>
+          </div>
+          <h4 class="feature-title">Smart Dealer Search</h4>
+          <p class="feature-desc">Database of trusted online reloading dealers with brand-specific filtering &mdash; only shows dealers that actually carry the brand you selected. Automated search URL generation per dealer for your specific component. Includes free hazmat shipping flags.</p>
+        </div>
+      </div>
+
+      <!-- Detailed Phase Breakdown -->
+      <div class="detail-section fade-in">
+        <h3 class="detail-section-title">What Each Phase <span class="gold">Actually Does</span></h3>
+        <div class="phase-details">
+          <div class="phase-detail-card">
+            <span class="phase-tag phase-tag-setup">Setup &mdash; LD-01 to LD-07</span>
+            <h4>Complete Project Configuration</h4>
+            <ul>
+              <li><strong>Shooter Profile:</strong> Skill level, discipline (Benchrest/PRS/F-Class/Hunting/ELR), experience, MOA/ES/SD targets, equipment inventory</li>
+              <li><strong>Rifle Configuration:</strong> Full specs including barrel length, twist rate, contour, material, trigger pull weight, optic details, serial number, round count, and rifle photo</li>
+              <li><strong>Caliber &amp; Platform:</strong> SAAMI/CIP spec sheet with 20+ cartridge dimensions auto-loaded</li>
+              <li><strong>Component Selection:</strong> Brass (brand, lot, quantity), Primer (type/size/sensitivity), Bullet (weight, diameter, type, G1/G7 BC, sectional density), Powder (burn rate, type, suitable calibers)</li>
+            </ul>
+          </div>
+
+          <div class="phase-detail-card">
+            <span class="phase-tag phase-tag-brass">Brass Prep &mdash; LD-08 to LD-14</span>
+            <h4>Inspection Through Neck Tension</h4>
+            <ul>
+              <li><strong>Brass Inspection:</strong> Weight sorting guidance, 7-point defect checklist (mouth cracks, body dents, head stamps, expansion, internal cracks, pocket looseness, corrosion)</li>
+              <li><strong>Chamber Measurement:</strong> COAL/CBTO to lands, multiple measurement methods, freebore calculation, comparator datum, baseline tracking</li>
+              <li><strong>Trim &amp; Chamfer:</strong> Trim length, neck turning decision/tracking, target wall thickness, post-turn average</li>
+              <li><strong>Case Sizing:</strong> Method (FL/Neck/Bushing), shoulder bump measurement, bushing size, die settings</li>
+              <li><strong>Neck Tension:</strong> Target tension, bushing selection, loaded neck OD measurement</li>
+            </ul>
+          </div>
+
+          <div class="phase-detail-card">
+            <span class="phase-tag phase-tag-planning">Planning &mdash; LD-15 to LD-17</span>
+            <h4>Strategy &amp; Ladder Design</h4>
+            <ul>
+              <li><strong>Seating Depth Strategy:</strong> Jump distance planning based on your chamber measurements, integrates with BallisticPlotter coarse sweep generation</li>
+              <li><strong>Pressure Baseline:</strong> Safe starting &amp; maximum charge weights from published data</li>
+              <li><strong>Charge Ladder Plan:</strong> Centered Middle-10 algorithm generates all charges in 0.2gr increments, selects the optimal middle 10 &mdash; your test plan is built automatically</li>
+            </ul>
+          </div>
+
+          <div class="phase-detail-card">
+            <span class="phase-tag phase-tag-testing">Testing &mdash; LD-18 to LD-21</span>
+            <h4>Range Day Data Capture</h4>
+            <ul>
+              <li><strong>Velocity Testing:</strong> Per-shot chrono data with full environmental conditions (temp, wind, humidity, altitude, barometric pressure, density altitude, mirage)</li>
+              <li><strong>Accuracy Testing:</strong> Group size (inches &amp; MOA), vertical/horizontal spread, mean radius, POI offset, target photos, flyer tracking, confidence ratings</li>
+              <li><strong>Pressure Evaluation:</strong> Comprehensive checklist &mdash; primer signs (cratering, flattening, flow, pierced, blown), case signs (ejector marks, head expansion, web bulging, sticky extraction, bolt lift), velocity anomalies, severity assessment</li>
+            </ul>
+          </div>
+
+          <div class="phase-detail-card">
+            <span class="phase-tag phase-tag-optimization">Optimization &mdash; LD-22 to LD-27</span>
+            <h4>BallisticPlotter-Driven Decisions</h4>
+            <ul>
+              <li><strong>Select Optimal Charge:</strong> BallisticPlotter pre-fills the recommended charge weight, 2 alternates, and a plain-English rationale explaining why</li>
+              <li><strong>Seating Depth Fine Tune:</strong> Two-phase optimization &mdash; coarse sweep (0.010&quot; increments) then fine sweep (0.002&quot; centered on best coarse result)</li>
+              <li><strong>Extended Group Testing:</strong> 20-30 shot validation groups for statistical confidence, loops until scoring engine confirms</li>
+              <li><strong>Consistency Verification:</strong> ES/SD verification against your target thresholds</li>
+            </ul>
+          </div>
+
+          <div class="phase-detail-card">
+            <span class="phase-tag phase-tag-final">Final &amp; Advanced &mdash; LD-28 to LD-33</span>
+            <h4>Certification &amp; Long-Term Tracking</h4>
+            <ul>
+              <li><strong>Final Load Certification:</strong> Formal sign-off with complete data review across all phases</li>
+              <li><strong>Load Documentation:</strong> Full recipe export &mdash; every component, measurement, and performance data point</li>
+              <li><strong>Batch Planning:</strong> Production batch calculator with component needs and cost estimation</li>
+              <li><strong>Barrel Life Tracking:</strong> Round count, throat erosion monitoring (baseline vs. current COAL-to-lands), accuracy degradation detection, cleaning schedule, barrel condition assessment</li>
+              <li><strong>Component Change Monitoring:</strong> Lot change tracking and performance delta logging</li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -190,25 +315,33 @@
       <div class="workflow-phases fade-in">
         <h3 class="phases-title">Workflow Phases</h3>
         <div class="phases-bar">
-          <div class="phase phase-setup" data-tooltip="Steps 1-7: Rifle, caliber, components">
+          <div class="phase phase-setup" data-tooltip="Steps 1-7: Profile, rifle, caliber, components">
             <span>Setup</span>
           </div>
-          <div class="phase phase-brass" data-tooltip="Steps 8-14: Brass prep & chamber work">
+          <div class="phase phase-brass" data-tooltip="Steps 8-14: Inspection, chamber, sizing, tension">
             <span>Brass Prep</span>
           </div>
-          <div class="phase phase-planning" data-tooltip="Steps 15-19: Load planning & ladder prep">
+          <div class="phase phase-planning" data-tooltip="Steps 15-17: Seating strategy, charge ladder">
             <span>Planning</span>
           </div>
-          <div class="phase phase-testing" data-tooltip="Steps 20-25: Range testing & analysis">
+          <div class="phase phase-testing" data-tooltip="Steps 18-21: Velocity, accuracy, pressure">
             <span>Testing</span>
           </div>
-          <div class="phase phase-optimization" data-tooltip="Steps 26-30: Seating depth & fine tuning">
+          <div class="phase phase-optimization" data-tooltip="Steps 22-27: Charge selection, seating, validation">
             <span>Optimization</span>
           </div>
-          <div class="phase phase-final" data-tooltip="Steps 31-33: Validation & documentation">
+          <div class="phase phase-final" data-tooltip="Steps 28-33: Certification, docs, barrel life">
             <span>Final</span>
           </div>
         </div>
+      </div>
+
+      <!-- Embedded Knowledge Base Callout -->
+      <div class="suite-integration fade-in">
+        <div class="integration-icon">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="4" width="32" height="40" rx="4" stroke="#C9A962" stroke-width="2"/><path d="M16 14h16M16 20h16M16 26h10" stroke="#C9A962" stroke-width="1.5" stroke-linecap="round"/><circle cx="36" cy="36" r="8" fill="#1A1A1A" stroke="#C9A962" stroke-width="2"/><text x="36" y="40" text-anchor="middle" fill="#C9A962" font-size="12" font-weight="bold">!</text></svg>
+        </div>
+        <p class="integration-text"><strong>40+ embedded expert knowledge entries</strong> seeded at first launch &mdash; safety rules (SAAMI-sourced), best practices (shoulder bump, neck tension, annealing schedules, charge increments), troubleshooting guides (primer diagnosis, vertical stringing, random flyers), formulas (MOA, twist rate stability, CBTO relationships), and caliber-specific proven load data for 6mm PPC, 30 BR, 7mm PRC, .223 Rem, 6.5 Creedmoor, .308 Win, and more.</p>
       </div>
 
       <!-- App Screenshots -->
@@ -249,7 +382,7 @@
       <div class="app-header fade-in">
         <img src="images/logo-ballistic-analysis.jpg" alt="BallisticAnalysis Logo" class="app-logo">
         <h2 class="app-title"><span class="gold">Ballistic</span>Analysis&trade;</h2>
-        <p class="app-subtitle">Photograph. Calibrate. Analyze.</p>
+        <p class="app-subtitle">Photograph. Calibrate. Measure. &mdash; 14+ Statistics Per Group</p>
       </div>
 
       <div class="app-content-row fade-in">
@@ -257,43 +390,43 @@
           <div class="feature-item">
             <span class="feature-bullet"></span>
             <div>
-              <h4>Camera &amp; Gallery Capture</h4>
-              <p>Import target images directly from your camera or photo library for instant analysis.</p>
-            </div>
-          </div>
-          <div class="feature-item">
-            <span class="feature-bullet"></span>
-            <div>
               <h4>Two-Point Scale Calibration</h4>
-              <p>Set a known reference distance on the target to convert pixels to real-world measurements.</p>
+              <p>Tap two points on any target at a known distance apart. The system calculates a precise pixels-per-inch scale factor, converting your phone camera into a measurement instrument. Full pinch-to-zoom with InteractiveViewer for sub-pixel placement.</p>
             </div>
           </div>
           <div class="feature-item">
             <span class="feature-bullet"></span>
             <div>
-              <h4>Tap-to-Mark Shot Impacts</h4>
-              <p>Precisely mark each shot location with drag adjustment for sub-pixel accuracy.</p>
+              <h4>Precision Shot Marking</h4>
+              <p>Tap to place shot impacts rendered at actual bullet-diameter scale (calibrated to your cartridge). Drag to reposition with a magnifier loupe for fine adjustment. Undo/redo support. Each shot is tracked as X/Y coordinates in real-world inches relative to calibration.</p>
             </div>
           </div>
           <div class="feature-item">
             <span class="feature-bullet"></span>
             <div>
-              <h4>MOA &amp; Group Statistics</h4>
-              <p>Automatic computation of extreme spread, mean radius, and MOA at your shooting distance.</p>
+              <h4>Complete Statistical Engine</h4>
+              <p>Every group is analyzed with <strong>14+ measurements</strong>: Group Size (Extreme Spread CC), MOA, MIL, Mean Radius, CEP (Circular Error Probable &mdash; 50% hit probability radius), Radial SD, Horizontal SD, Vertical SD, Horizontal Spread, Vertical Spread, Group Centroid (X,Y), POA Offset (windage &amp; elevation &mdash; tells you exactly how far to adjust your scope), and a Quality Score.</p>
             </div>
           </div>
           <div class="feature-item">
             <span class="feature-bullet"></span>
             <div>
-              <h4>Geometry Quality Analysis</h4>
-              <p>Measures group roundness, vertical vs. horizontal dispersion, and statistical consistency.</p>
+              <h4>POA Offset &mdash; Scope Adjustment Data</h4>
+              <p>Computes windage (X) and elevation (Y) offset from your Point of Aim. Know exactly how many clicks to adjust before your next group &mdash; not a guess, a measurement.</p>
             </div>
           </div>
           <div class="feature-item">
             <span class="feature-bullet"></span>
             <div>
-              <h4>Export Overlay Images</h4>
-              <p>Share annotated target images with all stats and markings overlaid &mdash; ready for social or records.</p>
+              <h4>Branded Share Images</h4>
+              <p>Generates full iPhone Pro Max resolution (1290&times;2796) share images with annotated target overlay, shot circles, extreme spread line, statistics box, and Choice Tactical branding. Ready for social media, match records, or your reloading journal.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>Direct Data Pipeline to BallisticPlotter</h4>
+              <p>Every measurement &mdash; group size, vertical/horizontal spread, mean radius, CEP, radial SD, POA offset, and overlay images &mdash; flows directly to BallisticPlotter via App Groups. No screenshots, no manual entry, no transcription errors.</p>
             </div>
           </div>
         </div>
@@ -304,6 +437,25 @@
               <img src="images/screenshots/ba-results.png" alt="BallisticAnalysis Target Results" loading="lazy">
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Stats Showcase Grid -->
+      <div class="detail-section fade-in">
+        <h3 class="detail-section-title">Every Measurement Computed <span class="gold">Per Group</span></h3>
+        <div class="stats-showcase">
+          <div class="stats-showcase-item"><div class="stat-name">Group Size</div><div class="stat-value">Extreme Spread CC</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">Angular Size</div><div class="stat-value">MOA &amp; MIL</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">Mean Radius</div><div class="stat-value">Avg from Centroid</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">CEP</div><div class="stat-value">50% Hit Probability</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">Radial SD</div><div class="stat-value">Distance Consistency</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">Horizontal SD</div><div class="stat-value">Wind Consistency</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">Vertical SD</div><div class="stat-value">Velocity Consistency</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">H-Spread</div><div class="stat-value">Max Horizontal</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">V-Spread</div><div class="stat-value">Max Vertical</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">Centroid</div><div class="stat-value">Group Center X,Y</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">POA Offset</div><div class="stat-value">Windage &amp; Elevation</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">Quality Score</div><div class="stat-value">0&ndash;1000 Rating</div></div>
         </div>
       </div>
     </div>
@@ -317,7 +469,7 @@
       <div class="app-header fade-in">
         <img src="images/logo-ballistic-plotter.jpg" alt="BallisticPlotter Logo" class="app-logo">
         <h2 class="app-title"><span class="gold">Ballistic</span>Plotter&trade;</h2>
-        <p class="app-subtitle">Data-Driven Load Optimization</p>
+        <p class="app-subtitle">Deterministic Scoring Engine &mdash; No AI Guessing, No Black Box</p>
       </div>
 
       <div class="app-content-row fade-in">
@@ -333,37 +485,129 @@
           <div class="feature-item">
             <span class="feature-bullet"></span>
             <div>
-              <h4>Deterministic Scoring Engine</h4>
-              <p>Weighted multi-factor scoring: vertical dispersion (40%), group size (25%), mean radius (15%), geometry (10%), chrono (10%).</p>
+              <h4>5-Component Weighted Scoring Formula</h4>
+              <p>Every charge group gets a 0&ndash;100 composite score using locked, transparent weights. Vertical dispersion is 40% because it's the #1 predictor of a true node. No machine learning, no hidden variables &mdash; you can verify every score yourself.</p>
             </div>
           </div>
           <div class="feature-item">
             <span class="feature-bullet"></span>
             <div>
-              <h4>Charge Node Ranking</h4>
-              <p>Identifies optimal charge weight nodes from your ladder test data with confidence-based scoring.</p>
+              <h4>Charge Node Ranking with Reason Codes</h4>
+              <p>The engine doesn't just say "this charge is best" &mdash; it tells you <em>why</em>. Each ranked candidate is annotated with specific codes: BEST_VERTICAL, TIGHT_GROUP, GOOD_CHRONO, ROUND_GROUP. Runner-ups show BETTER_VERTICAL_THAN_WINNER or BETTER_CHRONO_THAN_WINNER so you understand the trade-offs.</p>
             </div>
           </div>
           <div class="feature-item">
             <span class="feature-bullet"></span>
             <div>
-              <h4>Seating Depth Optimization</h4>
-              <p>Measurement-agnostic depth tuning using thousandths offset from baseline &mdash; works with COAL or CBTO.</p>
+              <h4>Two-Phase Seating Depth Optimization</h4>
+              <p>Coarse sweep: 5 offsets at 0.010&quot; increments. Engine identifies the best zone. Fine sweep: 5 offsets at 0.002&quot; centered on the best coarse result. Measurement-agnostic &mdash; uses thousandths offset from baseline, works with COAL or CBTO.</p>
             </div>
           </div>
           <div class="feature-item">
             <span class="feature-bullet"></span>
             <div>
-              <h4>Chrono Data Integration</h4>
-              <p>Incorporate standard deviation and extreme spread from your chronograph to enhance scoring accuracy.</p>
+              <h4>Chrono Spike Detection</h4>
+              <p>Flags abnormal velocity jumps &gt;50 fps between adjacent charge weights with specific warnings like &ldquo;CHRONO_SPIKE_41.0_TO_41.5_DELTA_65FPS&rdquo; &mdash; potential pressure indicators that demand attention before continuing.</p>
             </div>
           </div>
           <div class="feature-item">
             <span class="feature-bullet"></span>
             <div>
-              <h4>Confidence-Based Routing</h4>
-              <p>Automatically recommends your next workflow step based on score confidence &mdash; no guesswork.</p>
+              <h4>Automatic Workflow Routing</h4>
+              <p>Based on confidence score and warning flags, the engine routes PrecisionLoad to the exact right next step: pressure evaluation if warnings detected, charge selection if confidence &ge;75%, or extended testing if more data is needed. Pre-fills the next screen with recommended charges, alternates, and rationale.</p>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scoring Formula Table -->
+      <div class="detail-section fade-in">
+        <h3 class="detail-section-title">The Scoring Formula &mdash; <span class="gold">Transparent &amp; Locked</span></h3>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 14px;">Each component uses inverse-proportion scoring: <code style="color: var(--gold); background: var(--bg-card); padding: 2px 8px; border-radius: 4px;">100 / (1 + value &times; k)</code>. Smaller measurements = higher scores.</p>
+        <table class="scoring-table">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Weight</th>
+              <th>What It Measures</th>
+              <th>Why It Matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Vertical Dispersion</td>
+              <td class="weight-cell">40%</td>
+              <td>verticalInches</td>
+              <td>The #1 predictor of a true charge node &mdash; vertical stringing means velocity variation</td>
+            </tr>
+            <tr>
+              <td>Group Size</td>
+              <td class="weight-cell">25%</td>
+              <td>groupSizeInches (extreme spread CC)</td>
+              <td>Overall group tightness &mdash; what most shooters measure at the range</td>
+            </tr>
+            <tr>
+              <td>Mean Radius</td>
+              <td class="weight-cell">15%</td>
+              <td>meanRadiusInches</td>
+              <td>Average tightness from centroid &mdash; less sensitive to single outliers than ES</td>
+            </tr>
+            <tr>
+              <td>Geometry Quality</td>
+              <td class="weight-cell">10%</td>
+              <td>min(H,V) / max(H,V)</td>
+              <td>Group roundness &mdash; 1.0 = perfect circle, low = stringing in one axis</td>
+            </tr>
+            <tr>
+              <td>Chrono Support</td>
+              <td class="weight-cell">10%</td>
+              <td>SD (fps) &amp; ES (fps)</td>
+              <td>Velocity consistency &mdash; neutral if no chrono data (never penalizes missing data)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Confidence Computation -->
+      <div class="detail-section fade-in">
+        <h3 class="detail-section-title">3-Factor Confidence Score &mdash; <span class="gold">How Certain Is the Decision?</span></h3>
+        <div class="confidence-meter">
+          <div style="flex: 1;">
+            <div class="confidence-bar"><div class="confidence-fill"></div></div>
+            <div class="confidence-labels">
+              <span>0% &mdash; Re-test</span>
+              <span>75% &mdash; Threshold</span>
+              <span>100%</span>
+            </div>
+          </div>
+          <div class="confidence-info">
+            <h5>Three weighted factors:</h5>
+            <p><strong style="color: var(--gold);">60%</strong> &mdash; Absolute quality of top candidate's composite score</p>
+            <p><strong style="color: var(--gold);">30%</strong> &mdash; Separation gap between #1 and #2 (clear winner = high confidence)</p>
+            <p><strong style="color: var(--gold);">10%</strong> &mdash; Data completeness (missing groups, low marking confidence penalized)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Routing Rules -->
+      <div class="detail-section fade-in">
+        <h3 class="detail-section-title">Deterministic Routing &mdash; <span class="gold">Where Does It Send You?</span></h3>
+        <div class="detail-columns">
+          <div class="detail-item">
+            <h5>After Accuracy Testing (LD-20)</h5>
+            <p>Pressure warnings detected &rarr; Pressure Evaluation (LD-21). Confidence &ge;75% &rarr; Select Optimal Charge (LD-22). Otherwise &rarr; Extended Group Testing (LD-25) with top 3 candidates and recommended shot count.</p>
+          </div>
+          <div class="detail-item">
+            <h5>After Extended Testing (LD-25)</h5>
+            <p>Confidence &ge;75% &rarr; Select Optimal Charge (LD-22) with pre-filled recommendation. Otherwise &rarr; Stay on LD-25, tighten test with refined candidates and increased shot count (20&rarr;30).</p>
+          </div>
+          <div class="detail-item">
+            <h5>After Seating Depth Coarse (LD-23)</h5>
+            <p>Always loops back to LD-23 for fine sweep &mdash; 5 offsets at 0.002&quot; increments centered on the best coarse offset.</p>
+          </div>
+          <div class="detail-item">
+            <h5>After Seating Depth Fine (LD-23)</h5>
+            <p>Confidence &ge;75% &rarr; Extended Group Testing (LD-25) with refined seating depth. Otherwise &rarr; Re-test LD-23 with shifted baseline.</p>
           </div>
         </div>
       </div>
