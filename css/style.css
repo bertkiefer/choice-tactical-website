@@ -644,6 +644,33 @@ img {
   justify-content: center;
 }
 
+.mockup-container-dual {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.mockup-container-dual .phone-mockup {
+  width: 180px;
+  padding: 8px;
+  border-radius: 24px;
+}
+
+.mockup-item-inline {
+  text-align: center;
+}
+
+.mockup-item-inline .mockup-caption {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.app-content-row .mockup-container-dual {
+  flex: 0 0 400px;
+}
+
 .phone-mockup {
   width: 240px;
   padding: 12px;
@@ -1232,7 +1259,8 @@ img {
     flex-direction: column;
   }
 
-  .app-content-row .mockup-container {
+  .app-content-row .mockup-container,
+  .app-content-row .mockup-container-dual {
     flex: none;
     width: 100%;
   }
