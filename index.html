@@ -175,7 +175,7 @@
         </div>
         <div class="stat-callout">
           <div class="stat-number">AI</div>
-          <div class="stat-label">Claude-Powered Brain<br>Context-Aware</div>
+          <div class="stat-label">Powerful AI Brain<br>Context-Aware</div>
         </div>
       </div>
 
@@ -195,7 +195,7 @@
             <svg viewBox="0 0 40 40" fill="none"><rect x="6" y="6" width="28" height="28" rx="6" stroke="#C9A962" stroke-width="2"/><circle cx="20" cy="18" r="5" stroke="#C9A962" stroke-width="1.5"/><path d="M12 30c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#C9A962" stroke-width="1.5"/><circle cx="32" cy="8" r="5" fill="#1A1A1A" stroke="#2196F3" stroke-width="2"/><path d="M30 8h4M32 6v4" stroke="#2196F3" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
           <h4 class="feature-title">PrecisionLoad Brain &mdash; AI That Knows Your Load</h4>
-          <p class="feature-desc">Claude-powered AI that reads your actual project data &mdash; your brass dimensions, neck turning status, bushing sizes, and sizing die settings. Ask a bushing question and it recalculates based on YOUR turned neck thickness, not factory specs. Includes web search for real-time supplemental data.</p>
+          <p class="feature-desc">Powerful AI that reads your actual project data &mdash; your brass dimensions, neck turning status, bushing sizes, and sizing die settings. Ask a bushing question and it recalculates based on YOUR turned neck thickness, not factory specs. Includes web search for real-time supplemental data.</p>
         </div>
 
         <div class="feature-card">
@@ -429,6 +429,13 @@
               <p>Every measurement &mdash; group size, vertical/horizontal spread, mean radius, CEP, radial SD, POA offset, and overlay images &mdash; flows directly to BallisticPlotter via App Groups. No screenshots, no manual entry, no transcription errors.</p>
             </div>
           </div>
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>Feed Entire Ladder Tests &mdash; 10 Groups, One Project</h4>
+              <p>Photograph all 10 targets from a powder charge ladder or neck tension test. Mark every shot. All 14+ statistics per group flow into a single BallisticPlotter project where the scoring engine ranks every charge node, generates a velocity chart with error bars and trend lines, computes a confidence score, and routes the results directly into PrecisionLoad for your next step.</p>
+            </div>
+          </div>
         </div>
 
         <div class="mockup-container">
@@ -517,6 +524,42 @@
               <p>Based on confidence score and warning flags, the engine routes PrecisionLoad to the exact right next step: pressure evaluation if warnings detected, charge selection if confidence &ge;75%, or extended testing if more data is needed. Pre-fills the next screen with recommended charges, alternates, and rationale.</p>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Ladder Test Types -->
+      <div class="detail-section fade-in">
+        <h3 class="detail-section-title">Built-In Ladder Test Programs &mdash; <span class="gold">From Range Day to Results</span></h3>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 14px;">Create a project, define your test parameters, enter all shot groups with chronograph data, and get a complete analysis &mdash; all in one place. Results feed directly into PrecisionLoad for next-step routing.</p>
+        <div class="detail-columns detail-columns-3">
+          <div class="detail-item">
+            <h5>Powder Charge Ladder</h5>
+            <p>Define start/end charge weights and increment (e.g., 40.0&ndash;45.0 gr in 0.5 gr steps). Enter velocities for every shot in every group. The engine scores all 10 charge nodes, ranks them, identifies the optimal charge window, and feeds the winner into PrecisionLoad with alternates and rationale.</p>
+          </div>
+          <div class="detail-item">
+            <h5>Neck Tension Ladder</h5>
+            <p>Hold charge weight constant and vary neck tension across groups. Same scoring engine, same velocity chart, same confidence-based routing. Isolates the effect of neck tension on ES, SD, and vertical dispersion so you know exactly which bushing or mandrel delivers the tightest velocity spread.</p>
+          </div>
+          <div class="detail-item">
+            <h5>Seating Depth Sweep</h5>
+            <p>Lock in your optimal charge and sweep seating depths &mdash; coarse pass at 0.010&quot; increments, then fine pass at 0.002&quot; centered on the best coarse result. Uses thousandths offset from baseline so it works with COAL or CBTO. Two-phase design finds the exact seating sweet spot.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Velocity Chart -->
+      <div class="detail-section fade-in">
+        <h3 class="detail-section-title">Interactive Velocity Chart &mdash; <span class="gold">See Everything at a Glance</span></h3>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 14px;">After entering your data, view a publication-quality velocity chart that shows the full picture of your ladder test. Pinch-to-zoom from 0.5&times; to 4&times; magnification. Export as high-resolution PNG and share.</p>
+        <div class="stats-showcase stats-showcase-4">
+          <div class="stats-showcase-item"><div class="stat-name">Individual Shots</div><div class="stat-value">Every Round Plotted</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">Error Bars</div><div class="stat-value">Min&ndash;Max Per Group</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">Mean Line</div><div class="stat-value">Connects Averages</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">Trend Line</div><div class="stat-value">Linear Regression</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">ES Per Group</div><div class="stat-value">Extreme Spread (fps)</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">SD Per Group</div><div class="stat-value">Standard Deviation</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">Delta Labels</div><div class="stat-value">Velocity Change +/&minus;</div></div>
+          <div class="stats-showcase-item"><div class="stat-name">PNG Export</div><div class="stat-value">3&times; Resolution Share</div></div>
         </div>
       </div>
 

@@ -981,6 +981,14 @@ img {
   gap: 16px 32px;
 }
 
+.detail-columns-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.stats-showcase-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .detail-item {
   padding: 8px 0;
 }
@@ -1229,6 +1237,14 @@ img {
     width: 100%;
   }
 
+  .detail-columns-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stats-showcase-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .mockup-row {
     gap: 24px;
   }
@@ -1245,11 +1261,13 @@ img {
     grid-template-columns: 1fr;
   }
 
-  .detail-columns {
+  .detail-columns,
+  .detail-columns-3 {
     grid-template-columns: 1fr;
   }
 
-  .stats-showcase {
+  .stats-showcase,
+  .stats-showcase-4 {
     grid-template-columns: repeat(2, 1fr);
   }
 
