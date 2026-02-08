@@ -673,6 +673,39 @@ img {
   height: auto;
 }
 
+/* Screenshot images inside phone mockups */
+.phone-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Multi-phone mockup row (PrecisionLoad) */
+.mockup-row {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+
+.mockup-item {
+  text-align: center;
+}
+
+.mockup-item .phone-mockup {
+  width: 200px;
+}
+
+.mockup-caption {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
 /* ---------- Teaser Grid (Component Search) ---------- */
 .teaser-grid {
   display: grid;
@@ -863,6 +896,14 @@ img {
     flex: none;
     width: 100%;
   }
+
+  .mockup-row {
+    gap: 24px;
+  }
+
+  .mockup-item .phone-mockup {
+    width: 180px;
+  }
 }
 
 /* ---------- RESPONSIVE: Mobile ---------- */
@@ -946,6 +987,18 @@ img {
 
   .phone-mockup {
     width: 200px;
+  }
+
+  .mockup-row {
+    gap: 20px;
+  }
+
+  .mockup-item .phone-mockup {
+    width: 160px;
+  }
+
+  .mockup-caption {
+    font-size: 11px;
   }
 
   .signup-form {
