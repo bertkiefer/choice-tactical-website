@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choice Tactical — Precision Reloading. Perfected.</title>
+  <meta name="description" content="The complete reloading app suite. AI-guided load development, shot group analysis, charge optimization, and component price comparison.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- NAVIGATION                                  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <nav id="navbar" class="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <img src="images/logo-main.png" alt="Choice Tactical" class="nav-logo-img">
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span class="hamburger"></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#suite" class="nav-link">Suite</a></li>
+        <li><a href="#precisionload" class="nav-link">PrecisionLoad</a></li>
+        <li><a href="#analysis" class="nav-link">Analysis</a></li>
+        <li><a href="#plotter" class="nav-link">Plotter</a></li>
+        <li><a href="#search" class="nav-link">Search</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 1: HERO                             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="hero" class="hero">
+    <div class="hero-content">
+      <div class="hero-emblem">
+        <img src="images/logo-main.png" alt="Choice Tactical Emblem" class="hero-logo">
+      </div>
+      <h1 class="hero-title">
+        <span class="gold">CHOICE</span> TACTICAL
+      </h1>
+      <div class="hero-accent-line"></div>
+      <p class="hero-tagline">Precision Reloading. Perfected.</p>
+      <p class="hero-subtitle">The Complete Reloading App Suite &mdash; Coming Soon</p>
+      <a href="#suite" class="btn btn-gold hero-cta">Explore the Suite</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 2: THE SUITE                        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="suite" class="section section-alt">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2 class="section-title">Four Apps. <span class="gold">One Mission.</span></h2>
+        <p class="section-subtitle">An integrated ecosystem of precision tools, built by reloaders for reloaders. Each app excels on its own &mdash; together, they share data seamlessly through Apple App Groups.</p>
+      </div>
+
+      <div class="suite-grid">
+        <div class="suite-card fade-in">
+          <div class="suite-card-icon">
+            <img src="images/icon-precisionload.png" alt="PrecisionLoad Icon">
+          </div>
+          <h3 class="suite-card-title"><span class="gold">Precision</span>Load</h3>
+          <p class="suite-card-desc">AI-guided 33-step load development</p>
+          <a href="#precisionload" class="suite-card-link">Learn more &rarr;</a>
+        </div>
+
+        <div class="suite-card fade-in">
+          <div class="suite-card-icon">
+            <img src="images/icon-ballistic-analysis.png" alt="BallisticAnalysis Icon">
+          </div>
+          <h3 class="suite-card-title"><span class="gold">Ballistic</span>Analysis</h3>
+          <p class="suite-card-desc">Photograph targets. Analyze groups.</p>
+          <a href="#analysis" class="suite-card-link">Learn more &rarr;</a>
+        </div>
+
+        <div class="suite-card fade-in">
+          <div class="suite-card-icon">
+            <img src="images/icon-ballistic-plotter.png" alt="BallisticPlotter Icon">
+          </div>
+          <h3 class="suite-card-title"><span class="gold">Ballistic</span>Plotter</h3>
+          <p class="suite-card-desc">Data-driven charge &amp; seating optimization</p>
+          <a href="#plotter" class="suite-card-link">Learn more &rarr;</a>
+        </div>
+
+        <div class="suite-card fade-in">
+          <div class="suite-card-icon coming-soon-icon">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="16" width="64" height="48" rx="6" stroke="#C9A962" stroke-width="2"/>
+              <path d="M24 40L36 52L56 28" stroke="#C9A962" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="40" cy="10" r="4" fill="#C9A962"/>
+              <line x1="40" y1="6" x2="40" y2="1" stroke="#C9A962" stroke-width="2" stroke-linecap="round"/>
+              <line x1="34" y1="8" x2="30" y2="4" stroke="#C9A962" stroke-width="2" stroke-linecap="round"/>
+              <line x1="46" y1="8" x2="50" y2="4" stroke="#C9A962" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="suite-card-title"><span class="gold">Component</span> Search</h3>
+          <p class="suite-card-desc">Compare prices across dealers</p>
+          <span class="badge badge-gold">COMING SOON</span>
+        </div>
+      </div>
+
+      <div class="suite-integration fade-in">
+        <div class="integration-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="20" stroke="#C9A962" stroke-width="2" stroke-dasharray="4 4"/>
+            <circle cx="14" cy="18" r="5" fill="#1A1A1A" stroke="#C9A962" stroke-width="1.5"/>
+            <circle cx="34" cy="18" r="5" fill="#1A1A1A" stroke="#C9A962" stroke-width="1.5"/>
+            <circle cx="24" cy="34" r="5" fill="#1A1A1A" stroke="#C9A962" stroke-width="1.5"/>
+            <line x1="18" y1="20" x2="22" y2="30" stroke="#C9A962" stroke-width="1"/>
+            <line x1="30" y1="20" x2="26" y2="30" stroke="#C9A962" stroke-width="1"/>
+            <line x1="19" y1="18" x2="29" y2="18" stroke="#C9A962" stroke-width="1"/>
+          </svg>
+        </div>
+        <p class="integration-text">All apps share data through <strong>Apple App Groups</strong> &mdash; calibration data from BallisticAnalysis flows into BallisticPlotter scores, which route your PrecisionLoad workflow. No exports, no copy-paste. Just precision.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 3: PRECISIONLOAD                    -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="precisionload" class="section">
+    <div class="container">
+      <div class="app-header fade-in">
+        <img src="images/logo-precisionload.jpg" alt="PrecisionLoad Logo" class="app-logo">
+        <h2 class="app-title"><span class="gold">Precision</span>Load&trade;</h2>
+        <p class="app-subtitle">AI-Guided Load Development &mdash; From Setup to Range Day</p>
+      </div>
+
+      <div class="features-grid fade-in">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 40 40" fill="none"><path d="M8 8h24v24H8z" stroke="#C9A962" stroke-width="2"/><path d="M12 16h16M12 20h16M12 24h12" stroke="#C9A962" stroke-width="1.5" stroke-linecap="round"/><circle cx="32" cy="32" r="6" fill="#1A1A1A" stroke="#4CAF50" stroke-width="2"/><path d="M30 32l1.5 1.5L34 31" stroke="#4CAF50" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h4 class="feature-title">33-Step Guided Workflow</h4>
+          <p class="feature-desc">From brass selection through final validation &mdash; every step organized into logical phases with expert-level skip options.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 40 40" fill="none"><rect x="6" y="6" width="28" height="28" rx="6" stroke="#C9A962" stroke-width="2"/><circle cx="20" cy="18" r="5" stroke="#C9A962" stroke-width="1.5"/><path d="M12 30c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#C9A962" stroke-width="1.5"/><circle cx="32" cy="8" r="5" fill="#1A1A1A" stroke="#2196F3" stroke-width="2"/><path d="M30 8h4M32 6v4" stroke="#2196F3" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h4 class="feature-title">AI Assistant</h4>
+          <p class="feature-desc">Claude-powered, context-aware AI that understands your specific load, components, and progress. Ask anything.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="8" width="32" height="24" rx="4" stroke="#C9A962" stroke-width="2"/><path d="M4 16h32" stroke="#C9A962" stroke-width="1.5"/><rect x="8" y="20" width="8" height="3" rx="1" fill="#C9A962" opacity="0.5"/><rect x="8" y="25" width="12" height="3" rx="1" fill="#C9A962" opacity="0.3"/></svg>
+          </div>
+          <h4 class="feature-title">Component Library</h4>
+          <p class="feature-desc">Comprehensive inventory tracking for brass, bullets, primers, and powder with usage history and batch management.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="#C9A962" stroke-width="2"/><circle cx="20" cy="20" r="8" stroke="#C9A962" stroke-width="1" stroke-dasharray="3 3"/><circle cx="20" cy="20" r="2" fill="#C9A962"/><path d="M20 6v4M20 30v4M6 20h4M30 20h4" stroke="#C9A962" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h4 class="feature-title">Caliber Recommendations</h4>
+          <p class="feature-desc">Expert powder and charge recommendations for popular calibers, with centered middle-10 charge tables.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 40 40" fill="none"><path d="M8 32V12l8-4 8 4 8-4v20l-8 4-8-4-8 4z" stroke="#C9A962" stroke-width="2" stroke-linejoin="round"/><path d="M16 8v20M24 12v20" stroke="#C9A962" stroke-width="1.5" stroke-dasharray="2 2"/></svg>
+          </div>
+          <h4 class="feature-title">Online Price Comparison</h4>
+          <p class="feature-desc">Search dealers in real-time for in-stock components with price comparison and direct purchase links.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 40 40" fill="none"><rect x="10" y="6" width="20" height="28" rx="3" stroke="#C9A962" stroke-width="2"/><path d="M14 14h12M14 18h8" stroke="#C9A962" stroke-width="1.5" stroke-linecap="round"/><path d="M10 26h20" stroke="#C9A962" stroke-width="1"/><circle cx="20" cy="30" r="2" stroke="#C9A962" stroke-width="1.5"/></svg>
+          </div>
+          <h4 class="feature-title">Chamber &amp; Brass Prep</h4>
+          <p class="feature-desc">Measure chamber dimensions, track brass prep steps, neck tension, and primer pocket uniformity.</p>
+        </div>
+      </div>
+
+      <!-- Workflow Phases Bar -->
+      <div class="workflow-phases fade-in">
+        <h3 class="phases-title">Workflow Phases</h3>
+        <div class="phases-bar">
+          <div class="phase phase-setup" data-tooltip="Steps 1-7: Rifle, caliber, components">
+            <span>Setup</span>
+          </div>
+          <div class="phase phase-brass" data-tooltip="Steps 8-14: Brass prep & chamber work">
+            <span>Brass Prep</span>
+          </div>
+          <div class="phase phase-planning" data-tooltip="Steps 15-19: Load planning & ladder prep">
+            <span>Planning</span>
+          </div>
+          <div class="phase phase-testing" data-tooltip="Steps 20-25: Range testing & analysis">
+            <span>Testing</span>
+          </div>
+          <div class="phase phase-optimization" data-tooltip="Steps 26-30: Seating depth & fine tuning">
+            <span>Optimization</span>
+          </div>
+          <div class="phase phase-final" data-tooltip="Steps 31-33: Validation & documentation">
+            <span>Final</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone Mockup Placeholder -->
+      <div class="mockup-container fade-in">
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div class="mockup-placeholder">
+              <svg viewBox="0 0 60 60" fill="none"><rect x="10" y="5" width="40" height="50" rx="8" stroke="#333" stroke-width="2"/><rect x="14" y="12" width="32" height="36" rx="2" stroke="#333" stroke-width="1"/><circle cx="30" cy="54" r="2" stroke="#333" stroke-width="1"/><text x="30" y="32" text-anchor="middle" fill="#666" font-size="6" font-family="Inter">Screenshot</text><text x="30" y="38" text-anchor="middle" fill="#666" font-size="5" font-family="Inter">Coming Soon</text></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 4: BALLISTIC ANALYSIS               -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="analysis" class="section section-alt">
+    <div class="container">
+      <div class="app-header fade-in">
+        <img src="images/logo-ballistic-analysis.jpg" alt="BallisticAnalysis Logo" class="app-logo">
+        <h2 class="app-title"><span class="gold">Ballistic</span>Analysis&trade;</h2>
+        <p class="app-subtitle">Photograph. Calibrate. Analyze.</p>
+      </div>
+
+      <div class="app-content-row fade-in">
+        <div class="app-features-list">
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>Camera &amp; Gallery Capture</h4>
+              <p>Import target images directly from your camera or photo library for instant analysis.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>Two-Point Scale Calibration</h4>
+              <p>Set a known reference distance on the target to convert pixels to real-world measurements.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>Tap-to-Mark Shot Impacts</h4>
+              <p>Precisely mark each shot location with drag adjustment for sub-pixel accuracy.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>MOA &amp; Group Statistics</h4>
+              <p>Automatic computation of extreme spread, mean radius, and MOA at your shooting distance.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>Geometry Quality Analysis</h4>
+              <p>Measures group roundness, vertical vs. horizontal dispersion, and statistical consistency.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>Export Overlay Images</h4>
+              <p>Share annotated target images with all stats and markings overlaid &mdash; ready for social or records.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mockup-container">
+          <div class="phone-mockup">
+            <div class="phone-screen">
+              <div class="mockup-placeholder">
+                <svg viewBox="0 0 60 60" fill="none"><rect x="10" y="5" width="40" height="50" rx="8" stroke="#333" stroke-width="2"/><circle cx="30" cy="28" r="10" stroke="#333" stroke-width="1"/><circle cx="30" cy="28" r="6" stroke="#333" stroke-width="1" stroke-dasharray="2 2"/><circle cx="28" cy="26" r="1.5" fill="#C9A962"/><circle cx="32" cy="29" r="1.5" fill="#C9A962"/><circle cx="30" cy="24" r="1.5" fill="#C9A962"/><text x="30" y="48" text-anchor="middle" fill="#666" font-size="5" font-family="Inter">Screenshot Coming</text></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 5: BALLISTIC PLOTTER                -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="plotter" class="section">
+    <div class="container">
+      <div class="app-header fade-in">
+        <img src="images/logo-ballistic-plotter.jpg" alt="BallisticPlotter Logo" class="app-logo">
+        <h2 class="app-title"><span class="gold">Ballistic</span>Plotter&trade;</h2>
+        <p class="app-subtitle">Data-Driven Load Optimization</p>
+      </div>
+
+      <div class="app-content-row reverse fade-in">
+        <div class="mockup-container">
+          <div class="phone-mockup">
+            <div class="phone-screen">
+              <div class="mockup-placeholder">
+                <svg viewBox="0 0 60 60" fill="none"><rect x="10" y="5" width="40" height="50" rx="8" stroke="#333" stroke-width="2"/><polyline points="16,42 22,35 28,38 34,25 40,30 46,20" stroke="#C9A962" stroke-width="1.5" fill="none" stroke-linecap="round"/><line x1="14" y1="44" x2="46" y2="44" stroke="#333" stroke-width="1"/><line x1="14" y1="18" x2="14" y2="44" stroke="#333" stroke-width="1"/><text x="30" y="52" text-anchor="middle" fill="#666" font-size="5" font-family="Inter">Screenshot Coming</text></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-features-list">
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>Deterministic Scoring Engine</h4>
+              <p>Weighted multi-factor scoring: vertical dispersion (40%), group size (25%), mean radius (15%), geometry (10%), chrono (10%).</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>Charge Node Ranking</h4>
+              <p>Identifies optimal charge weight nodes from your ladder test data with confidence-based scoring.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>Seating Depth Optimization</h4>
+              <p>Measurement-agnostic depth tuning using thousandths offset from baseline &mdash; works with COAL or CBTO.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>Chrono Data Integration</h4>
+              <p>Incorporate standard deviation and extreme spread from your chronograph to enhance scoring accuracy.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-bullet"></span>
+            <div>
+              <h4>Confidence-Based Routing</h4>
+              <p>Automatically recommends your next workflow step based on score confidence &mdash; no guesswork.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 6: COMPONENT SEARCH (Teaser)        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="search" class="section section-alt">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2 class="section-title">Find Components. Compare Prices. <span class="gold">Buy Smart.</span></h2>
+        <span class="badge badge-gold badge-lg">COMING SOON</span>
+      </div>
+
+      <div class="teaser-grid fade-in">
+        <div class="teaser-item">
+          <div class="teaser-icon">
+            <svg viewBox="0 0 40 40" fill="none"><circle cx="18" cy="18" r="10" stroke="#C9A962" stroke-width="2"/><line x1="25" y1="25" x2="34" y2="34" stroke="#C9A962" stroke-width="2.5" stroke-linecap="round"/><path d="M14 18h8M18 14v8" stroke="#C9A962" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h4>Real-Time In-Stock Tracking</h4>
+          <p>Know what's available before you shop. Live inventory from major dealers.</p>
+        </div>
+
+        <div class="teaser-item">
+          <div class="teaser-icon">
+            <svg viewBox="0 0 40 40" fill="none"><rect x="6" y="10" width="12" height="20" rx="2" stroke="#C9A962" stroke-width="2"/><rect x="22" y="6" width="12" height="28" rx="2" stroke="#C9A962" stroke-width="2"/><path d="M10 14h4M10 18h4M10 22h4" stroke="#C9A962" stroke-width="1" stroke-linecap="round"/><path d="M26 10h4M26 14h4M26 18h4M26 22h4M26 26h4" stroke="#C9A962" stroke-width="1" stroke-linecap="round"/></svg>
+          </div>
+          <h4>Price Comparison</h4>
+          <p>Side-by-side pricing across multiple retailers with per-unit cost breakdowns.</p>
+        </div>
+
+        <div class="teaser-item">
+          <div class="teaser-icon">
+            <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="#C9A962" stroke-width="2"/><path d="M14 20l4 4 8-8" stroke="#C9A962" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h4>Standalone or Integrated</h4>
+          <p>Use it independently or let PrecisionLoad auto-search components for your current project.</p>
+        </div>
+
+        <div class="teaser-item">
+          <div class="teaser-icon">
+            <svg viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="10" height="24" rx="2" stroke="#C9A962" stroke-width="2"/><rect x="22" y="12" width="10" height="16" rx="2" stroke="#C9A962" stroke-width="1.5"/><circle cx="13" cy="26" r="2" fill="#C9A962" opacity="0.5"/><path d="M22 20h10" stroke="#C9A962" stroke-width="1" stroke-dasharray="2 2"/></svg>
+          </div>
+          <h4>Bullets, Primers, Powder &amp; More</h4>
+          <p>Search across all component types: bullets, primers, powder, brass, and loaded ammunition.</p>
+        </div>
+      </div>
+
+      <!-- Email Signup -->
+      <div class="signup-container fade-in">
+        <h3 class="signup-title">Get Notified When We Launch</h3>
+        <form action="https://formspree.io/f/sendit@choice-tactical.com" method="POST" class="signup-form">
+          <input type="email" name="email" placeholder="your@email.com" required class="signup-input">
+          <button type="submit" class="btn btn-gold signup-btn">Notify Me</button>
+        </form>
+        <p class="signup-note">No spam. Just a single launch notification.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 7: CONTACT & FOOTER                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2 class="section-title">Get In <span class="gold">Touch</span></h2>
+      </div>
+
+      <div class="contact-content fade-in">
+        <div class="contact-info">
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#C9A962" stroke-width="2"/><polyline points="22,6 12,13 2,6" stroke="#C9A962" stroke-width="2"/></svg>
+            <a href="mailto:sendit@choice-tactical.com" class="contact-link">sendit@choice-tactical.com</a>
+          </div>
+          <p class="contact-note">Partnership inquiries welcome. Whether you're a dealer, affiliate network, or industry partner &mdash; we'd love to hear from you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <img src="images/logo-main.png" alt="Choice Tactical" class="footer-logo">
+        <p class="footer-copy">&copy; 2026 Choice Tactical. All rights reserved.</p>
+        <p class="footer-tagline">Built with precision.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
