@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrecisionLoad Suite — Choice Tactical</title>
+  <meta name="description" content="AI-guided load development, shot group analysis, charge optimization, and ballistic target design — all in one integrated platform. Built around real load development workflows.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <script type="text/javascript" src="http://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=2ff18a2e299b1ed5790325922d96936dee055fb2"></script>
+</head>
+<body data-page="precisionload">
+
+  <!-- Navigation -->
+  <div data-include="includes/nav.html"></div>
+
+  <!-- Sticky Subnav -->
+  <div class="subnav">
+    <div class="subnav-container">
+      <a href="#overview" class="subnav-link">Overview</a>
+      <a href="#workflow" class="subnav-link">Workflow</a>
+      <a href="#plotter" class="subnav-link">Plotter</a>
+      <a href="#analysis" class="subnav-link">Analysis</a>
+      <a href="#targets" class="subnav-link">Targets</a>
+      <a href="#decisions" class="subnav-link">Decision Engine</a>
+      <a href="#reports" class="subnav-link">Reports</a>
+      <a href="#gallery" class="subnav-link">Gallery</a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- PAGE HERO                                   -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="page-hero" id="overview">
+      <div class="container">
+        <img src="images/logo-precisionload.png" alt="PrecisionLoad Suite" class="hero-logo">
+        <h1 class="section-title">A Complete Load Development System — Not Just an App</h1>
+        <p class="section-subtitle centered">Plan, test, analyze, and validate loads with one connected system.</p>
+        <p class="credibility-line">Built around real load development workflows — not generic data tracking.</p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- KEY STATS                                   -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="stats-bar">
+          <div class="stat fade-in">
+            <div class="stat-number" data-target="33">0</div>
+            <div class="stat-label">Guided Steps</div>
+            <div class="stat-desc">From component selection to certified load</div>
+          </div>
+          <div class="stat fade-in delay-1">
+            <div class="stat-number" data-target="7">0</div>
+            <div class="stat-label">Development Phases</div>
+            <div class="stat-desc">Setup, brass, planning, testing, optimization, final, advanced</div>
+          </div>
+          <div class="stat fade-in delay-2">
+            <div class="stat-number" data-target="34" data-suffix="+">0</div>
+            <div class="stat-label">Caliber Load Profiles</div>
+            <div class="stat-desc">Benchrest, F-Class, PRS, ELR, and Hunting disciplines</div>
+          </div>
+          <div class="stat fade-in delay-3">
+            <div class="stat-number" data-target="14" data-suffix="+">0</div>
+            <div class="stat-label">Group Statistics</div>
+            <div class="stat-desc">MOA, CEP, Mean Radius, SD, POA Offset, and more</div>
+          </div>
+          <div class="stat fade-in delay-4">
+            <div class="stat-number" data-target="40" data-suffix="+">0</div>
+            <div class="stat-label">Expert Knowledge Entries</div>
+            <div class="stat-desc">Safety, best practices, troubleshooting, formulas</div>
+          </div>
+        </div>
+
+        <!-- Four modules overview -->
+        <div class="section-header fade-in" style="margin-top: 60px;">
+          <h2 class="section-title">Four Modules. One Integrated Platform.</h2>
+          <p class="section-subtitle centered">Every module shares data automatically. Test results flow into scoring. Scores route back to your load project. No manual re-entry.</p>
+        </div>
+
+        <div class="grid-4 fade-in">
+          <div class="card hover-glow">
+            <div class="card-icon card-icon-gold">&#9632;</div>
+            <h3>PrecisionLoad</h3>
+            <p>33-step guided load development with AI Brain, 34+ caliber recommendations, and expert knowledge at every step.</p>
+          </div>
+          <div class="card hover-glow">
+            <div class="card-icon card-icon-green">&#9632;</div>
+            <h3>Ballistic Plotter</h3>
+            <p>Deterministic scoring engine with 5-component formula, charge ranking, and two-phase seating depth optimization.</p>
+          </div>
+          <div class="card hover-glow">
+            <div class="card-icon card-icon-blue">&#9632;</div>
+            <h3>Ballistic Analysis</h3>
+            <p>Photograph targets, calibrate scale, mark impacts. 14+ statistical measurements per group with branded share images.</p>
+          </div>
+          <div class="card hover-glow">
+            <div class="card-icon card-icon-gold">&#9678;</div>
+            <h3>Ballistic Targets</h3>
+            <p>IBS-style competition targets, grid layouts, sighter references, and PDF export — designed for precision testing and print.</p>
+          </div>
+        </div>
+
+        <!-- Data flow -->
+        <div class="data-flow fade-in">
+          <div class="data-flow-node">
+            <span class="data-flow-name">PrecisionLoad</span>
+            <span class="data-flow-desc">Creates project, sets charge ladder</span>
+          </div>
+          <span class="data-flow-arrow">&#8594;</span>
+          <div class="data-flow-node">
+            <span class="data-flow-name">Ballistic Analysis</span>
+            <span class="data-flow-desc">Measures groups, generates statistics</span>
+          </div>
+          <span class="data-flow-arrow">&#8594;</span>
+          <div class="data-flow-node">
+            <span class="data-flow-name">Ballistic Plotter</span>
+            <span class="data-flow-desc">Scores, ranks, routes next step</span>
+          </div>
+          <span class="data-flow-arrow">&#8594;</span>
+          <div class="data-flow-node">
+            <span class="data-flow-name">PrecisionLoad</span>
+            <span class="data-flow-desc">Receives result, advances workflow</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- PRECISIONLOAD WORKFLOW                      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="section" id="workflow">
+      <div class="container">
+        <div class="section-header fade-in">
+          <p class="section-label">PrecisionLoad Core</p>
+          <h2 class="section-title">33 Steps. 7 Phases. Every Decision Documented.</h2>
+          <p class="section-subtitle centered">A structured workflow that follows the actual sequence experienced reloaders use — from initial setup through final load certification.</p>
+        </div>
+
+        <!-- Simple workflow flow -->
+        <div class="workflow-flow fade-in">
+          <span class="workflow-flow-step">Setup</span>
+          <span class="workflow-flow-arrow">&#8594;</span>
+          <span class="workflow-flow-step">Testing</span>
+          <span class="workflow-flow-arrow">&#8594;</span>
+          <span class="workflow-flow-step">Analysis</span>
+          <span class="workflow-flow-arrow">&#8594;</span>
+          <span class="workflow-flow-step">Recommendation</span>
+          <span class="workflow-flow-arrow">&#8594;</span>
+          <span class="workflow-flow-step">Validation</span>
+        </div>
+
+        <!-- Phase bar -->
+        <div class="phase-bar fade-in">
+          <div class="phase-block phase-setup">
+            <span class="phase-name">Setup</span>
+            <span class="phase-steps">LD-01 – LD-07</span>
+          </div>
+          <div class="phase-block phase-brass">
+            <span class="phase-name">Brass Prep</span>
+            <span class="phase-steps">LD-08 – LD-14</span>
+          </div>
+          <div class="phase-block phase-planning">
+            <span class="phase-name">Planning</span>
+            <span class="phase-steps">LD-15 – LD-17</span>
+          </div>
+          <div class="phase-block phase-testing">
+            <span class="phase-name">Testing</span>
+            <span class="phase-steps">LD-18 – LD-21</span>
+          </div>
+          <div class="phase-block phase-optimization">
+            <span class="phase-name">Optimization</span>
+            <span class="phase-steps">LD-22 – LD-27</span>
+          </div>
+          <div class="phase-block phase-final">
+            <span class="phase-name">Final</span>
+            <span class="phase-steps">LD-28 – LD-33</span>
+          </div>
+        </div>
+
+        <!-- Phase details (expandable) -->
+        <div class="phase-details fade-in">
+          <div class="expandable">
+            <div class="expandable-header">
+              <div>
+                <h3><span class="phase-dot phase-setup-dot"></span>Setup — LD-01 through LD-07</h3>
+              </div>
+              <span class="expandable-toggle">&#9660;</span>
+            </div>
+            <div class="expandable-body">
+              <div class="expandable-content">
+                <p>Establish your shooter profile, rifle configuration, caliber selection, and component inventory. This phase captures every variable that affects your load — barrel length, twist rate, chamber dimensions, and the specific brass, bullets, primers, and powder you're working with.</p>
+                <ul class="feature-list">
+                  <li>Shooter profile with experience level and discipline focus</li>
+                  <li>Rifle configuration with barrel specs, twist rate, and chamber measurements</li>
+                  <li>SAAMI/CIP cartridge database with 20+ specifications per cartridge</li>
+                  <li>Component inventory with batch/lot tracking across brass, bullets, primers, powder</li>
+                  <li>34+ caliber-specific load recommendations by discipline (Benchrest, F-Class, PRS, ELR, Hunting)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="expandable">
+            <div class="expandable-header">
+              <div>
+                <h3><span class="phase-dot phase-brass-dot"></span>Brass Prep — LD-08 through LD-14</h3>
+              </div>
+              <span class="expandable-toggle">&#9660;</span>
+            </div>
+            <div class="expandable-body">
+              <div class="expandable-content">
+                <p>Systematic brass preparation with chamber measurement tracking, trim-to-length calculations, sizing strategy, and neck tension configuration. Expert Mode allows experienced reloaders to skip this phase entirely.</p>
+                <ul class="feature-list">
+                  <li>Chamber measurement tracking — COAL/CBTO-to-lands, freebore calculation</li>
+                  <li>Case inspection, head stamp sorting, and weight variation tracking</li>
+                  <li>Trim-to-length with SAAMI spec reference and tool calibration guidance</li>
+                  <li>Neck sizing vs. full-length sizing strategy selection</li>
+                  <li>Bushing selection and neck tension calculation</li>
+                  <li>Expert Skip — 7-step brass prep bypass for experienced reloaders</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="expandable">
+            <div class="expandable-header">
+              <div>
+                <h3><span class="phase-dot phase-planning-dot"></span>Planning — LD-15 through LD-17</h3>
+              </div>
+              <span class="expandable-toggle">&#9660;</span>
+            </div>
+            <div class="expandable-body">
+              <div class="expandable-content">
+                <p>Configure your seating depth strategy, establish a pressure baseline from published data, and build a charge ladder with appropriate increments for your cartridge class.</p>
+                <ul class="feature-list">
+                  <li>Seating depth strategy — jump vs. jam, initial offset calculation</li>
+                  <li>Pressure baseline reference from manufacturer and community data</li>
+                  <li>Charge ladder generation with middle-10 selection from min/max range</li>
+                  <li>Increment calculation based on case capacity and powder sensitivity</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="expandable">
+            <div class="expandable-header">
+              <div>
+                <h3><span class="phase-dot phase-testing-dot"></span>Testing — LD-18 through LD-21</h3>
+              </div>
+              <span class="expandable-toggle">&#9660;</span>
+            </div>
+            <div class="expandable-body">
+              <div class="expandable-content">
+                <p>Execute ladder tests with integrated velocity recording, accuracy measurement, and pressure evaluation. Results feed directly into Ballistic Analysis for group measurement and then into Ballistic Plotter for scoring.</p>
+                <ul class="feature-list">
+                  <li>Velocity testing with chronograph data entry per charge weight</li>
+                  <li>Accuracy testing with automatic pipeline to Ballistic Analysis</li>
+                  <li>Pressure evaluation with warning flags and safety guidance</li>
+                  <li>ES/SD tracking, spike detection, and trend visualization</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="expandable">
+            <div class="expandable-header">
+              <div>
+                <h3><span class="phase-dot phase-optimization-dot"></span>Optimization — LD-22 through LD-27</h3>
+              </div>
+              <span class="expandable-toggle">&#9660;</span>
+            </div>
+            <div class="expandable-body">
+              <div class="expandable-content">
+                <p>Narrow down your best charge weight, then optimize seating depth with a two-phase coarse/fine sweep. Extended testing validates your selection with larger sample sizes.</p>
+                <ul class="feature-list">
+                  <li>Charge selection based on Plotter scoring with confidence thresholds</li>
+                  <li>Seating depth coarse sweep (0.010" increments)</li>
+                  <li>Seating depth fine sweep (half the coarse increment)</li>
+                  <li>Extended 10-round group testing for final validation</li>
+                  <li>Automatic routing based on confidence scores and data quality</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="expandable">
+            <div class="expandable-header">
+              <div>
+                <h3><span class="phase-dot phase-final-dot"></span>Final & Advanced — LD-28 through LD-33</h3>
+              </div>
+              <span class="expandable-toggle">&#9660;</span>
+            </div>
+            <div class="expandable-body">
+              <div class="expandable-content">
+                <p>Certify your final load, generate documentation, plan production batches, and track barrel life. Your complete load development record is preserved for reference and replication.</p>
+                <ul class="feature-list">
+                  <li>Final load certification with all parameters locked</li>
+                  <li>Complete documentation — every measurement, decision, and test result</li>
+                  <li>Batch planning for production runs</li>
+                  <li>Barrel life tracking with round count and accuracy degradation monitoring</li>
+                  <li>Load card generation for range reference</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Brain + Expert Mode -->
+        <div class="grid-2 fade-in" style="margin-top: 48px;">
+          <div class="card-flat">
+            <h3 style="margin-bottom: 12px;">&#9733; PrecisionLoad Brain</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.7;">Context-aware AI that reads your actual project data — brass dimensions, bushing sizes, charge weights, velocity data, group measurements. It doesn't give generic advice. It analyzes your specific situation, references your components, and provides actionable guidance tuned to your current step.</p>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.7; margin-top: 12px;">Includes integrated web search for manufacturer specifications, community load data, and component availability.</p>
+          </div>
+          <div class="card-flat">
+            <h3 style="margin-bottom: 12px;">&#127941; Expert Mode</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.7;">Experienced reloaders don't need guidance on brass prep. Expert Mode lets you skip the 7-step brass preparation phase entirely and go straight to planning. You still get the full workflow structure, data pipeline, and scoring — without being forced through steps you've done a thousand times.</p>
+            <p style="color: var(--text-dim); font-size: 13px; margin-top: 12px;">40+ embedded expert knowledge entries cover safety rules, best practices, troubleshooting, and caliber-specific formulas throughout the workflow.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- BALLISTIC PLOTTER                           -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="section section-alt" id="plotter">
+      <div class="container">
+        <div class="section-header fade-in">
+          <p class="section-label">Ballistic Plotter</p>
+          <h2 class="section-title">Deterministic Scoring — No Black Box</h2>
+          <p class="section-subtitle centered">Automatically ranks charge weights based on vertical dispersion, velocity behavior, and group stability — not just group size.</p>
+          <p class="section-subtitle centered" style="margin-top: 12px; font-size: 15px;">Every score is calculated from a transparent, weighted formula. Every ranking comes with reason codes. Every recommendation tells you exactly why.</p>
+        </div>
+
+        <!-- Scoring Formula — Table -->
+        <div class="fade-in" style="margin-top: 48px;">
+          <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 8px;">The Scoring Formula — <span style="color: var(--gold);">Transparent &amp; Locked</span></h3>
+          <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 24px;">Each component uses inverse-proportion scoring: <code style="background: var(--bg-card); padding: 2px 8px; border-radius: 4px; font-size: 13px;">100 / (1 + value &times; k)</code>. Smaller measurements = higher scores.</p>
+
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+              <thead>
+                <tr style="border-bottom: 1px solid var(--border); text-align: left;">
+                  <th style="padding: 10px 12px; color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">Component</th>
+                  <th style="padding: 10px 12px; color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">Weight</th>
+                  <th style="padding: 10px 12px; color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">What It Measures</th>
+                  <th style="padding: 10px 12px; color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">Why It Matters</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px 12px;">Vertical Dispersion</td>
+                  <td style="padding: 10px 12px; color: var(--gold); font-weight: 700;">40%</td>
+                  <td style="padding: 10px 12px; color: var(--text-secondary);">verticalInches</td>
+                  <td style="padding: 10px 12px; color: var(--text-secondary);">The #1 predictor of a true charge node — vertical stringing means velocity variation</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px 12px;">Group Size</td>
+                  <td style="padding: 10px 12px; color: var(--gold); font-weight: 700;">25%</td>
+                  <td style="padding: 10px 12px; color: var(--text-secondary);">groupSizeInches (extreme spread CC)</td>
+                  <td style="padding: 10px 12px; color: var(--text-secondary);">Overall group tightness — what most shooters measure at the range</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px 12px;">Mean Radius</td>
+                  <td style="padding: 10px 12px; color: var(--gold); font-weight: 700;">15%</td>
+                  <td style="padding: 10px 12px; color: var(--text-secondary);">meanRadiusInches</td>
+                  <td style="padding: 10px 12px; color: var(--text-secondary);">Average tightness from centroid — less sensitive to single outliers than ES</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 10px 12px;">Geometry Quality</td>
+                  <td style="padding: 10px 12px; color: var(--gold); font-weight: 700;">10%</td>
+                  <td style="padding: 10px 12px; color: var(--text-secondary);">min(H,V) / max(H,V)</td>
+                  <td style="padding: 10px 12px; color: var(--text-secondary);">Group roundness — 1.0 = perfect circle, low = stringing in one axis</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 12px;">Chrono Support</td>
+                  <td style="padding: 10px 12px; color: var(--gold); font-weight: 700;">10%</td>
+                  <td style="padding: 10px 12px; color: var(--text-secondary);">SD (fps) &amp; ES (fps)</td>
+                  <td style="padding: 10px 12px; color: var(--text-secondary);">Velocity consistency — neutral if no chrono data (never penalizes missing data)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3-Factor Confidence Score -->
+        <div class="fade-in" style="margin-top: 48px;">
+          <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 24px;">3-Factor Confidence Score — <span style="color: var(--gold);">How Certain Is the Decision?</span></h3>
+          <div style="display: flex; gap: 32px; align-items: center; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 280px;">
+              <div style="height: 24px; border-radius: 12px; background: linear-gradient(to right, #E53935, #E53935 30%, #FFC107 50%, #4CAF50 75%, #4CAF50); position: relative;"></div>
+              <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); margin-top: 6px;">
+                <span>0% — Re-test</span>
+                <span>75% — Threshold</span>
+                <span>100%</span>
+              </div>
+            </div>
+            <div style="flex: 1; min-width: 280px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--card-radius); padding: 16px;">
+              <p style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Three weighted factors:</p>
+              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;"><span style="color: var(--gold); font-weight: 700;">60%</span> — Absolute quality of top candidate's composite score</p>
+              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;"><span style="color: var(--gold); font-weight: 700;">30%</span> — Separation gap between #1 and #2 (clear winner = high confidence)</p>
+              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;"><span style="color: var(--gold); font-weight: 700;">10%</span> — Data completeness (missing groups, low marking confidence penalized)</p>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Content + Screenshot layout -->
+        <div class="analysis-layout fade-in" style="margin-top: 40px;">
+          <div class="analysis-content">
+            <div class="analysis-feature">
+              <h4>Charge Node Ranking</h4>
+              <p>Charges ranked by composite score with reason codes: BEST_VERTICAL, TIGHT_GROUP, GOOD_CHRONO, ROUND_GROUP. You see exactly why each charge ranked where it did.</p>
+            </div>
+            <div class="analysis-feature">
+              <h4>Two-Phase Seating Optimization</h4>
+              <p>Coarse sweep at 0.010" increments, then fine sweep at half-increment. Systematically narrows to the optimal seating depth without wasted rounds.</p>
+            </div>
+            <div class="analysis-feature">
+              <h4>Chrono Spike Detection</h4>
+              <p>Flags velocity jumps exceeding 50 fps between adjacent charges. Identifies pressure signs before they become safety issues.</p>
+            </div>
+            <div class="analysis-feature">
+              <h4>Confidence Scoring</h4>
+              <p>Three-factor confidence: 60% from top score, 30% from separation gap between #1 and #2, 10% from data completeness. 75% threshold gates routing decisions.</p>
+            </div>
+            <div class="analysis-feature">
+              <h4>Automatic Workflow Routing</h4>
+              <p>After scoring, Plotter tells PrecisionLoad what to do next — advance to optimization, run extended testing, or refine the current ladder. Every routing decision is explained.</p>
+            </div>
+            <div class="analysis-feature">
+              <h4>Three Ladder Types</h4>
+              <p>Powder charge ladder, neck tension ladder, and seating depth sweep. Each with configurable start/end values, increments, and group assignments.</p>
+            </div>
+          </div>
+
+          <div class="analysis-screenshots">
+            <div class="preview-phone fade-in-right">
+              <img src="images/screenshots/bp-velocities.png" alt="Velocity Analysis" loading="lazy">
+            </div>
+            <div class="preview-phone preview-phone-offset fade-in-right delay-2">
+              <img src="images/screenshots/bp-chart.png" alt="Velocity Ladder Chart" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- BALLISTIC ANALYSIS                          -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="section" id="analysis">
+      <div class="container">
+        <div class="section-header fade-in">
+          <p class="section-label">Ballistic Analysis</p>
+          <h2 class="section-title">Photograph. Calibrate. Measure.</h2>
+          <p class="section-subtitle centered">14+ statistical measurements per group — from a photograph of your target.</p>
+        </div>
+
+        <div class="analysis-layout fade-in">
+          <div class="analysis-content">
+            <div class="analysis-feature">
+              <h4>Two-Point Scale Calibration</h4>
+              <p>Tap two points at a known distance. The system calculates pixels-per-inch and scales all measurements to real-world dimensions.</p>
+            </div>
+            <div class="analysis-feature">
+              <h4>Precision Shot Marking</h4>
+              <p>Tap to place impacts at bullet-diameter scale. Drag with a magnifier loupe for sub-pixel accuracy. Each shot is individually adjustable.</p>
+            </div>
+            <div class="analysis-feature">
+              <h4>Complete Statistical Engine</h4>
+              <p>Group Size, Angular Size (MOA/MIL), Mean Radius, CEP, Radial SD, Horizontal/Vertical SD, H-Spread, V-Spread, Centroid, POA Offset, and Quality Score — all calculated per group.</p>
+            </div>
+            <div class="analysis-feature">
+              <h4>Direct Pipeline to Plotter</h4>
+              <p>Group measurements flow directly into Ballistic Plotter for scoring. Feed entire ladder tests — 10 groups, one project, automatic scoring of every charge.</p>
+            </div>
+            <div class="analysis-feature">
+              <h4>Branded Share Images</h4>
+              <p>Generate 1290&times;2796 resolution annotated images with your group statistics, target photo, and Choice Tactical branding. Ready to share.</p>
+            </div>
+          </div>
+
+          <div class="analysis-screenshots">
+            <div class="preview-phone fade-in-right">
+              <img src="images/screenshots/ba-results.png" alt="Group Analysis Results" loading="lazy">
+            </div>
+            <div class="preview-phone preview-phone-offset fade-in-right delay-2">
+              <img src="images/screenshots/ba-ladder.png" alt="Charge Ladder Setup" loading="lazy">
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats showcase -->
+        <div class="stats-showcase fade-in">
+          <span class="stat-pill">Group Size</span>
+          <span class="stat-pill">MOA</span>
+          <span class="stat-pill">MIL</span>
+          <span class="stat-pill">Mean Radius</span>
+          <span class="stat-pill">CEP</span>
+          <span class="stat-pill">Radial SD</span>
+          <span class="stat-pill">Horizontal SD</span>
+          <span class="stat-pill">Vertical SD</span>
+          <span class="stat-pill">H-Spread</span>
+          <span class="stat-pill">V-Spread</span>
+          <span class="stat-pill">Centroid</span>
+          <span class="stat-pill">POA Offset</span>
+          <span class="stat-pill">Quality Score</span>
+          <span class="stat-pill">Geometry Rating</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- BALLISTIC TARGETS                           -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="section section-alt" id="targets">
+      <div class="container">
+        <div class="section-header fade-in">
+          <p class="section-label">Ballistic Targets</p>
+          <h2 class="section-title">Competition-Grade Target Design</h2>
+          <p class="section-subtitle centered">IBS-style targets, grid layouts, sighter references, and calibration marks — designed for precision testing and ready for print.</p>
+        </div>
+
+        <div class="grid-3 fade-in">
+          <div class="card">
+            <div class="card-icon card-icon-gold">&#9678;</div>
+            <h3>IBS-Style Targets</h3>
+            <p>Regulation-format targets matching IBS (International Benchrest Shooters) specifications. Proper ring sizing, scoring lines, and record fire zones designed for competition and serious load testing.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon card-icon-gold">&#9638;</div>
+            <h3>Grid Layouts</h3>
+            <p>Multi-target grid layouts for efficient ladder testing. Arrange 5, 10, or custom target counts on a single sheet — one target per charge weight for systematic data collection.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon card-icon-green">&#9681;</div>
+            <h3>Sighter Targets</h3>
+            <p>Dedicated sighter target formats with separate sighting squares and record fire zones. Ensure your zero is confirmed before recording test groups.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon card-icon-blue">&#8982;</div>
+            <h3>Calibration References</h3>
+            <p>Built-in scale references printed on every target for Ballistic Analysis calibration. Two-point calibration marks at known distances eliminate measurement guesswork.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon card-icon-gold">&#9113;</div>
+            <h3>PDF Export</h3>
+            <p>Generate print-ready PDF files at proper scale. Print at home or at a commercial printer — targets maintain exact dimensions for accurate scoring and measurement.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon card-icon-green">&#8644;</div>
+            <h3>Analysis Integration</h3>
+            <p>Targets designed to work seamlessly with Ballistic Analysis. Calibration marks on printed targets match the two-point calibration system — photograph, calibrate, measure.</p>
+          </div>
+        </div>
+
+        <!-- Target mini gallery -->
+        <div class="section-header fade-in" style="margin-top: 60px;">
+          <h3 class="section-title" style="font-size: 24px;">Target Formats</h3>
+        </div>
+        <div class="carousel-wrapper fade-in">
+          <button class="carousel-arrow carousel-arrow-left" aria-label="Previous">&#8249;</button>
+
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+
+              <div class="carousel-card">
+                <img src="images/screenshots/bt-single-target.png" alt="Single IBS Target" loading="lazy">
+                <div class="screenshot-info">
+                  <p class="screenshot-title">Single IBS Target</p>
+                  <p class="screenshot-desc">Full-page record fire target for benchrest competition.</p>
+                  <span class="screenshot-tag">Targets</span>
+                </div>
+              </div>
+
+              <div class="carousel-card">
+                <img src="images/screenshots/bt-portrait-no-sighters.png" alt="6-Target Portrait Grid" loading="lazy">
+                <div class="screenshot-info">
+                  <p class="screenshot-title">6-Target Portrait Grid</p>
+                  <p class="screenshot-desc">Multi-target ladder layout with large sighter option.</p>
+                  <span class="screenshot-tag">Targets</span>
+                </div>
+              </div>
+
+              <div class="carousel-card">
+                <img src="images/screenshots/bt-portrait-sighters.png" alt="Portrait with Sighters" loading="lazy">
+                <div class="screenshot-info">
+                  <p class="screenshot-title">Portrait + Sighters</p>
+                  <p class="screenshot-desc">Seating depth test layout with 12 small sighter targets.</p>
+                  <span class="screenshot-tag">Targets</span>
+                </div>
+              </div>
+
+              <div class="carousel-card">
+                <img src="images/screenshots/bt-landscape.png" alt="Landscape Layout" loading="lazy">
+                <div class="screenshot-info">
+                  <p class="screenshot-title">Landscape Layout</p>
+                  <p class="screenshot-desc">3x2 grid with sighter strip for seating depth sweeps.</p>
+                  <span class="screenshot-tag">Targets</span>
+                </div>
+              </div>
+
+              <div class="carousel-card">
+                <img src="images/screenshots/bt-builder.png" alt="Target Builder" loading="lazy">
+                <div class="screenshot-info">
+                  <p class="screenshot-title">Target Builder</p>
+                  <p class="screenshot-desc">Configure paper size, layout, sighters, and export to PDF.</p>
+                  <span class="screenshot-tag">Targets</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <button class="carousel-arrow carousel-arrow-right" aria-label="Next">&#8250;</button>
+
+          <div class="carousel-dots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- DECISION ENGINE & TRANSPARENCY              -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="section" id="decisions">
+      <div class="container">
+        <div class="section-header fade-in">
+          <p class="section-label">Decision Engine</p>
+          <h2 class="section-title">Every Recommendation Has a Reason</h2>
+          <p class="section-subtitle centered">PrecisionLoad doesn't just tell you what to do. It shows you why — with the data, the logic, and the confidence level behind every decision.</p>
+        </div>
+
+        <div class="decision-grid fade-in">
+          <div class="decision-card decision-card-featured">
+            <div class="decision-card-header">
+              <span class="decision-icon">&#9733;</span>
+              <h3>Decision Trace</h3>
+            </div>
+            <p>Every recommendation includes a complete decision trace — what data was analyzed, which measurements mattered most, and the specific logic path that led to the recommendation. No hidden algorithms. No unexplainable outputs.</p>
+            <div class="decision-example">
+              <p class="decision-example-label">Example trace:</p>
+              <p class="decision-example-text">"Charge 41.2gr selected: Vertical dispersion 0.31 MOA (best in ladder), group size 0.58 MOA (2nd best), confidence 82%. Separation from #2 candidate: 11 points. Recommend advancing to seating depth optimization."</p>
+            </div>
+          </div>
+
+          <div class="decision-card">
+            <span class="decision-icon">&#9678;</span>
+            <h3>Node Detection</h3>
+            <p>Identifies optimal charge nodes using vertical dispersion as the primary signal. Detects BEST_VERTICAL, TIGHT_GROUP, GOOD_CHRONO, and ROUND_GROUP nodes — each flagged with specific reason codes tied to actual measurements.</p>
+          </div>
+
+          <div class="decision-card">
+            <span class="decision-icon">&#9670;</span>
+            <h3>Confidence Scoring</h3>
+            <p>Three-factor composite: absolute score strength (60%), separation gap between top candidates (30%), and data completeness (10%). The 75% threshold gates all routing decisions — if confidence is low, the system tells you to gather more data, not guess.</p>
+          </div>
+
+          <div class="decision-card">
+            <span class="decision-icon">&#9644;</span>
+            <h3>Flatness Detection</h3>
+            <p>Identifies velocity plateaus across adjacent charge weights — regions where velocity changes are minimal despite powder increases. These flat zones often indicate pressure stability and optimal charge windows.</p>
+          </div>
+
+          <div class="decision-card">
+            <span class="decision-icon">&#9650;</span>
+            <h3>Data Strength Indicators</h3>
+            <p>Every analysis shows data strength — how many groups were measured, whether chrono data was included, sample sizes per charge weight, and whether any measurements are missing or incomplete. You always know how much to trust the result.</p>
+          </div>
+
+          <div class="decision-card">
+            <span class="decision-icon">&#8596;</span>
+            <h3>Historical Comparison</h3>
+            <p>Compare results across test sessions. See how your current ladder performs against previous attempts with different components, primers, or conditions. Track improvement over time with the same level of transparency.</p>
+          </div>
+        </div>
+
+        <!-- The differentiator callout -->
+        <div class="transparency-callout transparency-callout-major fade-in">
+          <div class="transparency-callout-content">
+            <p class="section-label" style="margin-bottom: 8px;">The Difference</p>
+            <h3>This Is Not AI Guessing</h3>
+            <p>Most reloading apps either give you no guidance or hide their logic behind marketing terms like "advanced algorithms." PrecisionLoad uses a deterministic scoring formula with published weights, documented thresholds, and visible decision paths.</p>
+            <p style="margin-top: 12px;">Every number comes from your data. Every recommendation cites specific measurements. If you disagree with a recommendation, you can see exactly why it was made and decide for yourself.</p>
+            <p class="transparency-emphasis" style="margin-top: 16px;">Every recommendation is data-driven, every decision path is visible, and every conclusion can be verified against your own measurements.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- REPORTS                                     -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="section section-alt" id="reports">
+      <div class="container">
+        <div class="section-header fade-in">
+          <p class="section-label">Reports & Documentation</p>
+          <h2 class="section-title">Complete Load Development Records</h2>
+          <p class="section-subtitle centered">Every measurement, every decision, every test result — documented and exportable.</p>
+        </div>
+
+        <div class="grid-3 fade-in">
+          <div class="card">
+            <h3>Load Certification Reports</h3>
+            <p>Complete certification-style documentation of your final load — every parameter locked, every test result recorded, every decision traced. The definitive record of how and why your load was developed.</p>
+          </div>
+          <div class="card">
+            <h3>Decision Trace History</h3>
+            <p>Full history of every routing decision, scoring result, and recommendation. See what the system recommended at each step, what data drove those recommendations, and what you chose to do.</p>
+          </div>
+          <div class="card">
+            <h3>Historical Comparison</h3>
+            <p>Compare results across test sessions and load development projects. Track how different components, primers, or conditions affected performance over time with full data parity.</p>
+          </div>
+          <div class="card">
+            <h3>Cross-Module Data Integration</h3>
+            <p>Reports pull data from every module — PrecisionLoad workflow progress, Plotter scoring results, Analysis group measurements, and Targets calibration data — into unified documentation.</p>
+          </div>
+          <div class="card">
+            <h3>Branded Share Images</h3>
+            <p>Publication-ready images showing group statistics, target annotations, and scoring results. Full resolution, branded, and ready to share with your shooting community.</p>
+          </div>
+          <div class="card">
+            <h3>Load Cards</h3>
+            <p>Generate reference cards with your final certified load — cartridge, powder charge, bullet, seating depth, primer, brass, and expected performance data. Take it to the range.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SCREENSHOT GALLERY                          -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="section-header fade-in">
+          <p class="section-label">Gallery</p>
+          <h2 class="section-title">PrecisionLoad Suite in Action</h2>
+        </div>
+
+        <div class="carousel-wrapper fade-in">
+          <button class="carousel-arrow carousel-arrow-left" aria-label="Previous">&#8249;</button>
+
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+
+              <div class="carousel-card" data-src="images/screenshots/pl-home.png" data-title="Project Dashboard" data-desc="Active load development project with status, recent activity, and quick navigation.">
+                <img src="images/screenshots/pl-home.png" alt="Dashboard" loading="lazy">
+                <div class="screenshot-info">
+                  <p class="screenshot-title">Project Dashboard</p>
+                  <p class="screenshot-desc">Load development project overview with status tracking.</p>
+                  <span class="screenshot-tag">PrecisionLoad</span>
+                </div>
+              </div>
+
+              <div class="carousel-card" data-src="images/screenshots/pl-brain.png" data-title="AI Brain" data-desc="Context-aware AI that reads your project data and provides step-specific guidance.">
+                <img src="images/screenshots/pl-brain.png" alt="AI Brain" loading="lazy">
+                <div class="screenshot-info">
+                  <p class="screenshot-title">AI Brain</p>
+                  <p class="screenshot-desc">Project-aware AI guidance at every step.</p>
+                  <span class="screenshot-tag">PrecisionLoad</span>
+                </div>
+              </div>
+
+              <div class="carousel-card" data-src="images/screenshots/pl-workflow.png" data-title="33-Step Workflow" data-desc="Complete workflow view showing all 7 phases and 33 steps with progress tracking.">
+                <img src="images/screenshots/pl-workflow.png" alt="Workflow" loading="lazy">
+                <div class="screenshot-info">
+                  <p class="screenshot-title">33-Step Workflow</p>
+                  <p class="screenshot-desc">All phases and steps with progress tracking.</p>
+                  <span class="screenshot-tag">PrecisionLoad</span>
+                </div>
+              </div>
+
+              <div class="carousel-card" data-src="images/screenshots/ba-results.png" data-title="Group Statistics" data-desc="14+ measurements per group including MOA, Mean Radius, CEP, Standard Deviation, and Quality Score.">
+                <img src="images/screenshots/ba-results.png" alt="Group Stats" loading="lazy">
+                <div class="screenshot-info">
+                  <p class="screenshot-title">Group Statistics</p>
+                  <p class="screenshot-desc">14+ measurements per group with visual annotations.</p>
+                  <span class="screenshot-tag">Analysis</span>
+                </div>
+              </div>
+
+              <div class="carousel-card" data-src="images/screenshots/bp-velocities.png" data-title="Velocity Analysis" data-desc="Per-charge velocity tracking with ES, SD, mean velocity, trend analysis, and spike detection.">
+                <img src="images/screenshots/bp-velocities.png" alt="Velocities" loading="lazy">
+                <div class="screenshot-info">
+                  <p class="screenshot-title">Velocity Analysis</p>
+                  <p class="screenshot-desc">Charge-level velocity tracking with spike detection.</p>
+                  <span class="screenshot-tag">Plotter</span>
+                </div>
+              </div>
+
+              <div class="carousel-card" data-src="images/screenshots/ba-ladder.png" data-title="Ladder Configuration" data-desc="Set up charge ladder tests with group assignments and automatic pipeline to scoring.">
+                <img src="images/screenshots/ba-ladder.png" alt="Ladder Setup" loading="lazy">
+                <div class="screenshot-info">
+                  <p class="screenshot-title">Ladder Configuration</p>
+                  <p class="screenshot-desc">Charge ladder setup with pipeline integration.</p>
+                  <span class="screenshot-tag">Analysis</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <button class="carousel-arrow carousel-arrow-right" aria-label="Next">&#8250;</button>
+
+          <div class="carousel-dots"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- DIFFERENTIATORS                             -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header fade-in">
+          <p class="section-label">Why PrecisionLoad</p>
+          <h2 class="section-title">What Makes This Different</h2>
+        </div>
+
+        <div class="grid-2 fade-in">
+          <div class="card-flat">
+            <h3 style="margin-bottom: 12px; color: var(--gold);">Not a Data Logger</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.7;">Most reloading apps let you record data. PrecisionLoad tells you what the data means, what to do next, and why. The difference is a deterministic scoring engine, confidence-gated routing, and full decision transparency — not just a prettier spreadsheet.</p>
+          </div>
+          <div class="card-flat">
+            <h3 style="margin-bottom: 12px; color: var(--gold);">Not a Black Box</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.7;">Every formula is published. Every weight is documented. Every recommendation cites specific measurements from your data. If the system says "41.2 grains is your best charge," it shows you the vertical dispersion, group size, chrono data, and confidence score that led to that conclusion.</p>
+          </div>
+          <div class="card-flat">
+            <h3 style="margin-bottom: 12px; color: var(--gold);">Not Four Separate Apps</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.7;">PrecisionLoad, Plotter, Analysis, and Targets share data through Apple App Groups. Test results from Analysis feed into Plotter scoring. Plotter routing decisions flow back to PrecisionLoad. Zero manual data transfer between modules.</p>
+          </div>
+          <div class="card-flat">
+            <h3 style="margin-bottom: 12px; color: var(--gold);">Not Generic</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.7;">34+ caliber-specific load profiles. IBS-format targets. Discipline-specific recommendations for Benchrest, F-Class, PRS, ELR, and Hunting. This isn't a generic measurement tool adapted for reloading — it was built for it from the first line of code.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <div data-include="includes/footer.html"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/interactions.js"></script>
+  <script src="js/carousel.js"></script>
+</body>
+</html>
