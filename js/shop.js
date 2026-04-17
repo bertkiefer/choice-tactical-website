@@ -247,11 +247,89 @@
     });
   }
 
+  function renderCartPage(container) {
+    var cart = readCart();
+    if (!cart.length) {
+      container.innerHTML = '' +
+        '<header class="shop-header">' +
+          '<h1 class="shop-title">Your Cart</h1>' +
+        '</header>' +
+        '<div class="cart-empty">' +
+          '<p>Your cart is empty.</p>' +
+          '<p><a class="btn-primary" href="/shop/">Browse Precision Gear</a></p>' +
+        '</div>';
+      return;
+    }
+    loadProducts().then(function (products) {
+      var rows = [];
+      var subtotalCents = 0;
+      var missing = [];
+      cart.forEach(function (line) {
+        var p = findProductByStripePriceId(products, line.stripePriceId);
+        if (!p) { missing.push(line.stripePriceId); return; }
+        var lineTotal = p.priceUsd * line.qty;
+        subtotalCents += lineTotal;
+        var img = (p.images && p.images[0]) || '/shop/images/placeholder-1.svg';
+        rows.push('' +
+          '<div class="cart-row" data-price-id="' + escapeHtml(p.stripePriceId) + '">' +
+            '<img class="cart-row-image" src="' + escapeHtml(img) + '" alt="' + escapeHtml(p.name) + '">' +
+            '<a class="cart-row-name" href="/shop/' + escapeHtml(p.slug) + '/">' + escapeHtml(p.name) + '</a>' +
+            '<input class="cart-row-qty" type="number" min="1" max="99" value="' + line.qty + '">' +
+            '<span class="cart-row-subtotal">' + formatUSD(lineTotal) + '</span>' +
+            '<button class="cart-row-remove" type="button" aria-label="Remove">×</button>' +
+          '</div>'
+        );
+      });
+      container.innerHTML = '' +
+        '<header class="shop-header">' +
+          '<h1 class="shop-title">Your Cart</h1>' +
+        '</header>' +
+        rows.join('') +
+        '<div class="cart-total">' +
+          '<span class="cart-total-label">Subtotal</span>' +
+          '<span class="cart-total-amount">' + formatUSD(subtotalCents) + '</span>' +
+        '</div>' +
+        '<p class="cart-note">Shipping &amp; tax calculated at checkout.</p>' +
+        '<div class="cart-actions">' +
+          '<a class="btn-secondary" href="/shop/">Continue Shopping</a>' +
+          '<button class="btn-primary" id="checkoutBtn" type="button">Checkout</button>' +
+        '</div>' +
+        (missing.length ? '<div class="shop-error">Some items in your cart are no longer available and were skipped.</div>' : '');
+
+      // Wire up line-level events
+      container.querySelectorAll('.cart-row').forEach(function (row) {
+        var priceId = row.getAttribute('data-price-id');
+        var qtyEl = row.querySelector('.cart-row-qty');
+        var removeBtn = row.querySelector('.cart-row-remove');
+        qtyEl.addEventListener('change', function () {
+          var n = parseInt(qtyEl.value, 10);
+          if (!isFinite(n) || n < 1) n = 1;
+          if (n > 99) n = 99;
+          updateCartLineQty(priceId, n);
+          renderCartPage(container);
+        });
+        removeBtn.addEventListener('click', function () {
+          removeCartLine(priceId);
+          renderCartPage(container);
+        });
+      });
+
+      // Checkout wiring comes in Task 12.
+    });
+  }
+
+  function initCartPage() {
+    var container = document.getElementById('cartContainer');
+    if (!container) return;
+    renderCartPage(container);
+  }
+
   function initPage() {
     // Nav loads asynchronously; delay badge refresh.
     setTimeout(updateCartBadge, 300);
     initShopGrid();
     initProductDetail();
+    initCartPage();
   }
 
   // Expose for later tasks
