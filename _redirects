@@ -7,6 +7,8 @@
 # Keep the cart page as a real static file (override the slug wildcard)
 /shop/cart            /shop/cart/                     200
 /shop/cart/*          /shop/cart/:splat               200
+/shop/thanks          /shop/thanks/                   200
+/shop/thanks/*        /shop/thanks/:splat             200
 
 # Pretty shop product URLs → template with slug query param (200 rewrite)
 /shop/:slug/          /shop/product.html?slug=:slug   200
