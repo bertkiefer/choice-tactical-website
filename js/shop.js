@@ -25,6 +25,108 @@
     return m || '';
   }
 
+  // ── Cart state (localStorage) ──────────────────
+  function readCart() {
+    try {
+      var raw = localStorage.getItem(CART_KEY);
+      if (!raw) return [];
+      var parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function writeCart(cart) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartBadge();
+  }
+
+  function cartItemCount() {
+    return readCart().reduce(function (sum, i) { return sum + (i.qty || 0); }, 0);
+  }
+
+  function addToCart(item) {
+    // item = { slug, stripePriceId, qty }
+    var cart = readCart();
+    var existing = null;
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].stripePriceId === item.stripePriceId) {
+        existing = cart[i];
+        break;
+      }
+    }
+    if (existing) {
+      existing.qty = Math.min(99, (existing.qty || 0) + item.qty);
+    } else {
+      cart.push({
+        slug: item.slug,
+        stripePriceId: item.stripePriceId,
+        qty: Math.min(99, Math.max(1, item.qty))
+      });
+    }
+    writeCart(cart);
+  }
+
+  function updateCartLineQty(stripePriceId, qty) {
+    var cart = readCart();
+    var out = [];
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].stripePriceId === stripePriceId) {
+        if (qty > 0) {
+          cart[i].qty = Math.min(99, qty);
+          out.push(cart[i]);
+        }
+      } else {
+        out.push(cart[i]);
+      }
+    }
+    writeCart(out);
+  }
+
+  function removeCartLine(stripePriceId) {
+    var cart = readCart().filter(function (i) {
+      return i.stripePriceId !== stripePriceId;
+    });
+    writeCart(cart);
+  }
+
+  function clearCart() {
+    localStorage.removeItem(CART_KEY);
+    updateCartBadge();
+  }
+
+  function updateCartBadge() {
+    var badge = document.getElementById('navCartBadge');
+    if (!badge) return;
+    var count = cartItemCount();
+    if (count > 0) {
+      badge.textContent = String(count);
+      badge.hidden = false;
+    } else {
+      badge.textContent = '0';
+      badge.hidden = true;
+    }
+  }
+
+  // ── Toast ──────────────────────────────────────
+  function showToast(message) {
+    var toast = document.getElementById('shopToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'shopToast';
+      toast.className = 'shop-toast';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    requestAnimationFrame(function () {
+      toast.classList.add('visible');
+    });
+    setTimeout(function () {
+      toast.classList.remove('visible');
+    }, 1800);
+  }
+
   // ── Catalog ────────────────────────────────────
   var _productsCache = null;
   function loadProducts() {
@@ -99,6 +201,20 @@
         addBtn +
       '</div>';
     document.title = product.name + ' — Precision Gear — Choice Tactical';
+
+    var btn = document.getElementById('addToCartBtn');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var qtyInput = document.getElementById('qtyInput');
+        var qty = Math.max(1, Math.min(10, parseInt(qtyInput && qtyInput.value, 10) || 1));
+        addToCart({
+          slug: product.slug,
+          stripePriceId: product.stripePriceId,
+          qty: qty
+        });
+        showToast('Added to cart');
+      });
+    }
   }
 
   // ── Page init ──────────────────────────────────
@@ -132,19 +248,30 @@
   }
 
   function initPage() {
+    // Nav loads asynchronously; delay badge refresh.
+    setTimeout(updateCartBadge, 300);
     initShopGrid();
     initProductDetail();
   }
 
   // Expose for later tasks
   window.ShopApp = {
-    init: function () { initShopGrid(); },
+    init: function () { initPage(); },
     loadProducts: loadProducts,
     findProductBySlug: findProductBySlug,
     findProductByStripePriceId: findProductByStripePriceId,
     formatUSD: formatUSD,
     escapeHtml: escapeHtml,
-    getQueryParam: getQueryParam
+    getQueryParam: getQueryParam,
+    readCart: readCart,
+    writeCart: writeCart,
+    addToCart: addToCart,
+    updateCartLineQty: updateCartLineQty,
+    removeCartLine: removeCartLine,
+    clearCart: clearCart,
+    cartItemCount: cartItemCount,
+    updateCartBadge: updateCartBadge,
+    showToast: showToast
   };
 
   if (document.readyState === 'loading') {
