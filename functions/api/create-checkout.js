@@ -18,6 +18,10 @@ export async function onRequestPost(context) {
     return json({ error: 'Invalid JSON body' }, 400);
   }
 
+  if (!body || typeof body !== 'object') {
+    return json({ error: 'Invalid JSON body' }, 400);
+  }
+
   const items = Array.isArray(body.items) ? body.items : [];
   if (!items.length) {
     return json({ error: 'Cart is empty' }, 400);
