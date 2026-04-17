@@ -1,0 +1,37 @@
+{
+  "products": [
+    {
+      "slug": "sample-product-1",
+      "name": "Sample Product One",
+      "tagline": "Placeholder tagline for the first product.",
+      "description": "This is placeholder text. Replace with the real description once the product is finalized. Keep it short — two or three sentences is plenty.",
+      "priceUsd": 49.99,
+      "stripePriceId": "price_PLACEHOLDER_ONE",
+      "images": ["/shop/images/placeholder-1.svg"],
+      "weightOz": 24,
+      "inStock": true
+    },
+    {
+      "slug": "sample-product-2",
+      "name": "Sample Product Two",
+      "tagline": "Placeholder tagline for the second product.",
+      "description": "Lorem ipsum dolor sit amet. Replace with real content when your product is ready to ship.",
+      "priceUsd": 89.99,
+      "stripePriceId": "price_PLACEHOLDER_TWO",
+      "images": ["/shop/images/placeholder-2.svg"],
+      "weightOz": 32,
+      "inStock": true
+    },
+    {
+      "slug": "sample-product-3",
+      "name": "Sample Product Three",
+      "tagline": "Out-of-stock demo item.",
+      "description": "This product demonstrates how out-of-stock behavior renders on the grid and detail pages.",
+      "priceUsd": 129.99,
+      "stripePriceId": "price_PLACEHOLDER_THREE",
+      "images": ["/shop/images/placeholder-3.svg"],
+      "weightOz": 48,
+      "inStock": false
+    }
+  ]
+}
