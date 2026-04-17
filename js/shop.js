@@ -75,6 +75,32 @@
     }).join('');
   }
 
+  // ── Detail rendering ───────────────────────────
+  function renderProductDetail(container, product) {
+    var img = (product.images && product.images[0]) || '/shop/images/placeholder-1.svg';
+    var addBtn = product.inStock
+      ? '<button type="button" class="add-to-cart-btn" id="addToCartBtn" ' +
+        'data-price-id="' + escapeHtml(product.stripePriceId) + '" ' +
+        'data-slug="' + escapeHtml(product.slug) + '">Add to Cart</button>'
+      : '<span class="product-card-sold-out">Sold Out</span>';
+    container.innerHTML = '' +
+      '<div>' +
+        '<img class="product-detail-image" src="' + escapeHtml(img) + '" alt="' + escapeHtml(product.name) + '">' +
+      '</div>' +
+      '<div>' +
+        '<h1 class="product-detail-name">' + escapeHtml(product.name) + '</h1>' +
+        '<p class="product-detail-tagline">' + escapeHtml(product.tagline) + '</p>' +
+        '<p class="product-detail-price">' + formatUSD(product.priceUsd) + '</p>' +
+        '<p class="product-detail-description">' + escapeHtml(product.description) + '</p>' +
+        (product.inStock ? '<div class="qty-row">' +
+          '<label class="qty-label" for="qtyInput">Quantity</label>' +
+          '<input class="qty-input" id="qtyInput" type="number" min="1" max="10" value="1">' +
+        '</div>' : '') +
+        addBtn +
+      '</div>';
+    document.title = product.name + ' — Precision Gear — Choice Tactical';
+  }
+
   // ── Page init ──────────────────────────────────
   function initShopGrid() {
     var container = document.getElementById('productGrid');
@@ -85,6 +111,29 @@
         console.error('Failed to load products', err);
         container.innerHTML = '<p style="color:#FF5722">Unable to load products. Please refresh.</p>';
       });
+  }
+
+  function initProductDetail() {
+    var container = document.getElementById('productDetail');
+    if (!container) return;
+    var slug = getQueryParam('slug');
+    if (!slug) {
+      container.innerHTML = '<p class="shop-error">No product specified.</p>';
+      return;
+    }
+    loadProducts().then(function (products) {
+      var product = findProductBySlug(products, slug);
+      if (!product) {
+        container.innerHTML = '<p class="shop-error">Product not found. <a href="/shop/">Back to shop</a></p>';
+        return;
+      }
+      renderProductDetail(container, product);
+    });
+  }
+
+  function initPage() {
+    initShopGrid();
+    initProductDetail();
   }
 
   // Expose for later tasks
@@ -99,8 +148,8 @@
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initShopGrid);
+    document.addEventListener('DOMContentLoaded', initPage);
   } else {
-    initShopGrid();
+    initPage();
   }
 })();
