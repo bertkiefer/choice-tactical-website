@@ -127,6 +127,51 @@
     }, 1800);
   }
 
+  // ── Checkout ───────────────────────────────────
+  function startCheckout(btn) {
+    var cart = readCart();
+    if (!cart.length) {
+      showToast('Cart is empty');
+      return;
+    }
+    if (btn) { btn.disabled = true; btn.textContent = 'Redirecting…'; }
+
+    fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: cart.map(function (i) {
+          return { stripePriceId: i.stripePriceId, qty: i.qty };
+        })
+      })
+    })
+      .then(function (r) { return r.json().then(function (j) { return { status: r.status, body: j }; }); })
+      .then(function (res) {
+        if (res.status >= 200 && res.status < 300 && res.body.url) {
+          window.location = res.body.url;
+        } else {
+          var msg = (res.body && res.body.error) || 'Checkout failed — please try again.';
+          showCheckoutError(msg);
+          if (btn) { btn.disabled = false; btn.textContent = 'Checkout'; }
+        }
+      })
+      .catch(function () {
+        showCheckoutError('Network error — please check your connection and try again.');
+        if (btn) { btn.disabled = false; btn.textContent = 'Checkout'; }
+      });
+  }
+
+  function showCheckoutError(msg) {
+    var container = document.getElementById('cartContainer');
+    if (!container) return;
+    var existing = container.querySelector('.shop-error');
+    if (existing) existing.remove();
+    var banner = document.createElement('div');
+    banner.className = 'shop-error';
+    banner.textContent = msg;
+    container.appendChild(banner);
+  }
+
   // ── Catalog ────────────────────────────────────
   var _productsCache = null;
   function loadProducts() {
@@ -314,7 +359,12 @@
         });
       });
 
-      // Checkout wiring comes in Task 12.
+      var checkoutBtn = document.getElementById('checkoutBtn');
+      if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', function () {
+          startCheckout(checkoutBtn);
+        });
+      }
     });
   }
 
