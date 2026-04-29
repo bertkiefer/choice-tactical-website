@@ -1,8 +1,8 @@
 {
   "products": [
     {
-      "slug": "the-range-box",
-      "name": "The Range Box",
+      "slug": "the-rangebox",
+      "name": "The RangeBox",
       "subtitle": "V4 AutoTrickler Wind Shield",
       "images": ["/shop/images/placeholder-1.svg"],
       "inStock": false,
