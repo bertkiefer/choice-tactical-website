@@ -11,6 +11,14 @@
   margin-bottom: 48px;
 }
 
+.shop-header-logo {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  margin: 0 auto 20px;
+}
+
 .shop-title {
   font-size: 48px;
   font-weight: 800;
@@ -53,19 +61,63 @@
   background: #0c0c0c;
 }
 
+.product-card-square {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #0c0c0c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
 .product-card-body {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  flex: 1;
+  align-items: center;
+}
+
+.product-card-element-mark {
+  width: 84px;
+  height: 84px;
+  margin: -8px auto 8px;
+  display: block;
 }
 
 .product-card-name {
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 700;
   color: #fff;
   margin: 0;
+  text-align: center;
+}
+
+.product-card-subtitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.product-card-coming-soon {
+  display: inline-block;
+  align-self: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #CBB589;
+  border: 1px solid #CBB589;
+  background: rgba(203, 181, 137, 0.08);
+  border-radius: 4px;
+  padding: 6px 14px;
+  margin-top: 10px;
+  text-transform: uppercase;
 }
 
 .product-card-tagline {
@@ -117,6 +169,13 @@
   border-radius: 12px;
 }
 
+.product-detail-element-mark {
+  width: 72px;
+  height: 72px;
+  display: block;
+  margin: 0 0 12px;
+}
+
 .product-detail-name {
   font-size: 36px;
   font-weight: 800;
@@ -124,10 +183,24 @@
   margin: 0 0 8px;
 }
 
+.product-detail-subtitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 20px;
+  letter-spacing: 0.02em;
+}
+
 .product-detail-tagline {
   font-size: 16px;
   color: #B0B0B0;
   margin: 0 0 24px;
+}
+
+.product-detail-coming-soon {
+  font-size: 14px;
+  padding: 8px 18px;
+  margin-top: 16px;
 }
 
 .product-detail-price {

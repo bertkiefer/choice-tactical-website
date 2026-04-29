@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<title>2026-04-17-precision-gear-store-design</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, Inter, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 24px; line-height: 1.55; color: #24292e; }
+  h1, h2, h3 { color: #1b1f23; }
+  h1 { border-bottom: 2px solid #cbb589; padding-bottom: 10px; }
+  h2 { border-bottom: 1px solid #e1e4e8; padding-bottom: 6px; margin-top: 32px; }
+  code { background: #f6f8fa; padding: 2px 6px; border-radius: 4px; font-size: 0.92em; }
+  pre { background: #f6f8fa; padding: 16px; border-radius: 6px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  table { border-collapse: collapse; margin: 12px 0; }
+  th, td { border: 1px solid #e1e4e8; padding: 8px 14px; text-align: left; }
+  th { background: #f6f8fa; }
+  blockquote { border-left: 4px solid #cbb589; margin: 0; padding-left: 16px; color: #6a737d; }
+  a { color: #0366d6; }
+</style>
+</head><body>
+<h1 id="choice-tactical-website-splash-precision-gear-store">Choice Tactical Website — Splash + Precision Gear Store</h1>
+<p><strong>Date:</strong> 2026-04-17
+<strong>Repo:</strong> <code>bertkiefer/choice-tactical-website</code>
+<strong>Domain:</strong> <code>www.choice-tactical.com</code></p>
+<h2 id="context">Context</h2>
+<p>The current site is a static HTML/CSS/JS marketing site for two software products (PrecisionLoad Suite, Range Command), deployed via GitHub Pages. The owner is launching a line of physical precision-shooting products under the label <strong>"Precision Gear"</strong> and wants:</p>
+<ol>
+<li>A top-level splash page that lets visitors choose between <strong>App Development</strong> (existing software side) and <strong>Precision Gear</strong> (new storefront).</li>
+<li>A complete storefront for 1–5 mid-size physical products with a real shopping cart and Stripe-powered credit card checkout.</li>
+</ol>
+<p>Existing products, App Store privacy-policy dependencies, and the site's current visual language must be preserved.</p>
+<h2 id="goals">Goals</h2>
+<ul>
+<li>Ship a functional storefront with Stripe Checkout for 1–5 mid-size products.</li>
+<li>Preserve <code>/privacy.html</code> URL (App Store submission references it).</li>
+<li>Reuse existing CSS (<code>style.css</code>, <code>components.css</code>, <code>animations.css</code>) — no new design system.</li>
+<li>Zero monthly hosting cost.</li>
+<li>Owner can edit products without code changes after launch.</li>
+</ul>
+<h2 id="non-goals-out-of-scope-for-v1">Non-Goals (out of scope for v1)</h2>
+<ul>
+<li>Multi-currency pricing (USD only).</li>
+<li>International shipping (US only for v1; set Stripe shipping to US destinations).</li>
+<li>Inventory automation — <code>inStock</code> flag toggled manually in <code>products.json</code>.</li>
+<li>Customer accounts / login — guest checkout only, Stripe handles receipts.</li>
+<li>Subscription products.</li>
+<li>Blog or marketing CMS.</li>
+<li>Product reviews / ratings.</li>
+</ul>
+<h2 id="architecture">Architecture</h2>
+<p>Three moving parts, all on free tiers:</p>
+<ol>
+<li><strong>Static site</strong> — Cloudflare Pages, served from the same GitHub repo. HTML/CSS/JS only.</li>
+<li><strong>One serverless function</strong> — Cloudflare Pages Function at <code>/functions/api/create-checkout.js</code>. Receives cart JSON, creates a Stripe Checkout Session, returns the redirect URL.</li>
+<li><strong>Stripe Dashboard</strong> — product catalog, tax config, shipping rates, order notifications. Owner-managed, not in code.</li>
+</ol>
+<pre><code>www.choice-tactical.com (Cloudflare Pages)
+├── /                     splash (two cards)
+├── /apps/                App Development landing (existing homepage, moved)
+├── /apps/precisionload   was /precisionload.html
+├── /apps/rangecommand    was /rangecommand.html
+├── /apps/contact         was /contact.html
+├── /apps/screenshots     was /screenshots.html
+├── /privacy.html         UNCHANGED — App Store link dependency
+├── /shop/                Precision Gear storefront (product grid)
+├── /shop/&lt;slug&gt;/         product detail page
+├── /shop/cart/           cart review + Checkout button
+├── /shop/thanks/         post-purchase landing
+└── /api/create-checkout  Cloudflare Pages Function → Stripe
+                          ↓ redirect
+                    checkout.stripe.com (hosted)
+                          ↓ after payment
+                    /shop/thanks
+</code></pre>
+<h2 id="hosting-migration">Hosting Migration</h2>
+<p>Current: GitHub Pages. Target: Cloudflare Pages (free, same repo, same domain, adds serverless functions).</p>
+<p><strong>Owner does once:</strong>
+1. Sign up at cloudflare.com (free).
+2. Cloudflare Pages → "Create project" → connect GitHub → pick <code>choice-tactical-website</code> repo → default settings.
+3. Add custom domain <code>www.choice-tactical.com</code> in Cloudflare Pages.
+4. Update DNS: change the <code>www</code> record to CNAME <code>choice-tactical.pages.dev</code> (Cloudflare shows the exact value in the UI).
+5. Wait for DNS propagation (typically minutes, max 24h).</p>
+<p><code>CNAME</code> file in repo stays as <code>www.choice-tactical.com</code> — Cloudflare honors it the same way GitHub Pages did.</p>
+<p><strong>Deployment unchanged in day-to-day use:</strong> <code>git push</code> auto-deploys as before.</p>
+<h2 id="url-redirects">URL Redirects</h2>
+<p>File: <code>_redirects</code> in repo root (Cloudflare Pages native format).</p>
+<pre><code>/precisionload.html   /apps/precisionload   301
+/rangecommand.html    /apps/rangecommand    301
+/contact.html         /apps/contact         301
+/screenshots.html     /apps/screenshots     301
+</code></pre>
+<p><code>privacy.html</code> has NO redirect entry — it stays at its original URL forever.</p>
+<p>Old shared links keep working via 301.</p>
+<h2 id="splash-page">Splash Page (<code>/</code>)</h2>
+<p>Reuses the current homepage's <code>.product-paths</code> card pattern but at the top level.</p>
+<p><strong>Content blocks (top to bottom):</strong></p>
+<ol>
+<li>Choice Tactical logo (existing <code>images/logo-main.png</code>).</li>
+<li>Tagline: <code>Precision Software and Gear for Shooters</code>.</li>
+<li>Two-card row:</li>
+<li><strong>App Development</strong> — icon + "PrecisionLoad Suite + Range Command" + "Explore →" button linking to <code>/apps/</code>.</li>
+<li><strong>Precision Gear</strong> — icon + "Purpose-built gear for serious shooters" + "Shop Now →" button linking to <code>/shop/</code>.</li>
+<li>Footer (<code>includes/footer.html</code> reused).</li>
+</ol>
+<p><strong>Images needed:</strong>
+- A small icon or hero representing "apps" (reuse an existing App Store screenshot thumbnail or a generic "laptop/phone" gold-tinted mark).
+- A small icon or hero representing "gear" (stock photo of a rifle/accessory or branded graphic — user to supply, placeholder until then).</p>
+<h2 id="app-development-landing-apps">App Development Landing (<code>/apps/</code>)</h2>
+<p>Content is a straight move of the existing <code>/index.html</code> body. File split:</p>
+<ul>
+<li><code>/apps/index.html</code> gets the current hero + product-paths section minus the outermost "two-choice splash" metaphor (because the splash now lives at <code>/</code>).</li>
+<li>Navigation in <code>includes/nav.html</code> updated so clicking the logo from anywhere goes to <code>/</code> (splash), and a "← Back" style link at the top of <code>/apps/</code> returns to splash.</li>
+<li>Existing sub-pages (<code>precisionload</code>, <code>rangecommand</code>, <code>contact</code>, <code>screenshots</code>) move into <code>/apps/</code> and update their relative links.</li>
+</ul>
+<h2 id="shop-landing-shop">Shop Landing (<code>/shop/</code>)</h2>
+<p><strong>Data source:</strong> <code>/shop/products.json</code> — single file, 1–5 entries.</p>
+<pre><code class="language-json">{
+  &quot;products&quot;: [
+    {
+      &quot;slug&quot;: &quot;sample-product-1&quot;,
+      &quot;name&quot;: &quot;Sample Product One&quot;,
+      &quot;tagline&quot;: &quot;One-line pitch.&quot;,
+      &quot;description&quot;: &quot;Longer paragraph-form description.&quot;,
+      &quot;priceUsd&quot;: 89.99,
+      &quot;stripePriceId&quot;: &quot;price_TEST_PLACEHOLDER_1&quot;,
+      &quot;images&quot;: [&quot;/shop/images/product-1-hero.jpg&quot;],
+      &quot;weightOz&quot;: 24,
+      &quot;inStock&quot;: true
+    }
+  ]
+}
+</code></pre>
+<p><strong>Rendering:</strong> Client-side JS (<code>shop.js</code>) fetches <code>products.json</code> on <code>/shop/</code> load and injects a grid of tiles. Each tile links to <code>/shop/&lt;slug&gt;/</code>.</p>
+<p><strong>Out-of-stock behavior:</strong> Tile shows "Sold Out" badge, no add-to-cart button.</p>
+<p><strong>Placeholder content:</strong> Ships with 3 sample products using lorem-ipsum copy and a stock placeholder image so the flow can be demonstrated end-to-end before real products are ready.</p>
+<h2 id="product-detail-shopslug">Product Detail (<code>/shop/&lt;slug&gt;/</code>)</h2>
+<p><strong>Implementation choice:</strong> One template (<code>/shop/product.html</code>) that reads slug from URL query param (<code>?slug=bullet-sled-v1</code>) and renders details from <code>products.json</code>. Simpler than generating N static pages; fine for 1–5 products.</p>
+<p>Pretty URLs (<code>/shop/&lt;slug&gt;/</code>) handled via <code>_redirects</code>:</p>
+<pre><code>/shop/:slug/          /shop/product.html?slug=:slug   200
+</code></pre>
+<p>(200, not 301 — rewrites without changing the visible URL.)</p>
+<p><strong>Page content:</strong>
+- Breadcrumb: <code>Shop › Product Name</code>
+- Image (first from <code>images[]</code>; carousel if &gt;1, reuse existing <code>carousel.js</code>)
+- Name, tagline, price
+- Description
+- Quantity selector (1–10)
+- Add-to-cart button → adds <code>{stripePriceId, slug, qty}</code> to <code>localStorage.ct_cart</code>, shows toast "Added to cart", updates cart badge in nav.</p>
+<h2 id="cart-shopcart">Cart (<code>/shop/cart/</code>)</h2>
+<p>Pure client-side — reads <code>localStorage.ct_cart</code>, renders line items.</p>
+<ul>
+<li>Per line: thumbnail · name · qty controls · subtotal · remove button.</li>
+<li>Subtotal only (no tax/shipping preview — "calculated at checkout").</li>
+<li>Two buttons: "Continue Shopping" (→ <code>/shop/</code>) and "Checkout" (→ create-checkout flow).</li>
+<li>Empty state: "Your cart is empty" + "Browse Precision Gear" button.</li>
+</ul>
+<h2 id="checkout-flow">Checkout Flow</h2>
+<p><strong>Frontend (<code>shop.js</code>):</strong></p>
+<pre><code class="language-js">const res = await fetch('/api/create-checkout', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({ items: cart })
+});
+const { url, error } = await res.json();
+if (error) return showError(error);
+window.location = url;
+</code></pre>
+<p><strong>Backend (<code>functions/api/create-checkout.js</code>):</strong>
+- Validates <code>items</code> array: each needs non-empty <code>stripePriceId</code> and integer <code>qty</code> 1–99.
+- Calls Stripe API with:
+  - <code>mode: 'payment'</code>
+  - <code>line_items</code>: mapped from cart
+  - <code>automatic_tax: { enabled: true }</code>
+  - <code>shipping_address_collection: { allowed_countries: ['US'] }</code>
+  - <code>shipping_options</code>: Stripe shipping-rate IDs configured in Dashboard (owner supplies via env var <code>STRIPE_SHIPPING_RATE_IDS</code>)
+  - <code>success_url: https://www.choice-tactical.com/shop/thanks?session={CHECKOUT_SESSION_ID}</code>
+  - <code>cancel_url: https://www.choice-tactical.com/shop/cart</code>
+- Returns <code>{ url }</code>.
+- Errors return <code>{ error: "&lt;user-facing message&gt;" }</code> with a 400.</p>
+<p><strong>Environment variables (Cloudflare Pages → Settings → Environment):</strong>
+- <code>STRIPE_SECRET_KEY</code> — live/test secret.
+- <code>STRIPE_SHIPPING_RATE_IDS</code> — comma-separated shipping rate IDs (e.g., <code>shr_abc,shr_xyz</code>).</p>
+<p>Two environments: <strong>Preview</strong> uses test keys, <strong>Production</strong> uses live keys. Cloudflare Pages supports this natively.</p>
+<h2 id="thanks-page-shopthanks">Thanks Page (<code>/shop/thanks/</code>)</h2>
+<ul>
+<li>Reads <code>session</code> query param for display ("Order #abc123 confirmed").</li>
+<li>Clears <code>localStorage.ct_cart</code>.</li>
+<li>Shows confirmation message, order ID, "continue shopping" + "return home" links.</li>
+<li>Notes that Stripe sent a receipt to the buyer's email.</li>
+<li><strong>Does not</strong> fetch the full session from Stripe (no server call needed; Stripe's email is the source of truth).</li>
+</ul>
+<h2 id="stripe-dashboard-setup-owner-one-time">Stripe Dashboard Setup (owner, one-time)</h2>
+<ol>
+<li><strong>Products</strong>: create 1–5 products. Each gets a Price. Copy the <code>price_...</code> ID into <code>products.json</code>.</li>
+<li><strong>Tax</strong> → enable Stripe Tax. Set origin address.</li>
+<li><strong>Shipping</strong>: create shipping rates (e.g., <code>Standard Ground $8.00</code>, <code>Express $20.00</code>). Copy each <code>shr_...</code> ID.</li>
+<li><strong>API Keys</strong>: copy test &amp; live secret keys.</li>
+<li>Enter Cloudflare Pages → Settings → Environment Variables:</li>
+<li><code>STRIPE_SECRET_KEY</code> (Preview = test key, Production = live key)</li>
+<li><code>STRIPE_SHIPPING_RATE_IDS</code> (comma-separated)</li>
+</ol>
+<h2 id="file-layout-new-files-repo-root">File Layout (new files, repo root)</h2>
+<pre><code>/_redirects                                new (Cloudflare redirects)
+/index.html                                REPLACED (splash)
+/apps/index.html                           new (copy of old index.html)
+/apps/precisionload.html                   new (move of old file)
+/apps/rangecommand.html                    new (move of old file)
+/apps/contact.html                         new (move of old file)
+/apps/screenshots.html                     new (move of old file)
+/privacy.html                              UNCHANGED
+/shop/index.html                           new (storefront grid)
+/shop/product.html                         new (product detail template)
+/shop/cart/index.html                      new
+/shop/thanks/index.html                    new
+/shop/products.json                        new (placeholder products)
+/shop/images/placeholder-*.jpg             new (stock placeholders)
+/css/shop.css                              new (shop-specific styles; reuses vars from style.css)
+/js/shop.js                                new (cart, rendering, checkout POST)
+/functions/api/create-checkout.js          new (Cloudflare Pages Function)
+/includes/nav.html                         UPDATED (logo links to /, cart badge)
+/includes/footer.html                      UNCHANGED
+</code></pre>
+<h2 id="testing">Testing</h2>
+<ul>
+<li><strong>Local</strong>: <code>wrangler pages dev .</code> serves the site plus the function locally against the test Stripe key.</li>
+<li><strong>End-to-end test purchase</strong>: use Stripe test card <code>4242 4242 4242 4242</code> with any future expiry, any CVC, any ZIP.</li>
+<li><strong>Verify</strong>:</li>
+<li>Cart persists across refresh.</li>
+<li>Out-of-stock products show badge, no add-to-cart.</li>
+<li>Checkout creates a session, redirects to Stripe, returns to <code>/shop/thanks</code> after test payment.</li>
+<li>Old URL redirects (e.g., <code>/precisionload.html</code> → <code>/apps/precisionload</code>).</li>
+<li><code>/privacy.html</code> still resolves at its original URL.</li>
+</ul>
+<h2 id="success-criteria">Success Criteria</h2>
+<ol>
+<li>Clicking the site root serves the splash with two card choices.</li>
+<li>Clicking "App Development" reaches the current site's content unchanged.</li>
+<li>Clicking "Precision Gear" reaches a working storefront with at least placeholder products.</li>
+<li>Adding items to cart, viewing cart, and proceeding to checkout successfully completes a Stripe test-mode purchase end-to-end.</li>
+<li>Stripe Dashboard shows the test order with correct line items, shipping, and tax.</li>
+<li>Replacing placeholder products with real ones requires editing only <code>products.json</code> + Cloudflare environment vars — no code changes.</li>
+<li><code>/privacy.html</code> continues to resolve at the original URL.</li>
+</ol>
+<h2 id="open-items">Open Items</h2>
+<ul>
+<li>Owner to supply brand language for "Precision Gear" tagline and card copy on the splash page (current placeholder: "Purpose-built gear for serious shooters").</li>
+<li>Owner to supply hero imagery for the two splash cards when available (placeholders used until then).</li>
+<li>Real Stripe product data (names, prices, images, IDs) filled in by owner post-implementation.</li>
+</ul>
+</body></html>

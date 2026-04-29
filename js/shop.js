@@ -207,16 +207,28 @@
     }
     container.innerHTML = products.map(function (p) {
       var img = (p.images && p.images[0]) || '/shop/images/placeholder-1.svg';
-      var soldOut = !p.inStock
-        ? '<span class="product-card-sold-out">Sold Out</span>' : '';
+      var subtitle = p.subtitle
+        ? '<p class="product-card-subtitle">' + escapeHtml(p.subtitle) + '</p>' : '';
+      var status;
+      if (p.comingSoon) {
+        status = '<span class="product-card-coming-soon">Coming Soon</span>';
+      } else if (!p.inStock) {
+        status = '<span class="product-card-sold-out">Sold Out</span>';
+      } else {
+        status = '<p class="product-card-price">' + formatUSD(p.priceUsd) + '</p>';
+      }
+      var tagline = (!p.comingSoon && p.tagline)
+        ? '<p class="product-card-tagline">' + escapeHtml(p.tagline) + '</p>' : '';
       return '' +
         '<a class="product-card" href="/shop/' + escapeHtml(p.slug) + '/">' +
-          '<img class="product-card-image" src="' + escapeHtml(img) + '" alt="' + escapeHtml(p.name) + '">' +
-          '<div class="product-card-body">' +
+          '<div class="product-card-square">' +
+            '<img class="product-card-element-mark" src="/images/logo-element-badge-gold.png" alt="Element">' +
             '<h3 class="product-card-name">' + escapeHtml(p.name) + '</h3>' +
-            '<p class="product-card-tagline">' + escapeHtml(p.tagline) + '</p>' +
-            '<p class="product-card-price">' + formatUSD(p.priceUsd) + '</p>' +
-            soldOut +
+            subtitle +
+            tagline +
+          '</div>' +
+          '<div class="product-card-body">' +
+            status +
           '</div>' +
         '</a>';
     }).join('');
@@ -225,27 +237,42 @@
   // ── Detail rendering ───────────────────────────
   function renderProductDetail(container, product) {
     var img = (product.images && product.images[0]) || '/shop/images/placeholder-1.svg';
-    var addBtn = product.inStock
-      ? '<button type="button" class="add-to-cart-btn" id="addToCartBtn" ' +
+    var subtitle = product.subtitle
+      ? '<p class="product-detail-subtitle">' + escapeHtml(product.subtitle) + '</p>' : '';
+    var tagline = (!product.comingSoon && product.tagline)
+      ? '<p class="product-detail-tagline">' + escapeHtml(product.tagline) + '</p>' : '';
+    var description = (!product.comingSoon && product.description)
+      ? '<p class="product-detail-description">' + escapeHtml(product.description) + '</p>' : '';
+    var statusBlock, qtyRow = '', addBtn = '';
+    if (product.comingSoon) {
+      statusBlock = '<span class="product-card-coming-soon product-detail-coming-soon">Coming Soon</span>';
+    } else if (!product.inStock) {
+      statusBlock = '<span class="product-card-sold-out">Sold Out</span>';
+    } else {
+      statusBlock = '<p class="product-detail-price">' + formatUSD(product.priceUsd) + '</p>';
+      qtyRow = '<div class="qty-row">' +
+        '<label class="qty-label" for="qtyInput">Quantity</label>' +
+        '<input class="qty-input" id="qtyInput" type="number" min="1" max="10" value="1">' +
+      '</div>';
+      addBtn = '<button type="button" class="add-to-cart-btn" id="addToCartBtn" ' +
         'data-price-id="' + escapeHtml(product.stripePriceId) + '" ' +
-        'data-slug="' + escapeHtml(product.slug) + '">Add to Cart</button>'
-      : '<span class="product-card-sold-out">Sold Out</span>';
+        'data-slug="' + escapeHtml(product.slug) + '">Add to Cart</button>';
+    }
     container.innerHTML = '' +
       '<div>' +
         '<img class="product-detail-image" src="' + escapeHtml(img) + '" alt="' + escapeHtml(product.name) + '">' +
       '</div>' +
       '<div>' +
+        '<img class="product-detail-element-mark" src="/images/logo-element-badge-gold.png" alt="Element">' +
         '<h1 class="product-detail-name">' + escapeHtml(product.name) + '</h1>' +
-        '<p class="product-detail-tagline">' + escapeHtml(product.tagline) + '</p>' +
-        '<p class="product-detail-price">' + formatUSD(product.priceUsd) + '</p>' +
-        '<p class="product-detail-description">' + escapeHtml(product.description) + '</p>' +
-        (product.inStock ? '<div class="qty-row">' +
-          '<label class="qty-label" for="qtyInput">Quantity</label>' +
-          '<input class="qty-input" id="qtyInput" type="number" min="1" max="10" value="1">' +
-        '</div>' : '') +
+        subtitle +
+        tagline +
+        description +
+        statusBlock +
+        qtyRow +
         addBtn +
       '</div>';
-    document.title = product.name + ' — Precision Gear — Choice Tactical';
+    document.title = product.name + ' — The ELEMENT Line — Choice Tactical';
 
     var btn = document.getElementById('addToCartBtn');
     if (btn) {
