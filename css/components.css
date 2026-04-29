@@ -88,6 +88,8 @@
   transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .product-path-banner {
@@ -142,6 +144,8 @@
 .product-path-logo-large {
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 150px;
   margin-bottom: 20px;
 }
 
@@ -159,6 +163,7 @@
 .product-path-name {
   font-size: 20px;
   font-weight: 700;
+  color: var(--text-primary);
   margin-bottom: 4px;
 }
 
@@ -171,9 +176,10 @@
   margin-bottom: 12px;
 }
 
-.product-path-desc {
+.product-path-desc,
+.product-path-description {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   line-height: 1.5;
   margin-bottom: 20px;
 }
@@ -193,6 +199,27 @@
 }
 
 .product-path .btn-arrow:hover {
+  color: var(--gold-light);
+}
+
+.product-path-cta {
+  display: inline-block;
+  align-self: flex-end;
+  margin-top: auto;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #CBB589;
+  border: 1px solid #CBB589;
+  background: rgba(203, 181, 137, 0.08);
+  border-radius: 4px;
+  padding: 6px 14px;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+}
+
+.product-path:hover .product-path-cta {
+  background: rgba(203, 181, 137, 0.18);
   color: var(--gold-light);
 }
 
