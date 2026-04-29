@@ -1,0 +1,36 @@
+{
+  "products": [
+    {
+      "slug": "the-range-box",
+      "name": "The Range Box",
+      "subtitle": "V4 AutoTrickler Wind Shield",
+      "images": ["/shop/images/placeholder-1.svg"],
+      "inStock": false,
+      "comingSoon": true
+    },
+    {
+      "slug": "the-trueline",
+      "name": "The TrueLine",
+      "subtitle": "Wind Flag Alignment System",
+      "images": ["/shop/images/placeholder-2.svg"],
+      "inStock": false,
+      "comingSoon": true
+    },
+    {
+      "slug": "the-drift",
+      "name": "The Drift",
+      "subtitle": "Precision Wind Flags",
+      "images": ["/shop/images/placeholder-3.svg"],
+      "inStock": false,
+      "comingSoon": true
+    },
+    {
+      "slug": "the-stack",
+      "name": "The Stack",
+      "subtitle": "Gravity Feed Ammo Block",
+      "images": ["/shop/images/placeholder-4.svg"],
+      "inStock": false,
+      "comingSoon": true
+    }
+  ]
+}

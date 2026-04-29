@@ -86,6 +86,45 @@
   padding: 32px 28px;
   text-align: left;
   transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-path-banner {
+  position: absolute;
+  top: 28px;
+  right: -56px;
+  width: 220px;
+  text-align: center;
+  transform: rotate(35deg);
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  color: #111;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.product-path-app-store {
+  display: inline-block;
+  margin-left: 16px;
+  vertical-align: middle;
+  line-height: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.product-path-app-store:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.product-path-app-store img {
+  height: 44px;
+  width: auto;
+  display: block;
 }
 
 .product-path:hover {
@@ -109,6 +148,12 @@
 .product-path-logo-large img {
   height: 130px;
   width: auto;
+}
+
+.product-path-logo-large img.product-path-banner {
+  height: auto;
+  width: 100%;
+  max-width: 360px;
 }
 
 .product-path-name {
@@ -568,6 +613,35 @@
   margin-top: 40px;
 }
 
+.analysis-screenshots-single {
+  align-self: stretch;
+  position: relative;
+  min-height: 0;
+  width: 100%;
+}
+
+.analysis-screenshots-single .preview-phone-fill {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.analysis-screenshots-single .preview-phone-fill img {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
 .preview-phone .screenshot-placeholder {
   aspect-ratio: 9 / 16;
   border: none;
@@ -689,6 +763,210 @@
   object-position: top;
   background: var(--bg-section-alt);
   pointer-events: none;
+}
+
+.carousel-wrapper.gallery-phone .carousel-card img {
+  aspect-ratio: 9 / 19.5;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Decision Engine — 2-column layout with App Store screenshot on right */
+.decisions-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 56px;
+  align-items: start;
+}
+.decisions-content {
+  min-width: 0;
+}
+.section-header.section-header-left {
+  text-align: left;
+  margin-left: 0;
+  max-width: none;
+}
+.section-header.section-header-left .section-subtitle {
+  margin-left: 0;
+  text-align: left;
+}
+.decision-grid.decision-grid-narrow {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.decisions-visual {
+  position: sticky;
+  top: 100px;
+  width: 100%;
+}
+.decisions-visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 28px;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+@media (max-width: 1024px) {
+  .decisions-layout {
+    grid-template-columns: 1fr;
+  }
+  .decisions-visual {
+    position: static;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  .decision-grid.decision-grid-narrow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .decision-grid.decision-grid-narrow {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Target Formats — App Store screenshot replica, target image fills entire phone screen */
+.carousel-wrapper.target-formats .carousel-card {
+  background: #050608;
+  border-color: #1a1c20;
+}
+.carousel-wrapper.target-formats .carousel-card.active {
+  border-color: #ff3b30;
+  box-shadow: 0 8px 40px rgba(255, 59, 48, 0.18);
+}
+.appstore-shot {
+  position: relative;
+  aspect-ratio: 1242 / 2688;
+  background:
+    radial-gradient(ellipse 75% 35% at 50% 78%, rgba(255, 30, 25, 0.45) 0%, rgba(255, 30, 25, 0.12) 40%, transparent 75%),
+    #050608;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6.5% 5% 4%;
+  overflow: hidden;
+  text-align: center;
+  container-type: inline-size;
+}
+.as-eyebrow {
+  font-size: clamp(8px, 4cqw, 14px);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #ff3b30;
+  margin: 0 0 1.4%;
+  text-align: center;
+}
+.as-headline {
+  font-size: clamp(20px, 14cqw, 60px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 2.5%;
+  text-align: center;
+}
+.as-accent {
+  color: #ff3b30;
+}
+.as-subtitle {
+  font-size: clamp(8px, 4cqw, 16px);
+  line-height: 1.3;
+  color: #b8bcc2;
+  margin: 0 4% 4%;
+  text-align: center;
+}
+.as-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+  width: 92%;
+  background: #15171b;
+  border-radius: 14px;
+  padding: 3.2% 4%;
+  margin-bottom: 5%;
+}
+.as-pill-left {
+  font-size: clamp(6px, 2.6cqw, 10px);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #9aa0a6;
+  line-height: 1.25;
+  text-align: left;
+}
+.as-pill-arrow {
+  font-size: clamp(11px, 5cqw, 22px);
+  color: #ff3b30;
+  font-weight: 700;
+}
+.as-pill-right {
+  font-size: clamp(9px, 4.2cqw, 16px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+.as-phone {
+  flex: 0 0 auto;
+  width: 62%;
+  margin: 1% auto 4%;
+  border-radius: 12%/5.5%;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.as-phone-screen {
+  width: 100%;
+  display: block;
+  background: transparent;
+}
+.as-phone-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: fill;
+  background: transparent;
+  pointer-events: auto;
+  aspect-ratio: auto;
+}
+.as-tagline {
+  font-size: clamp(11px, 5cqw, 22px);
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 0.8%;
+  text-align: center;
+}
+.as-status {
+  font-size: clamp(7px, 2.8cqw, 11px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #ff3b30;
+  margin: 0;
+  text-align: center;
+}
+.carousel-wrapper.target-formats .carousel-card .screenshot-info {
+  background: #050608;
+  padding: 16px 16px 18px;
+  text-align: center;
+  border-top: 1px solid #14161a;
+}
+.carousel-wrapper.target-formats .carousel-card .screenshot-title {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.carousel-wrapper.target-formats .carousel-card .screenshot-desc {
+  color: #9aa0a6;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.carousel-wrapper.target-formats .carousel-card .screenshot-tag {
+  background: rgba(255, 59, 48, 0.12);
+  color: #ff3b30;
+  letter-spacing: 1.5px;
 }
 
 .carousel-card .screenshot-info {

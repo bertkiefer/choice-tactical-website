@@ -1,0 +1,27 @@
+{
+  "name": "choice-tactical-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "wrangler pages dev . --compatibility-date=2025-01-01"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bertkiefer/choice-tactical-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/bertkiefer/choice-tactical-website/issues"
+  },
+  "homepage": "https://github.com/bertkiefer/choice-tactical-website#readme",
+  "devDependencies": {
+    "wrangler": "^4.83.0"
+  }
+}

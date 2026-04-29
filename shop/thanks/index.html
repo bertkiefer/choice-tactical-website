@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You — Precision Gear — Choice Tactical</title>
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/shop.css">
+</head>
+<body data-page="thanks">
+
+  <div data-include="/includes/nav.html"></div>
+
+  <main class="cart-main">
+    <header class="shop-header">
+      <h1 class="shop-title">Thank You!</h1>
+      <p class="shop-subtitle">Your order is confirmed.</p>
+    </header>
+
+    <div style="text-align:center; padding: 24px 0; color:#E0E0E0;">
+      <p style="margin: 0 0 12px;">
+        You'll receive an email receipt from Stripe shortly.
+      </p>
+      <p id="orderRef" style="font-family:monospace; color:#B0B0B0; margin:0 0 32px;"></p>
+      <div class="cart-actions" style="justify-content: center;">
+        <a class="btn-secondary" href="/">Home</a>
+        <a class="btn-primary" href="/shop/">Keep Shopping</a>
+      </div>
+    </div>
+  </main>
+
+  <div data-include="/includes/footer.html"></div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/gallery.js"></script>
+  <script>
+    // Clear cart on arrival; show session ref if provided.
+    try { localStorage.removeItem('ct_cart'); } catch (e) {}
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var session = params.get('session');
+      if (session) {
+        var ref = document.getElementById('orderRef');
+        if (ref) ref.textContent = 'Order reference: ' + session;
+      }
+    })();
+  </script>
+</body>
+</html>
