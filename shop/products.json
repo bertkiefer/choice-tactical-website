@@ -1,16 +1,16 @@
 {
   "products": [
     {
-      "slug": "the-rangebox",
-      "name": "The RangeBox",
+      "slug": "the-element",
+      "name": "The Element",
       "subtitle": "V4 AutoTrickler Wind Shield",
       "images": ["/shop/images/placeholder-1.svg"],
       "inStock": false,
       "comingSoon": true
     },
     {
-      "slug": "the-trueline",
-      "name": "The TrueLine",
+      "slug": "the-axis",
+      "name": "The Axis",
       "subtitle": "Wind Flag Alignment System",
       "images": ["/shop/images/placeholder-2.svg"],
       "inStock": false,
@@ -29,6 +29,14 @@
       "name": "The Stack",
       "subtitle": "Gravity Feed Ammo Block",
       "images": ["/shop/images/placeholder-4.svg"],
+      "inStock": false,
+      "comingSoon": true
+    },
+    {
+      "slug": "the-artisan",
+      "name": "The Artisan",
+      "subtitle": "Handcrafted Reloading Range Box",
+      "images": ["/shop/images/placeholder-5.svg"],
       "inStock": false,
       "comingSoon": true
     }
