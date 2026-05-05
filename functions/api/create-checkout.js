@@ -88,17 +88,48 @@ export async function onRequestPost(context) {
     form.append('shipping_options[0][shipping_rate]', chosenRateId);
   }
 
-  // Line items + per-line selection metadata (e.g. color)
+  // ── Load product catalog (canonical source of names + amounts) ─
+  let products = [];
+  try {
+    const catalogUrl = new URL('/shop/products.json?ts=' + Date.now(), request.url);
+    const cr = await fetch(catalogUrl.toString());
+    if (cr.ok) {
+      const data = await cr.json();
+      products = Array.isArray(data.products) ? data.products : [];
+    }
+  } catch (_) { products = []; }
+
+  // Line items — use price_data with custom name (so capacity + color appear on
+  // the Stripe checkout page) when we can resolve the product, otherwise fall
+  // back to the stored price ID.
   items.forEach((item, i) => {
-    form.append(`line_items[${i}][price]`, item.stripePriceId);
+    const found = findProductByPriceId(products, item.stripePriceId);
     form.append(`line_items[${i}][quantity]`, String(item.qty));
+
+    if (found) {
+      const { product, variant } = found;
+      const unitPrice = variant && typeof variant.priceUsd === 'number'
+        ? variant.priceUsd
+        : (product.priceUsd || 0);
+      const displayName = buildLineDisplay(product, variant, item.selections);
+      const description = product.subtitle || '';
+      const cents = Math.round(unitPrice * 100);
+      form.append(`line_items[${i}][price_data][currency]`, 'usd');
+      form.append(`line_items[${i}][price_data][unit_amount]`, String(cents));
+      form.append(`line_items[${i}][price_data][product_data][name]`, displayName);
+      if (description) {
+        form.append(`line_items[${i}][price_data][product_data][description]`, description);
+      }
+      // Required for automatic_tax with inline product_data
+      form.append(`line_items[${i}][price_data][product_data][tax_code]`, 'txcd_99999999');
+    } else {
+      form.append(`line_items[${i}][price]`, item.stripePriceId);
+    }
+
     if (item.selections && typeof item.selections === 'object') {
       Object.keys(item.selections).forEach((k) => {
         const v = item.selections[k];
         if (typeof v === 'string' && v) {
-          // Stripe doesn't support metadata on Checkout line_items directly, but
-          // session-level metadata is searchable in the Dashboard. Fold them in
-          // with a per-line prefix so the value survives.
           form.append(`metadata[line_${i + 1}_${k}]`, v.slice(0, 500));
         }
       });
@@ -144,4 +175,48 @@ function json(obj, status) {
     status: status || 200,
     headers: { 'Content-Type': 'application/json' }
   });
+}
+
+function findProductByPriceId(products, priceId) {
+  for (const p of products) {
+    if (p.stripePriceId === priceId) return { product: p, variant: null };
+    if (Array.isArray(p.variants)) {
+      for (const v of p.variants) {
+        if (v.stripePriceId === priceId) return { product: p, variant: v };
+      }
+    }
+  }
+  return null;
+}
+
+function buildLineDisplay(product, variant, selections) {
+  const parts = [product.name];
+  const opts = Array.isArray(product.options) ? product.options : [];
+
+  // Variant-driven option labels (e.g. capacity)
+  if (variant && variant.selections) {
+    const vNames = [];
+    for (const opt of opts) {
+      const id = variant.selections[opt.id];
+      if (!id) continue;
+      const val = (opt.values || []).find(v => v.id === id);
+      if (val) vNames.push(val.name);
+    }
+    if (vNames.length) parts.push(vNames.join(', '));
+  }
+
+  // Extra selections from the cart line that variant didn't cover (e.g. color)
+  if (selections) {
+    const extra = [];
+    for (const opt of opts) {
+      if (variant && variant.selections && variant.selections[opt.id]) continue;
+      const id = selections[opt.id];
+      if (!id) continue;
+      const val = (opt.values || []).find(v => v.id === id);
+      if (val) extra.push(val.name);
+    }
+    if (extra.length) parts.push(extra.join(', '));
+  }
+
+  return parts.join(' — ');
 }
