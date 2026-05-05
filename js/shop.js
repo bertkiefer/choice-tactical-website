@@ -6,7 +6,7 @@
   'use strict';
 
   var CART_KEY = 'ct_cart';
-  var PRODUCTS_URL = '/shop/products.json?v=9';
+  var PRODUCTS_URL = '/shop/products.json?v=10';
 
   // ── Utilities ──────────────────────────────────
   function formatUSD(cents) {
@@ -270,7 +270,7 @@
       } else if (!p.inStock) {
         status = '<span class="product-card-sold-out">Sold Out</span>';
       } else if (Array.isArray(p.variants) && p.variants.length) {
-        status = '<p class="product-card-price">From ' + formatUSD(lowestVariantPrice(p)) + '</p>';
+        status = '<p class="product-card-price"><span class="price-from">from</span> ' + formatUSD(lowestVariantPrice(p)) + '</p>';
       } else {
         status = '<p class="product-card-price">' + formatUSD(p.priceUsd) + '</p>';
       }
@@ -395,7 +395,10 @@
         '</div>';
       }
 
-      statusBlock = '<p class="product-detail-price" id="productPrice">' + formatUSD(initialPrice) + '</p>';
+      var pricePrefix = (hasOptions || hasFlatVariants)
+        ? '<span class="price-from">from</span> ' : '';
+      statusBlock = '<p class="product-detail-price" id="productPrice">' +
+        pricePrefix + formatUSD(initialPrice) + '</p>';
       qtyRow = '<div class="qty-row">' +
         '<label class="qty-label" for="qtyInput">Quantity</label>' +
         '<input class="qty-input" id="qtyInput" type="number" min="1" max="10" value="1">' +
@@ -426,7 +429,9 @@
 
       function applyVariant(v) {
         if (!v) return;
-        if (priceLabel) priceLabel.textContent = formatUSD(v.priceUsd);
+        if (priceLabel) {
+          priceLabel.innerHTML = '<span class="price-from">from</span> ' + formatUSD(v.priceUsd);
+        }
         if (addBtnEl) addBtnEl.setAttribute('data-price-id', v.stripePriceId);
       }
 

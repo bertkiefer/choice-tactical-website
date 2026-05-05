@@ -143,6 +143,15 @@
   margin: 8px 0 0;
 }
 
+.price-from {
+  font-size: 0.6em;
+  font-weight: 400;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  color: #B0B0B0;
+  margin-right: 2px;
+}
+
 .product-card-sold-out {
   display: inline-block;
   font-size: 12px;
