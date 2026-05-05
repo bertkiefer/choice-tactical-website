@@ -81,14 +81,21 @@
       "slug": "the-stack",
       "name": "The Stack",
       "subtitle": "Gravity Feed Ammo Block",
-      "images": ["/shop/images/placeholder-4.svg"],
+      "cardImage": "/shop/images/the-stack/01-bench-1.png",
+      "images": [
+        "/shop/images/the-stack/01-bench-1.png",
+        "/shop/images/the-stack/02-bench-3.png",
+        "/shop/images/the-stack/03-bench-2.png",
+        "/shop/images/the-stack/04-range-warm.png",
+        "/shop/images/the-stack/05-range-warm-2.png"
+      ],
       "options": [
         {
           "id": "capacity",
           "name": "Capacity",
           "values": [
-            { "id": "single", "name": "Single Stack", "description": "Holds 11 cartridges. One gravity-feed column with hex base." },
-            { "id": "double", "name": "Double Stack", "description": "Holds 22 cartridges. Two gravity-feed columns with hex base." }
+            { "id": "single", "name": "Single Stack", "description": "Holds 10 cartridges. One gravity-feed column with hex base." },
+            { "id": "double", "name": "Double Stack", "description": "Holds 20 cartridges. Two gravity-feed columns with hex base." }
           ]
         },
         {
@@ -112,7 +119,41 @@
       "description": [
         {
           "heading": "BUILT FOR PRECISION",
-          "body": "A bench-mounted cartridge stack that keeps your loaded rounds upright, organized, and within reach. Available as a Single Stack (holds 11 cartridges) or Double Stack (holds 22 cartridges), in three finishes."
+          "body": "A bench top cartridge stack that keeps your loaded rounds upright, organized, and within reach. Gravity-fed columns dispense rounds in load order; the hex base holds six more rounds for a fast reload or a sighter set. No moving parts. No more rounds rolling across the bench. You have the option for a single stack (10 rounds) or a double stack (20 rounds)."
+        },
+        {
+          "heading": "AT THE RANGE",
+          "items": [
+            "Add the flexible arm and the bracket to mount the Stack to the thumbscrew of your front rest.",
+            "Drop prepared rounds into the slots — gravity holds them in column.",
+            "Reach in, grab the next round nose-up, chamber, fire.",
+            "Use the six base receivers for fouling shots, sighters, or a staged reload.",
+            "Wipe clean. Pack up. Repeat next match."
+          ]
+        },
+        {
+          "heading": "WHY IT MATTERS",
+          "body": "At a precision match the difference between a .25 MOA group and a .45 MOA group is often just rhythm — and rhythm breaks the moment you fumble for a round. Loose ammo rolls. Pocket carry dings bullet tips. Plastic boxes are slow and force you to look down. The Stack keeps your rounds in the same spot, in the same order, every shot, every relay. Eyes stay on the rifle. Cadence stays smooth."
+        },
+        {
+          "heading": "KEY FEATURES",
+          "items": [
+            "Single or Twin gravity-feed columns — rounds dispense in load order",
+            "Six-position perimeter base — for sighters, fouling shots, or a quick reload stage",
+            "Flexible arm with bracket mount — locks rock-solid to a front rest",
+            "Sized for common benchrest rifle cartridges (6PPC, 6BR, 30BR or any variant of 6mm)",
+            "Matte finish — won't reflect into your scope or your neighbor's",
+            "Built in the USA by Choice Tactical",
+            "** Cartridges and rifle not included"
+          ]
+        },
+        {
+          "heading": "WHAT'S INCLUDED",
+          "items": [
+            "Single or Double Stack",
+            "12\" Flexible arm",
+            "Front Rest Bracket"
+          ]
         }
       ],
       "inStock": true,
