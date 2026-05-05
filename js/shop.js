@@ -6,7 +6,7 @@
   'use strict';
 
   var CART_KEY = 'ct_cart';
-  var PRODUCTS_URL = '/shop/products.json?v=7';
+  var PRODUCTS_URL = '/shop/products.json?v=8';
 
   // ── Utilities ──────────────────────────────────
   function formatUSD(cents) {
@@ -194,8 +194,33 @@
   function findProductByStripePriceId(products, priceId) {
     for (var i = 0; i < products.length; i++) {
       if (products[i].stripePriceId === priceId) return products[i];
+      var vs = products[i].variants;
+      if (Array.isArray(vs)) {
+        for (var j = 0; j < vs.length; j++) {
+          if (vs[j].stripePriceId === priceId) return products[i];
+        }
+      }
     }
     return null;
+  }
+
+  function findVariantByStripePriceId(product, priceId) {
+    if (!product || !Array.isArray(product.variants)) return null;
+    for (var i = 0; i < product.variants.length; i++) {
+      if (product.variants[i].stripePriceId === priceId) return product.variants[i];
+    }
+    return null;
+  }
+
+  function lowestVariantPrice(product) {
+    if (!Array.isArray(product.variants) || !product.variants.length) {
+      return product.priceUsd || 0;
+    }
+    var min = Infinity;
+    for (var i = 0; i < product.variants.length; i++) {
+      if (product.variants[i].priceUsd < min) min = product.variants[i].priceUsd;
+    }
+    return min;
   }
 
   // ── Grid rendering ─────────────────────────────
@@ -214,6 +239,8 @@
         status = '<span class="product-card-coming-soon">Coming Soon</span>';
       } else if (!p.inStock) {
         status = '<span class="product-card-sold-out">Sold Out</span>';
+      } else if (Array.isArray(p.variants) && p.variants.length) {
+        status = '<p class="product-card-price">From ' + formatUSD(lowestVariantPrice(p)) + '</p>';
       } else {
         status = '<p class="product-card-price">' + formatUSD(p.priceUsd) + '</p>';
       }
@@ -283,19 +310,36 @@
     var tagline = (!product.comingSoon && product.tagline)
       ? '<p class="product-detail-tagline">' + escapeHtml(product.tagline) + '</p>' : '';
     var description = (!product.comingSoon) ? renderDescription(product.description) : '';
-    var statusBlock, qtyRow = '', addBtn = '';
+    var hasVariants = Array.isArray(product.variants) && product.variants.length > 0;
+    var statusBlock = '', variantPicker = '', qtyRow = '', addBtn = '';
     if (product.comingSoon) {
       statusBlock = '<span class="product-card-coming-soon product-detail-coming-soon">Coming Soon</span>';
     } else if (!product.inStock) {
       statusBlock = '<span class="product-card-sold-out">Sold Out</span>';
     } else {
-      statusBlock = '<p class="product-detail-price">' + formatUSD(product.priceUsd) + '</p>';
+      var initialPrice = hasVariants ? product.variants[0].priceUsd : product.priceUsd;
+      var initialPriceId = hasVariants ? product.variants[0].stripePriceId : product.stripePriceId;
+      statusBlock = '<p class="product-detail-price" id="productPrice">' + formatUSD(initialPrice) + '</p>';
+      if (hasVariants) {
+        variantPicker = '<div class="variant-picker" role="radiogroup" aria-label="Choose option">' +
+          product.variants.map(function (v, i) {
+            return '<label class="variant-option' + (i === 0 ? ' active' : '') + '" data-index="' + i + '">' +
+              '<input type="radio" name="productVariant" value="' + i + '"' + (i === 0 ? ' checked' : '') + '>' +
+              '<div class="variant-option-head">' +
+                '<span class="variant-option-name">' + escapeHtml(v.name) + '</span>' +
+                '<span class="variant-option-price">' + formatUSD(v.priceUsd) + '</span>' +
+              '</div>' +
+              (v.description ? '<p class="variant-option-desc">' + escapeHtml(v.description) + '</p>' : '') +
+            '</label>';
+          }).join('') +
+        '</div>';
+      }
       qtyRow = '<div class="qty-row">' +
         '<label class="qty-label" for="qtyInput">Quantity</label>' +
         '<input class="qty-input" id="qtyInput" type="number" min="1" max="10" value="1">' +
       '</div>';
       addBtn = '<button type="button" class="add-to-cart-btn" id="addToCartBtn" ' +
-        'data-price-id="' + escapeHtml(product.stripePriceId) + '" ' +
+        'data-price-id="' + escapeHtml(initialPriceId) + '" ' +
         'data-slug="' + escapeHtml(product.slug) + '">Add to Cart</button>';
     }
     container.innerHTML = '' +
@@ -306,20 +350,42 @@
         subtitle +
         tagline +
         statusBlock +
+        variantPicker +
         qtyRow +
         addBtn +
         description +
       '</div>';
     document.title = product.name + ' — The ELEMENT Line — Choice Tactical';
 
+    if (hasVariants) {
+      var picker = container.querySelector('.variant-picker');
+      var priceLabel = document.getElementById('productPrice');
+      var addBtnEl = document.getElementById('addToCartBtn');
+      if (picker) {
+        picker.addEventListener('change', function (e) {
+          if (e.target && e.target.name === 'productVariant') {
+            var idx = Number(e.target.value);
+            var v = product.variants[idx];
+            if (!v) return;
+            picker.querySelectorAll('.variant-option').forEach(function (lbl) {
+              lbl.classList.toggle('active', Number(lbl.getAttribute('data-index')) === idx);
+            });
+            if (priceLabel) priceLabel.textContent = formatUSD(v.priceUsd);
+            if (addBtnEl) addBtnEl.setAttribute('data-price-id', v.stripePriceId);
+          }
+        });
+      }
+    }
+
     var btn = document.getElementById('addToCartBtn');
     if (btn) {
       btn.addEventListener('click', function () {
         var qtyInput = document.getElementById('qtyInput');
         var qty = Math.max(1, Math.min(10, parseInt(qtyInput && qtyInput.value, 10) || 1));
+        var priceId = btn.getAttribute('data-price-id');
         addToCart({
           slug: product.slug,
-          stripePriceId: product.stripePriceId,
+          stripePriceId: priceId,
           qty: qty
         });
         showToast('Added to cart');
@@ -490,13 +556,16 @@
       cart.forEach(function (line) {
         var p = findProductByStripePriceId(products, line.stripePriceId);
         if (!p) { missing.push(line.stripePriceId); return; }
-        var lineTotal = p.priceUsd * line.qty;
+        var v = findVariantByStripePriceId(p, line.stripePriceId);
+        var unitPrice = v ? v.priceUsd : p.priceUsd;
+        var displayName = v ? (p.name + ' — ' + v.name) : p.name;
+        var lineTotal = unitPrice * line.qty;
         subtotalCents += lineTotal;
         var img = (p.images && p.images[0]) || '/shop/images/placeholder-1.svg';
         rows.push('' +
-          '<div class="cart-row" data-price-id="' + escapeHtml(p.stripePriceId) + '">' +
+          '<div class="cart-row" data-price-id="' + escapeHtml(line.stripePriceId) + '">' +
             '<img class="cart-row-image" src="' + escapeHtml(img) + '" alt="' + escapeHtml(p.name) + '">' +
-            '<a class="cart-row-name" href="/shop/product.html?slug=' + escapeHtml(p.slug) + '">' + escapeHtml(p.name) + '</a>' +
+            '<a class="cart-row-name" href="/shop/product.html?slug=' + escapeHtml(p.slug) + '">' + escapeHtml(displayName) + '</a>' +
             '<input class="cart-row-qty" type="number" min="1" max="99" value="' + line.qty + '">' +
             '<span class="cart-row-subtotal">' + formatUSD(lineTotal) + '</span>' +
             '<button class="cart-row-remove" type="button" aria-label="Remove">×</button>' +

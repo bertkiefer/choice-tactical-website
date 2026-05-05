@@ -82,8 +82,30 @@
       "name": "The Stack",
       "subtitle": "Gravity Feed Ammo Block",
       "images": ["/shop/images/placeholder-4.svg"],
-      "inStock": false,
-      "comingSoon": true
+      "variants": [
+        {
+          "id": "single",
+          "name": "Single Stack",
+          "description": "Holds 11 cartridges. One gravity-feed column with hex base.",
+          "priceUsd": 70,
+          "stripePriceId": "price_live_REPLACE_ME_SINGLE"
+        },
+        {
+          "id": "double",
+          "name": "Double Stack",
+          "description": "Holds 22 cartridges. Two gravity-feed columns with hex base.",
+          "priceUsd": 90,
+          "stripePriceId": "price_live_REPLACE_ME_DOUBLE"
+        }
+      ],
+      "description": [
+        {
+          "heading": "BUILT FOR PRECISION",
+          "body": "A bench-mounted cartridge stack that keeps your loaded rounds upright, organized, and within reach. Available as a Single Stack (holds 11 cartridges) or Double Stack (holds 22 cartridges)."
+        }
+      ],
+      "inStock": true,
+      "comingSoon": false
     },
     {
       "slug": "the-artisan",
