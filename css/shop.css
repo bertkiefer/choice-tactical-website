@@ -409,61 +409,48 @@
   top: 4px;
 }
 
-/* Variant picker */
+/* Variant picker — dropdowns */
 .variant-picker {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 14px;
   margin: 0 0 20px;
 }
 
-.variant-option {
-  display: block;
-  padding: 14px 16px;
-  background: #0f0f0f;
-  border: 2px solid #2a2a2a;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: border-color 120ms ease, background 120ms ease;
-}
-
-.variant-option:hover { border-color: #5a5a5a; }
-.variant-option.active {
-  border-color: #CBB589;
-  background: rgba(203, 181, 137, 0.08);
-}
-
-.variant-option input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.variant-option-head {
+.variant-option-group {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 16px;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.variant-option-name {
+.variant-option-label {
+  font-size: 12px;
   font-weight: 700;
-  font-size: 15px;
-  color: #fff;
-  letter-spacing: 0.02em;
-}
-
-.variant-option-price {
-  font-size: 15px;
-  font-weight: 700;
-  color: #CBB589;
-}
-
-.variant-option-desc {
-  margin: 6px 0 0;
-  font-size: 13px;
-  line-height: 1.5;
   color: #B0B0B0;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.variant-option-select {
+  width: 100%;
+  padding: 12px 36px 12px 14px;
+  background: #0f0f0f url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23CBB589' d='M6 8L0 0h12z'/%3E%3C/svg%3E") no-repeat right 14px center;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 120ms ease;
+}
+
+.variant-option-select:hover { border-color: #5a5a5a; }
+.variant-option-select:focus {
+  outline: none;
+  border-color: #CBB589;
 }
 
 .qty-row {

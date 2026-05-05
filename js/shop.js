@@ -6,7 +6,7 @@
   'use strict';
 
   var CART_KEY = 'ct_cart';
-  var PRODUCTS_URL = '/shop/products.json?v=8';
+  var PRODUCTS_URL = '/shop/products.json?v=9';
 
   // ── Utilities ──────────────────────────────────
   function formatUSD(cents) {
@@ -212,6 +212,36 @@
     return null;
   }
 
+  function findVariantBySelections(product, selections) {
+    if (!product || !Array.isArray(product.variants)) return null;
+    for (var i = 0; i < product.variants.length; i++) {
+      var v = product.variants[i];
+      if (!v.selections) continue;
+      var match = true;
+      for (var key in selections) {
+        if (selections[key] !== v.selections[key]) { match = false; break; }
+      }
+      if (match) return v;
+    }
+    return null;
+  }
+
+  function variantDisplayName(product, variant) {
+    if (!variant) return '';
+    if (variant.selections && Array.isArray(product.options)) {
+      var parts = [];
+      product.options.forEach(function (opt) {
+        var selId = variant.selections[opt.id];
+        if (!selId) return;
+        var matching = null;
+        (opt.values || []).forEach(function (val) { if (val.id === selId) matching = val; });
+        if (matching) parts.push(matching.name);
+      });
+      return parts.join(', ');
+    }
+    return variant.name || '';
+  }
+
   function lowestVariantPrice(product) {
     if (!Array.isArray(product.variants) || !product.variants.length) {
       return product.priceUsd || 0;
@@ -310,30 +340,62 @@
     var tagline = (!product.comingSoon && product.tagline)
       ? '<p class="product-detail-tagline">' + escapeHtml(product.tagline) + '</p>' : '';
     var description = (!product.comingSoon) ? renderDescription(product.description) : '';
-    var hasVariants = Array.isArray(product.variants) && product.variants.length > 0;
+    var hasOptions = Array.isArray(product.options) && product.options.length > 0
+                     && Array.isArray(product.variants) && product.variants.length > 0;
+    var hasFlatVariants = !hasOptions && Array.isArray(product.variants) && product.variants.length > 0;
     var statusBlock = '', variantPicker = '', qtyRow = '', addBtn = '';
     if (product.comingSoon) {
       statusBlock = '<span class="product-card-coming-soon product-detail-coming-soon">Coming Soon</span>';
     } else if (!product.inStock) {
       statusBlock = '<span class="product-card-sold-out">Sold Out</span>';
     } else {
-      var initialPrice = hasVariants ? product.variants[0].priceUsd : product.priceUsd;
-      var initialPriceId = hasVariants ? product.variants[0].stripePriceId : product.stripePriceId;
-      statusBlock = '<p class="product-detail-price" id="productPrice">' + formatUSD(initialPrice) + '</p>';
-      if (hasVariants) {
-        variantPicker = '<div class="variant-picker" role="radiogroup" aria-label="Choose option">' +
-          product.variants.map(function (v, i) {
-            return '<label class="variant-option' + (i === 0 ? ' active' : '') + '" data-index="' + i + '">' +
-              '<input type="radio" name="productVariant" value="' + i + '"' + (i === 0 ? ' checked' : '') + '>' +
-              '<div class="variant-option-head">' +
-                '<span class="variant-option-name">' + escapeHtml(v.name) + '</span>' +
-                '<span class="variant-option-price">' + formatUSD(v.priceUsd) + '</span>' +
-              '</div>' +
-              (v.description ? '<p class="variant-option-desc">' + escapeHtml(v.description) + '</p>' : '') +
-            '</label>';
+      var initialVariant = null;
+      var initialPrice = product.priceUsd || 0;
+      var initialPriceId = product.stripePriceId || '';
+
+      if (hasOptions) {
+        var initialSelections = {};
+        product.options.forEach(function (opt) {
+          if (opt.values && opt.values.length) initialSelections[opt.id] = opt.values[0].id;
+        });
+        initialVariant = findVariantBySelections(product, initialSelections) || product.variants[0];
+        initialPrice = initialVariant.priceUsd;
+        initialPriceId = initialVariant.stripePriceId;
+        variantPicker = '<div class="variant-picker">' +
+          product.options.map(function (opt) {
+            return '<div class="variant-option-group">' +
+              '<label class="variant-option-label" for="opt_' + escapeHtml(opt.id) + '">' +
+                escapeHtml(opt.name) +
+              '</label>' +
+              '<select class="variant-option-select" id="opt_' + escapeHtml(opt.id) + '" ' +
+                'data-option-id="' + escapeHtml(opt.id) + '">' +
+                (opt.values || []).map(function (val, i) {
+                  var label = val.name + (val.subtitle ? ' (' + val.subtitle + ')' : '');
+                  return '<option value="' + escapeHtml(val.id) + '"' +
+                    (i === 0 ? ' selected' : '') + '>' + escapeHtml(label) + '</option>';
+                }).join('') +
+              '</select>' +
+            '</div>';
           }).join('') +
         '</div>';
+      } else if (hasFlatVariants) {
+        initialVariant = product.variants[0];
+        initialPrice = initialVariant.priceUsd;
+        initialPriceId = initialVariant.stripePriceId;
+        variantPicker = '<div class="variant-picker">' +
+          '<div class="variant-option-group">' +
+            '<label class="variant-option-label" for="opt_variant">Option</label>' +
+            '<select class="variant-option-select" id="opt_variant" data-flat-variant="1">' +
+              product.variants.map(function (v, i) {
+                return '<option value="' + i + '"' + (i === 0 ? ' selected' : '') + '>' +
+                  escapeHtml(v.name + ' — ' + formatUSD(v.priceUsd)) + '</option>';
+              }).join('') +
+            '</select>' +
+          '</div>' +
+        '</div>';
       }
+
+      statusBlock = '<p class="product-detail-price" id="productPrice">' + formatUSD(initialPrice) + '</p>';
       qtyRow = '<div class="qty-row">' +
         '<label class="qty-label" for="qtyInput">Quantity</label>' +
         '<input class="qty-input" id="qtyInput" type="number" min="1" max="10" value="1">' +
@@ -357,24 +419,33 @@
       '</div>';
     document.title = product.name + ' — The ELEMENT Line — Choice Tactical';
 
-    if (hasVariants) {
-      var picker = container.querySelector('.variant-picker');
+    if (hasOptions || hasFlatVariants) {
       var priceLabel = document.getElementById('productPrice');
       var addBtnEl = document.getElementById('addToCartBtn');
-      if (picker) {
-        picker.addEventListener('change', function (e) {
-          if (e.target && e.target.name === 'productVariant') {
-            var idx = Number(e.target.value);
-            var v = product.variants[idx];
-            if (!v) return;
-            picker.querySelectorAll('.variant-option').forEach(function (lbl) {
-              lbl.classList.toggle('active', Number(lbl.getAttribute('data-index')) === idx);
-            });
-            if (priceLabel) priceLabel.textContent = formatUSD(v.priceUsd);
-            if (addBtnEl) addBtnEl.setAttribute('data-price-id', v.stripePriceId);
-          }
-        });
+      var selects = container.querySelectorAll('.variant-option-select');
+
+      function applyVariant(v) {
+        if (!v) return;
+        if (priceLabel) priceLabel.textContent = formatUSD(v.priceUsd);
+        if (addBtnEl) addBtnEl.setAttribute('data-price-id', v.stripePriceId);
       }
+
+      function refresh() {
+        if (hasOptions) {
+          var sel = {};
+          selects.forEach(function (s) {
+            sel[s.getAttribute('data-option-id')] = s.value;
+          });
+          applyVariant(findVariantBySelections(product, sel));
+        } else {
+          var idx = Number(selects[0] && selects[0].value);
+          applyVariant(product.variants[idx]);
+        }
+      }
+
+      selects.forEach(function (s) {
+        s.addEventListener('change', refresh);
+      });
     }
 
     var btn = document.getElementById('addToCartBtn');
@@ -558,7 +629,8 @@
         if (!p) { missing.push(line.stripePriceId); return; }
         var v = findVariantByStripePriceId(p, line.stripePriceId);
         var unitPrice = v ? v.priceUsd : p.priceUsd;
-        var displayName = v ? (p.name + ' — ' + v.name) : p.name;
+        var vName = variantDisplayName(p, v);
+        var displayName = vName ? (p.name + ' — ' + vName) : p.name;
         var lineTotal = unitPrice * line.qty;
         subtotalCents += lineTotal;
         var img = (p.images && p.images[0]) || '/shop/images/placeholder-1.svg';

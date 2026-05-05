@@ -82,26 +82,37 @@
       "name": "The Stack",
       "subtitle": "Gravity Feed Ammo Block",
       "images": ["/shop/images/placeholder-4.svg"],
-      "variants": [
+      "options": [
         {
-          "id": "single",
-          "name": "Single Stack",
-          "description": "Holds 11 cartridges. One gravity-feed column with hex base.",
-          "priceUsd": 70,
-          "stripePriceId": "price_live_REPLACE_ME_SINGLE"
+          "id": "capacity",
+          "name": "Capacity",
+          "values": [
+            { "id": "single", "name": "Single Stack", "description": "Holds 11 cartridges. One gravity-feed column with hex base." },
+            { "id": "double", "name": "Double Stack", "description": "Holds 22 cartridges. Two gravity-feed columns with hex base." }
+          ]
         },
         {
-          "id": "double",
-          "name": "Double Stack",
-          "description": "Holds 22 cartridges. Two gravity-feed columns with hex base.",
-          "priceUsd": 90,
-          "stripePriceId": "price_live_REPLACE_ME_DOUBLE"
+          "id": "color",
+          "name": "Color",
+          "values": [
+            { "id": "black", "name": "Black", "subtitle": "Black Base" },
+            { "id": "burnt-titanium", "name": "Burnt Titanium", "subtitle": "Burnt Titanium Base" },
+            { "id": "copper", "name": "Copper", "subtitle": "Black Base" }
+          ]
         }
+      ],
+      "variants": [
+        { "selections": { "capacity": "single", "color": "black" },          "priceUsd": 70, "stripePriceId": "price_live_REPLACE_ME_SINGLE_BLACK" },
+        { "selections": { "capacity": "single", "color": "burnt-titanium" }, "priceUsd": 70, "stripePriceId": "price_live_REPLACE_ME_SINGLE_BURNT" },
+        { "selections": { "capacity": "single", "color": "copper" },         "priceUsd": 70, "stripePriceId": "price_live_REPLACE_ME_SINGLE_COPPER" },
+        { "selections": { "capacity": "double", "color": "black" },          "priceUsd": 90, "stripePriceId": "price_live_REPLACE_ME_DOUBLE_BLACK" },
+        { "selections": { "capacity": "double", "color": "burnt-titanium" }, "priceUsd": 90, "stripePriceId": "price_live_REPLACE_ME_DOUBLE_BURNT" },
+        { "selections": { "capacity": "double", "color": "copper" },         "priceUsd": 90, "stripePriceId": "price_live_REPLACE_ME_DOUBLE_COPPER" }
       ],
       "description": [
         {
           "heading": "BUILT FOR PRECISION",
-          "body": "A bench-mounted cartridge stack that keeps your loaded rounds upright, organized, and within reach. Available as a Single Stack (holds 11 cartridges) or Double Stack (holds 22 cartridges)."
+          "body": "A bench-mounted cartridge stack that keeps your loaded rounds upright, organized, and within reach. Available as a Single Stack (holds 11 cartridges) or Double Stack (holds 22 cartridges), in three finishes."
         }
       ],
       "inStock": true,
