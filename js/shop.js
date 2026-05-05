@@ -6,7 +6,7 @@
   'use strict';
 
   var CART_KEY = 'ct_cart';
-  var PRODUCTS_URL = '/shop/products.json?v=3';
+  var PRODUCTS_URL = '/shop/products.json?v=4';
 
   // ── Utilities ──────────────────────────────────
   function formatUSD(cents) {
@@ -220,7 +220,7 @@
       var tagline = (!p.comingSoon && p.tagline)
         ? '<p class="product-card-tagline">' + escapeHtml(p.tagline) + '</p>' : '';
       return '' +
-        '<a class="product-card" href="/shop/' + escapeHtml(p.slug) + '/">' +
+        '<a class="product-card" href="/shop/product.html?slug=' + escapeHtml(p.slug) + '">' +
           '<div class="product-card-square">' +
             '<img class="product-card-element-mark" src="/images/logo-element-badge-gold.png" alt="Element">' +
             '<h3 class="product-card-name">' + escapeHtml(p.name) + '</h3>' +
@@ -306,6 +306,14 @@
     if (!container) return;
     var slug = getQueryParam('slug');
     if (!slug) {
+      // Fall back to parsing slug from /shop/<slug>/ URL path
+      // (Cloudflare 200-rewrite keeps the pretty URL in the browser, hiding the query string)
+      var m = window.location.pathname.match(/^\/shop\/([^\/]+)\/?$/);
+      if (m && m[1] !== 'cart' && m[1] !== 'thanks') {
+        slug = m[1];
+      }
+    }
+    if (!slug) {
       container.innerHTML = '<p class="shop-error">No product specified.</p>';
       return;
     }
@@ -345,7 +353,7 @@
         rows.push('' +
           '<div class="cart-row" data-price-id="' + escapeHtml(p.stripePriceId) + '">' +
             '<img class="cart-row-image" src="' + escapeHtml(img) + '" alt="' + escapeHtml(p.name) + '">' +
-            '<a class="cart-row-name" href="/shop/' + escapeHtml(p.slug) + '/">' + escapeHtml(p.name) + '</a>' +
+            '<a class="cart-row-name" href="/shop/product.html?slug=' + escapeHtml(p.slug) + '">' + escapeHtml(p.name) + '</a>' +
             '<input class="cart-row-qty" type="number" min="1" max="99" value="' + line.qty + '">' +
             '<span class="cart-row-subtotal">' + formatUSD(lineTotal) + '</span>' +
             '<button class="cart-row-remove" type="button" aria-label="Remove">×</button>' +

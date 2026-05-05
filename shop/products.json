@@ -10,11 +10,13 @@
     },
     {
       "slug": "the-axis",
-      "name": "The Axis",
+      "name": "The AXIS",
       "subtitle": "Wind Flag Alignment System",
+      "stripePriceId": "price_1TTVX8IfCMZaSnjCnYZy7tEc",
+      "priceUsd": 195,
       "images": ["/shop/images/placeholder-2.svg"],
-      "inStock": false,
-      "comingSoon": true
+      "inStock": true,
+      "comingSoon": false
     },
     {
       "slug": "the-drift",
