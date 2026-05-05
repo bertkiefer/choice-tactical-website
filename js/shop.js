@@ -6,7 +6,7 @@
   'use strict';
 
   var CART_KEY = 'ct_cart';
-  var PRODUCTS_URL = '/shop/products.json?v=4';
+  var PRODUCTS_URL = '/shop/products.json?v=5';
 
   // ── Utilities ──────────────────────────────────
   function formatUSD(cents) {
@@ -235,14 +235,41 @@
   }
 
   // ── Detail rendering ───────────────────────────
+  function renderDescription(desc) {
+    if (!desc) return '';
+    if (typeof desc === 'string') {
+      return '<p class="product-detail-description">' + escapeHtml(desc) + '</p>';
+    }
+    if (!Array.isArray(desc)) return '';
+    return '<div class="product-detail-description">' + desc.map(function (sec) {
+      var heading = sec.heading
+        ? '<h3 class="product-detail-section-heading">' + escapeHtml(sec.heading) + '</h3>' : '';
+      var body = '';
+      if (sec.body) {
+        body = '<p class="product-detail-section-body">' + escapeHtml(sec.body) + '</p>';
+      } else if (Array.isArray(sec.items)) {
+        body = '<ul class="product-detail-section-list">' + sec.items.map(function (it) {
+          return '<li>' + escapeHtml(it) + '</li>';
+        }).join('') + '</ul>';
+      }
+      return heading + body;
+    }).join('') + '</div>';
+  }
+
   function renderProductDetail(container, product) {
-    var img = (product.images && product.images[0]) || '/shop/images/placeholder-1.svg';
+    var images = (product.images && product.images.length)
+      ? product.images : ['/shop/images/placeholder-1.svg'];
+    var gallery = '<div class="product-detail-gallery">' +
+      images.map(function (src) {
+        return '<img class="product-detail-image" src="' + escapeHtml(src) +
+          '" alt="' + escapeHtml(product.name) + '">';
+      }).join('') + '</div>';
+
     var subtitle = product.subtitle
       ? '<p class="product-detail-subtitle">' + escapeHtml(product.subtitle) + '</p>' : '';
     var tagline = (!product.comingSoon && product.tagline)
       ? '<p class="product-detail-tagline">' + escapeHtml(product.tagline) + '</p>' : '';
-    var description = (!product.comingSoon && product.description)
-      ? '<p class="product-detail-description">' + escapeHtml(product.description) + '</p>' : '';
+    var description = (!product.comingSoon) ? renderDescription(product.description) : '';
     var statusBlock, qtyRow = '', addBtn = '';
     if (product.comingSoon) {
       statusBlock = '<span class="product-card-coming-soon product-detail-coming-soon">Coming Soon</span>';
@@ -259,18 +286,16 @@
         'data-slug="' + escapeHtml(product.slug) + '">Add to Cart</button>';
     }
     container.innerHTML = '' +
-      '<div>' +
-        '<img class="product-detail-image" src="' + escapeHtml(img) + '" alt="' + escapeHtml(product.name) + '">' +
-      '</div>' +
+      '<div>' + gallery + '</div>' +
       '<div>' +
         '<img class="product-detail-element-mark" src="/images/logo-element-badge-gold.png" alt="Element">' +
         '<h1 class="product-detail-name">' + escapeHtml(product.name) + '</h1>' +
         subtitle +
         tagline +
-        description +
         statusBlock +
         qtyRow +
         addBtn +
+        description +
       '</div>';
     document.title = product.name + ' — The ELEMENT Line — Choice Tactical';
 

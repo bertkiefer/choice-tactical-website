@@ -14,7 +14,55 @@
       "subtitle": "Wind Flag Alignment System",
       "stripePriceId": "price_1TTVIjIfCMZaSnjC1yqmcydR",
       "priceUsd": 195,
-      "images": ["/shop/images/placeholder-2.svg"],
+      "images": [
+        "/shop/images/the-axis/01-gunsmith-1.png",
+        "/shop/images/the-axis/02-gunsmith-2.png",
+        "/shop/images/the-axis/03-gunsmith-3.png",
+        "/shop/images/the-axis/04-gunsmith-5.png",
+        "/shop/images/the-axis/05-labeled-features.png",
+        "/shop/images/the-axis/06-callouts.png",
+        "/shop/images/the-axis/07-marketing.png"
+      ],
+      "description": [
+        {
+          "heading": "BUILT FOR PRECISION",
+          "body": "A precision benchtop tool that projects a green laser along your shooting lane — giving you a visible reference for placing wind flags exactly on the line of fire and at consistent heights."
+        },
+        {
+          "heading": "AT THE RANGE",
+          "items": [
+            "Sight your scope on the target — line of fire locked in.",
+            "Turn on the laser — projects parallel to the scope, straight through the air.",
+            "Walk downrange with a board, your body, or the flag stand itself.",
+            "The green dot shows exactly where the line of fire passes at that distance.",
+            "Use the dot height to set the stand — flag goes on-line AND on elevation."
+          ]
+        },
+        {
+          "heading": "WHY IT MATTERS",
+          "body": "Most shooters get wind flags close, not exact. A flag five yards off the line of fire — or sitting at a different height than the next flag — gives you the wrong wind read. The AXIS makes every flag, at every distance, identically aligned. Trust your wind call."
+        },
+        {
+          "heading": "KEY FEATURES",
+          "items": [
+            "5W Green Laser",
+            "Picatinny rail — fits any standard scope",
+            "Integrated bubble level",
+            "Adjustable leveling feet",
+            "Knurled on/off dial for one-handed use",
+            "Weighted base for rock-solid stability"
+          ]
+        },
+        {
+          "heading": "WHY YOU'LL LOVE IT",
+          "items": [
+            "Set your flags in minutes — no string lines",
+            "Same exact flag layout, range after range",
+            "Confidence in every wind call",
+            "Built in the USA by Choice Tactical"
+          ]
+        }
+      ],
       "inStock": true,
       "comingSoon": false
     },
