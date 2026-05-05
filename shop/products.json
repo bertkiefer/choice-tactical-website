@@ -15,6 +15,7 @@
       "cardImage": "/shop/images/the-axis/01-gunsmith-1.png",
       "stripePriceId": "price_1TTVIjIfCMZaSnjC1yqmcydR",
       "priceUsd": 195,
+      "shippingRateId": "shr_1TTc20IfCMZaSnjCSSpSB0ti",
       "images": [
         "/shop/images/the-axis/00-hero-branded.png",
         "/shop/images/the-axis/01-gunsmith-1.png",
@@ -108,13 +109,10 @@
           ]
         }
       ],
+      "shippingRateId": "shr_1TTk8JIfCMZaSnjCFrASdj7N",
       "variants": [
-        { "selections": { "capacity": "single", "color": "black" },          "priceUsd": 70, "stripePriceId": "price_live_REPLACE_ME_SINGLE_BLACK" },
-        { "selections": { "capacity": "single", "color": "burnt-titanium" }, "priceUsd": 70, "stripePriceId": "price_live_REPLACE_ME_SINGLE_BURNT" },
-        { "selections": { "capacity": "single", "color": "copper" },         "priceUsd": 70, "stripePriceId": "price_live_REPLACE_ME_SINGLE_COPPER" },
-        { "selections": { "capacity": "double", "color": "black" },          "priceUsd": 90, "stripePriceId": "price_live_REPLACE_ME_DOUBLE_BLACK" },
-        { "selections": { "capacity": "double", "color": "burnt-titanium" }, "priceUsd": 90, "stripePriceId": "price_live_REPLACE_ME_DOUBLE_BURNT" },
-        { "selections": { "capacity": "double", "color": "copper" },         "priceUsd": 90, "stripePriceId": "price_live_REPLACE_ME_DOUBLE_COPPER" }
+        { "selections": { "capacity": "single" }, "priceUsd": 70, "stripePriceId": "price_1TTk0rIfCMZaSnjCtyrqaY47" },
+        { "selections": { "capacity": "double" }, "priceUsd": 90, "stripePriceId": "price_1TTgyqIfCMZaSnjC7rYVSHRP" }
       ],
       "description": [
         {

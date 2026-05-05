@@ -44,23 +44,65 @@ export async function onRequestPost(context) {
     return json({ error: 'Checkout unavailable — server not configured' }, 500);
   }
 
+  // ── Resolve shipping rate ──────────────────────
+  // Prefer cart-driven rates (sent by client). With multiple distinct rates in the
+  // cart, pick the one with the highest unit_amount so the customer pays the higher
+  // shipping cost when their order spans different-size boxes.
+  let chosenRateId = null;
+  const cartRateIds = Array.isArray(body.shippingRateIds)
+    ? body.shippingRateIds.filter(s => typeof s === 'string' && s.trim()).map(s => s.trim())
+    : [];
+
+  if (cartRateIds.length === 1) {
+    chosenRateId = cartRateIds[0];
+  } else if (cartRateIds.length > 1) {
+    try {
+      const rates = await Promise.all(cartRateIds.map(async (id) => {
+        const r = await fetch(`https://api.stripe.com/v1/shipping_rates/${id}`, {
+          headers: { 'Authorization': `Bearer ${secret}` }
+        });
+        return await r.json();
+      }));
+      let max = -1;
+      for (const rate of rates) {
+        const amt = (rate && rate.fixed_amount && rate.fixed_amount.amount) || 0;
+        if (amt > max) { max = amt; chosenRateId = rate.id; }
+      }
+    } catch (_) { chosenRateId = cartRateIds[0]; }
+  }
+
+  // Fallback: env var (legacy / single-rate mode)
+  if (!chosenRateId) {
+    const envIds = (env.STRIPE_SHIPPING_RATE_IDS || '')
+      .split(',').map(s => s.trim()).filter(Boolean);
+    chosenRateId = envIds[0] || null;
+  }
+
   // ── Build form-encoded Stripe request ──────────
   const form = new URLSearchParams();
   form.append('mode', 'payment');
   form.append('automatic_tax[enabled]', 'true');
   form.append('shipping_address_collection[allowed_countries][0]', 'US');
 
-  // Shipping options (if configured)
-  const shippingIds = (env.STRIPE_SHIPPING_RATE_IDS || '')
-    .split(',').map(s => s.trim()).filter(Boolean);
-  shippingIds.forEach((id, i) => {
-    form.append(`shipping_options[${i}][shipping_rate]`, id);
-  });
+  if (chosenRateId) {
+    form.append('shipping_options[0][shipping_rate]', chosenRateId);
+  }
 
-  // Line items
+  // Line items + per-line selection metadata (e.g. color)
   items.forEach((item, i) => {
     form.append(`line_items[${i}][price]`, item.stripePriceId);
     form.append(`line_items[${i}][quantity]`, String(item.qty));
+    if (item.selections && typeof item.selections === 'object') {
+      Object.keys(item.selections).forEach((k) => {
+        const v = item.selections[k];
+        if (typeof v === 'string' && v) {
+          // Stripe doesn't support metadata on Checkout line_items directly, but
+          // session-level metadata is searchable in the Dashboard. Fold them in
+          // with a per-line prefix so the value survives.
+          form.append(`metadata[line_${i + 1}_${k}]`, v.slice(0, 500));
+        }
+      });
+    }
   });
 
   const origin = new URL(request.url).origin;

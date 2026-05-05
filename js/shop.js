@@ -6,7 +6,7 @@
   'use strict';
 
   var CART_KEY = 'ct_cart';
-  var PRODUCTS_URL = '/shop/products.json?v=11';
+  var PRODUCTS_URL = '/shop/products.json?v=12';
 
   // ── Utilities ──────────────────────────────────
   function formatUSD(cents) {
@@ -46,12 +46,17 @@
     return readCart().reduce(function (sum, i) { return sum + (i.qty || 0); }, 0);
   }
 
+  function lineKey(line) {
+    return (line.stripePriceId || '') + '|' + JSON.stringify(line.selections || {});
+  }
+
   function addToCart(item) {
-    // item = { slug, stripePriceId, qty }
+    // item = { slug, stripePriceId, qty, selections? }
     var cart = readCart();
+    var newKey = lineKey(item);
     var existing = null;
     for (var i = 0; i < cart.length; i++) {
-      if (cart[i].stripePriceId === item.stripePriceId) {
+      if (lineKey(cart[i]) === newKey) {
         existing = cart[i];
         break;
       }
@@ -62,17 +67,18 @@
       cart.push({
         slug: item.slug,
         stripePriceId: item.stripePriceId,
+        selections: item.selections || null,
         qty: Math.min(99, Math.max(1, item.qty))
       });
     }
     writeCart(cart);
   }
 
-  function updateCartLineQty(stripePriceId, qty) {
+  function updateCartLineQty(key, qty) {
     var cart = readCart();
     var out = [];
     for (var i = 0; i < cart.length; i++) {
-      if (cart[i].stripePriceId === stripePriceId) {
+      if (lineKey(cart[i]) === key) {
         if (qty > 0) {
           cart[i].qty = Math.min(99, qty);
           out.push(cart[i]);
@@ -84,9 +90,9 @@
     writeCart(out);
   }
 
-  function removeCartLine(stripePriceId) {
+  function removeCartLine(key) {
     var cart = readCart().filter(function (i) {
-      return i.stripePriceId !== stripePriceId;
+      return lineKey(i) !== key;
     });
     writeCart(cart);
   }
@@ -136,29 +142,45 @@
     }
     if (btn) { btn.disabled = true; btn.textContent = 'Redirecting…'; }
 
-    fetch('/api/create-checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        items: cart.map(function (i) {
-          return { stripePriceId: i.stripePriceId, qty: i.qty };
+    loadProducts().then(function (products) {
+      var rateIds = [];
+      var rateSeen = {};
+      var items = cart.map(function (i) {
+        var p = findProductByStripePriceId(products, i.stripePriceId);
+        if (p && p.shippingRateId && !rateSeen[p.shippingRateId]) {
+          rateIds.push(p.shippingRateId);
+          rateSeen[p.shippingRateId] = true;
+        }
+        return {
+          stripePriceId: i.stripePriceId,
+          qty: i.qty,
+          selections: i.selections || null
+        };
+      });
+
+      fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: items,
+          shippingRateIds: rateIds
         })
       })
-    })
-      .then(function (r) { return r.json().then(function (j) { return { status: r.status, body: j }; }); })
-      .then(function (res) {
-        if (res.status >= 200 && res.status < 300 && res.body.url) {
-          window.location = res.body.url;
-        } else {
-          var msg = (res.body && res.body.error) || 'Checkout failed — please try again.';
-          showCheckoutError(msg);
+        .then(function (r) { return r.json().then(function (j) { return { status: r.status, body: j }; }); })
+        .then(function (res) {
+          if (res.status >= 200 && res.status < 300 && res.body.url) {
+            window.location = res.body.url;
+          } else {
+            var msg = (res.body && res.body.error) || 'Checkout failed — please try again.';
+            showCheckoutError(msg);
+            if (btn) { btn.disabled = false; btn.textContent = 'Checkout'; }
+          }
+        })
+        .catch(function () {
+          showCheckoutError('Network error — please check your connection and try again.');
           if (btn) { btn.disabled = false; btn.textContent = 'Checkout'; }
-        }
-      })
-      .catch(function () {
-        showCheckoutError('Network error — please check your connection and try again.');
-        if (btn) { btn.disabled = false; btn.textContent = 'Checkout'; }
-      });
+        });
+    });
   }
 
   function showCheckoutError(msg) {
@@ -218,7 +240,9 @@
       var v = product.variants[i];
       if (!v.selections) continue;
       var match = true;
-      for (var key in selections) {
+      // Match only on the keys the variant declares — extra user selections (like
+      // color, which doesn't drive price) are ignored at variant lookup time.
+      for (var key in v.selections) {
         if (selections[key] !== v.selections[key]) { match = false; break; }
       }
       if (match) return v;
@@ -226,19 +250,22 @@
     return null;
   }
 
+  function selectionsDisplayName(product, selections) {
+    if (!selections || !Array.isArray(product.options)) return '';
+    var parts = [];
+    product.options.forEach(function (opt) {
+      var selId = selections[opt.id];
+      if (!selId) return;
+      var matching = null;
+      (opt.values || []).forEach(function (val) { if (val.id === selId) matching = val; });
+      if (matching) parts.push(matching.name);
+    });
+    return parts.join(', ');
+  }
+
   function variantDisplayName(product, variant) {
     if (!variant) return '';
-    if (variant.selections && Array.isArray(product.options)) {
-      var parts = [];
-      product.options.forEach(function (opt) {
-        var selId = variant.selections[opt.id];
-        if (!selId) return;
-        var matching = null;
-        (opt.values || []).forEach(function (val) { if (val.id === selId) matching = val; });
-        if (matching) parts.push(matching.name);
-      });
-      return parts.join(', ');
-    }
+    if (variant.selections) return selectionsDisplayName(product, variant.selections);
     return variant.name || '';
   }
 
@@ -459,9 +486,18 @@
         var qtyInput = document.getElementById('qtyInput');
         var qty = Math.max(1, Math.min(10, parseInt(qtyInput && qtyInput.value, 10) || 1));
         var priceId = btn.getAttribute('data-price-id');
+        var sel = null;
+        if (hasOptions) {
+          sel = {};
+          var pickerSelects = container.querySelectorAll('.variant-option-select');
+          pickerSelects.forEach(function (s) {
+            sel[s.getAttribute('data-option-id')] = s.value;
+          });
+        }
         addToCart({
           slug: product.slug,
           stripePriceId: priceId,
+          selections: sel,
           qty: qty
         });
         showToast('Added to cart');
@@ -634,13 +670,17 @@
         if (!p) { missing.push(line.stripePriceId); return; }
         var v = findVariantByStripePriceId(p, line.stripePriceId);
         var unitPrice = v ? v.priceUsd : p.priceUsd;
-        var vName = variantDisplayName(p, v);
-        var displayName = vName ? (p.name + ' — ' + vName) : p.name;
+        // Prefer line.selections (captures color too) over variant.selections (price only)
+        var displayParts = '';
+        if (line.selections) displayParts = selectionsDisplayName(p, line.selections);
+        if (!displayParts) displayParts = variantDisplayName(p, v);
+        var displayName = displayParts ? (p.name + ' — ' + displayParts) : p.name;
         var lineTotal = unitPrice * line.qty;
         subtotalCents += lineTotal;
         var img = (p.images && p.images[0]) || '/shop/images/placeholder-1.svg';
+        var key = lineKey(line);
         rows.push('' +
-          '<div class="cart-row" data-price-id="' + escapeHtml(line.stripePriceId) + '">' +
+          '<div class="cart-row" data-line-key="' + escapeHtml(key) + '">' +
             '<img class="cart-row-image" src="' + escapeHtml(img) + '" alt="' + escapeHtml(p.name) + '">' +
             '<a class="cart-row-name" href="/shop/product.html?slug=' + escapeHtml(p.slug) + '">' + escapeHtml(displayName) + '</a>' +
             '<input class="cart-row-qty" type="number" min="1" max="99" value="' + line.qty + '">' +
@@ -667,18 +707,18 @@
 
       // Wire up line-level events
       container.querySelectorAll('.cart-row').forEach(function (row) {
-        var priceId = row.getAttribute('data-price-id');
+        var key = row.getAttribute('data-line-key');
         var qtyEl = row.querySelector('.cart-row-qty');
         var removeBtn = row.querySelector('.cart-row-remove');
         qtyEl.addEventListener('change', function () {
           var n = parseInt(qtyEl.value, 10);
           if (!isFinite(n) || n < 1) n = 1;
           if (n > 99) n = 99;
-          updateCartLineQty(priceId, n);
+          updateCartLineQty(key, n);
           renderCartPage(container);
         });
         removeBtn.addEventListener('click', function () {
-          removeCartLine(priceId);
+          removeCartLine(key);
           renderCartPage(container);
         });
       });
