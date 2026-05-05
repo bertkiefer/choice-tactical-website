@@ -6,7 +6,7 @@
   'use strict';
 
   var CART_KEY = 'ct_cart';
-  var PRODUCTS_URL = '/shop/products.json?v=6';
+  var PRODUCTS_URL = '/shop/products.json?v=7';
 
   // ── Utilities ──────────────────────────────────
   function formatUSD(cents) {
@@ -219,6 +219,9 @@
       }
       var tagline = (!p.comingSoon && p.tagline)
         ? '<p class="product-card-tagline">' + escapeHtml(p.tagline) + '</p>' : '';
+      var cardPhoto = p.cardImage
+        ? '<img class="product-card-photo" src="' + escapeHtml(p.cardImage) +
+          '" alt="' + escapeHtml(p.name) + '">' : '';
       return '' +
         '<a class="product-card" href="/shop/product.html?slug=' + escapeHtml(p.slug) + '">' +
           '<div class="product-card-square">' +
@@ -227,6 +230,7 @@
             subtitle +
             tagline +
           '</div>' +
+          cardPhoto +
           '<div class="product-card-body">' +
             status +
           '</div>' +
