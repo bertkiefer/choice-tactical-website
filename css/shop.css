@@ -73,14 +73,13 @@
 
 .product-card-square {
   width: 100%;
-  aspect-ratio: 1 / 1;
   background: #0c0c0c;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 24px;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 18px 24px 16px;
   text-align: center;
 }
 
@@ -92,9 +91,9 @@
 }
 
 .product-card-element-mark {
-  width: 84px;
-  height: 84px;
-  margin: -8px auto 8px;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 4px;
   display: block;
 }
 
