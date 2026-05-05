@@ -2,7 +2,6 @@
 /precisionload.html   /apps/precisionload.html   301
 /rangecommand.html    /apps/rangecommand.html    301
 /contact.html         /apps/contact.html         301
-/screenshots.html     /apps/screenshots.html     301
 
 # Keep the cart page as a real static file (override the slug wildcard)
 /shop/cart            /shop/cart/                     200
