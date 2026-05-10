@@ -7,6 +7,8 @@
  * No SDK needed — keeps the Worker small and dependency-free.
  */
 
+import { isValidPlateSize } from '../_lib/plate-validation.js';
+
 export async function onRequestPost(context) {
   const { request, env } = context;
 
@@ -126,6 +128,7 @@ export async function onRequestPost(context) {
       form.append(`line_items[${i}][price]`, item.stripePriceId);
     }
 
+    // Forward selections as metadata (existing behavior — color, etc.)
     if (item.selections && typeof item.selections === 'object') {
       Object.keys(item.selections).forEach((k) => {
         const v = item.selections[k];
@@ -133,6 +136,39 @@ export async function onRequestPost(context) {
           form.append(`metadata[line_${i + 1}_${k}]`, v.slice(0, 500));
         }
       });
+    }
+
+    // Plate size: server-controlled.
+    // - Laser bundles: server forces variant.bundledPlate, ignoring any client value.
+    // - No-laser AXIS / replacement plate: validate client-supplied metadata.plate_size
+    //   against product.replacementPlate.plateSizes; reject if invalid.
+    let plateSize = null;
+
+    if (found) {
+      const { product, variant } = found;
+      const allowed = (product.replacementPlate && Array.isArray(product.replacementPlate.plateSizes))
+        ? product.replacementPlate.plateSizes : [];
+
+      if (variant && typeof variant.bundledPlate === 'string') {
+        // Laser bundle — force the bundled size, ignore any client value
+        plateSize = variant.bundledPlate;
+      } else {
+        const isNoLaserAxis = variant && variant.selections && variant.selections.laser === 'none';
+        const isReplacementPlate = product.replacementPlate
+          && product.replacementPlate.stripePriceId === item.stripePriceId;
+        if (isNoLaserAxis || isReplacementPlate) {
+          const clientSize = item.metadata && typeof item.metadata.plate_size === 'string'
+            ? item.metadata.plate_size : '';
+          if (!isValidPlateSize(clientSize, allowed)) {
+            return json({ error: 'A valid plate size is required for this product' }, 400);
+          }
+          plateSize = clientSize;
+        }
+      }
+    }
+
+    if (plateSize) {
+      form.append(`metadata[line_${i + 1}_plate_size]`, plateSize.slice(0, 32));
     }
   });
 
