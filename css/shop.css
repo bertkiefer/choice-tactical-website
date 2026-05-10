@@ -650,3 +650,30 @@
   margin: 16px 0;
   font-size: 14px;
 }
+
+/* ── Customer Pictures button ───────────────────── */
+.customer-pictures-button-wrap {
+  margin-top: 12px;
+  text-align: center;
+}
+.customer-pictures-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #ffb84d;
+  border: 1px solid #ffb84d;
+  border-radius: 4px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: inherit;
+}
+.customer-pictures-button:hover {
+  background: #ffb84d;
+  color: #000;
+}
+.customer-pictures-icon { font-size: 14px; }

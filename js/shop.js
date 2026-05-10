@@ -347,6 +347,16 @@
   function renderProductDetail(container, product) {
     var images = (product.images && product.images.length)
       ? product.images : ['/shop/images/placeholder-1.svg'];
+    var galleryButton = product.customerPictures
+      ? '<div class="customer-pictures-button-wrap">' +
+          '<button type="button" class="customer-pictures-button" data-slug="' +
+            escapeHtml(product.slug) + '">' +
+            '<span class="customer-pictures-icon">📷</span>' +
+            '<span class="customer-pictures-label">Customer Pictures</span>' +
+          '</button>' +
+        '</div>'
+      : '';
+
     var gallery = '<div class="product-gallery">' +
       '<img class="product-gallery-hero no-zoom" id="productHero" ' +
         'data-index="0" src="' + escapeHtml(images[0]) +
@@ -360,6 +370,7 @@
           '</button>';
         }).join('') +
       '</div>' +
+      galleryButton +
     '</div>';
 
     var subtitle = product.subtitle
@@ -505,6 +516,7 @@
     }
 
     bindGalleryInteractions(container, images, product.name);
+    setupCustomerPicturesButton(container, product);
   }
 
   // ── Product gallery — hero swap + lightbox ─────
@@ -540,6 +552,37 @@
     hero.addEventListener('click', function () {
       openProductLightbox(images, currentIndex, productName);
     });
+  }
+
+  function setupCustomerPicturesButton(container, product) {
+    if (!product.customerPictures) return;
+    var btn = container.querySelector(
+      '.customer-pictures-button[data-slug="' + product.slug + '"]'
+    );
+    if (!btn) return;
+
+    var labelEl = btn.querySelector('.customer-pictures-label');
+    var iconEl = btn.querySelector('.customer-pictures-icon');
+
+    function openLightbox(data) {
+      if (window.CustomerPictures && typeof window.CustomerPictures.open === 'function') {
+        window.CustomerPictures.open(product.slug, data);
+      }
+    }
+
+    fetch('/api/customer-pictures/' + encodeURIComponent(product.slug))
+      .then(function (r) { return r.ok ? r.json() : { items: [], count: 0 }; })
+      .catch(function () { return { items: [], count: 0 }; })
+      .then(function (data) {
+        if (data.count > 0) {
+          if (labelEl) labelEl.textContent = 'Customer Pictures (' + data.count + ')';
+          if (iconEl) iconEl.textContent = '📷';
+        } else {
+          if (labelEl) labelEl.textContent = 'Submit a Picture';
+          if (iconEl) iconEl.textContent = '➕';
+        }
+        btn.addEventListener('click', function () { openLightbox(data); });
+      });
   }
 
   function ensureProductLightbox() {
