@@ -1,3 +1,16 @@
 name = "choice-tactical-website"
 compatibility_date = "2025-01-01"
 pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "customer_pictures"
+database_id = "REPLACE_WITH_PRODUCTION_ID"
+
+[[r2_buckets]]
+binding = "CUSTOMER_PICTURES"
+bucket_name = "choice-tactical-customer-pictures"
+preview_bucket_name = "choice-tactical-customer-pictures-preview"
+
+[vars]
+R2_PUBLIC_BASE_URL = "https://customer-pictures.choice-tactical.com"
