@@ -112,11 +112,20 @@ export async function onRequestPost(context) {
 
     if (found) {
       const { product, variant } = found;
+      const isReplacementPlateLine = !variant
+        && product.replacementPlate
+        && product.replacementPlate.stripePriceId === item.stripePriceId;
       const unitPrice = variant && typeof variant.priceUsd === 'number'
         ? variant.priceUsd
-        : (product.priceUsd || 0);
-      const displayName = buildLineDisplay(product, variant, item.selections);
-      const description = product.subtitle || '';
+        : isReplacementPlateLine
+          ? (product.replacementPlate.priceUsd || 0)
+          : (product.priceUsd || 0);
+      const displayName = isReplacementPlateLine
+        ? (product.replacementPlate.displayName || (product.name + ' Replacement Plate'))
+        : buildLineDisplay(product, variant, item.selections);
+      const description = isReplacementPlateLine
+        ? 'Replacement plate — ships in a small padded envelope'
+        : (product.subtitle || '');
       const cents = Math.round(unitPrice * 100);
       form.append(`line_items[${i}][price_data][currency]`, 'usd');
       form.append(`line_items[${i}][price_data][unit_amount]`, String(cents));
