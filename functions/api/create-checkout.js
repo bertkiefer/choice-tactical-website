@@ -104,7 +104,9 @@ export async function onRequestPost(context) {
   // Line items — use price_data with custom name (so capacity + color appear on
   // the Stripe checkout page) when we can resolve the product, otherwise fall
   // back to the stored price ID.
-  items.forEach((item, i) => {
+  // Note: for...of (not forEach) so that validation `return` exits onRequestPost.
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
     const found = findProductByPriceId(products, item.stripePriceId);
     form.append(`line_items[${i}][quantity]`, String(item.qty));
 
@@ -170,7 +172,7 @@ export async function onRequestPost(context) {
     if (plateSize) {
       form.append(`metadata[line_${i + 1}_plate_size]`, plateSize.slice(0, 32));
     }
-  });
+  }
 
   const origin = new URL(request.url).origin;
   form.append('success_url', `${origin}/shop/thanks/?session={CHECKOUT_SESSION_ID}`);
