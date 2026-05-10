@@ -581,6 +581,7 @@
 
     bindGalleryInteractions(container, images, product.name);
     setupCustomerPicturesButton(container, product);
+    renderReplacementPlateSection(container, product);
   }
 
   // ── Product gallery — hero swap + lightbox ─────
@@ -647,6 +648,55 @@
         }
         btn.addEventListener('click', function () { openLightbox(data); });
       });
+  }
+
+  function renderReplacementPlateSection(container, product) {
+    var rp = product.replacementPlate;
+    if (!rp || !Array.isArray(rp.plateSizes) || !rp.plateSizes.length) return;
+
+    var section = document.createElement('div');
+    section.className = 'replacement-plate-section';
+    section.innerHTML =
+      '<hr class="replacement-plate-divider">' +
+      '<h2 class="replacement-plate-h">Already own an AXIS?</h2>' +
+      '<p class="replacement-plate-blurb">Need a different plate to fit a different laser? ' +
+        'Replacement plates ship in a small padded envelope, free shipping included.</p>' +
+      '<div class="variant-option-group">' +
+        '<label class="variant-option-label" for="rp_plate_size">Plate Size</label>' +
+        '<select class="variant-option-select" id="rp_plate_size">' +
+          '<option value="">Pick a size</option>' +
+          rp.plateSizes.map(function (s) {
+            return '<option value="' + escapeHtml(s) + '">' + escapeHtml(s) + ' mm</option>';
+          }).join('') +
+        '</select>' +
+      '</div>' +
+      '<p class="replacement-plate-price">' + formatUSD(rp.priceUsd) + ' (shipping included)</p>' +
+      '<button type="button" class="add-to-cart-btn" id="rpAddBtn" disabled ' +
+        'title="Pick your plate size to continue">Add Plate to Cart</button>';
+
+    container.appendChild(section);
+
+    var sel = section.querySelector('#rp_plate_size');
+    var btn = section.querySelector('#rpAddBtn');
+    var allowed = rp.plateSizes;
+
+    sel.addEventListener('change', function () {
+      var ok = allowed.indexOf(sel.value) !== -1;
+      btn.disabled = !ok;
+      btn.title = ok ? '' : 'Pick your plate size to continue';
+    });
+
+    btn.addEventListener('click', function () {
+      if (btn.disabled) return;
+      addToCart({
+        slug: product.slug,
+        stripePriceId: rp.stripePriceId,
+        qty: 1,
+        selections: null,
+        metadata: { plate_size: sel.value }
+      });
+      showToast('Added to cart');
+    });
   }
 
   function ensureProductLightbox() {
