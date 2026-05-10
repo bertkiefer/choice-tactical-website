@@ -13,4 +13,4 @@ bucket_name = "choice-tactical-customer-pictures"
 preview_bucket_name = "choice-tactical-customer-pictures-preview"
 
 [vars]
-R2_PUBLIC_BASE_URL = "https://customer-pictures.choice-tactical.com"
+R2_PUBLIC_BASE_URL = "https://pub-8029c8916df24a73aed09d44b5fb16a6.r2.dev"
