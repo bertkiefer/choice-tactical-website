@@ -677,3 +677,59 @@
   color: #000;
 }
 .customer-pictures-icon { font-size: 14px; }
+
+/* ── Customer Pictures lightbox ─────────────────── */
+.cp-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.cp-box {
+  background: #14181f;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  width: 100%; max-width: 960px;
+  max-height: 90vh;
+  display: flex; flex-direction: column;
+  color: #e4e4e4;
+}
+.cp-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.cp-header h2 { margin: 0; font-size: 18px; color: #fff; }
+.cp-close {
+  background: none; border: none; color: #ccc; font-size: 24px; cursor: pointer;
+  padding: 0 8px; line-height: 1;
+}
+.cp-close:hover { color: #fff; }
+.cp-content { padding: 20px; overflow-y: auto; flex: 1; }
+.cp-footer {
+  padding: 16px 20px; border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+.cp-submit-btn {
+  background: #ffb84d; color: #000; border: none; border-radius: 4px;
+  padding: 12px 24px; font-size: 14px; font-weight: 700; cursor: pointer;
+  font-family: inherit;
+}
+.cp-submit-btn:hover { background: #ffc266; }
+
+.cp-empty {
+  text-align: center; color: #888; padding: 60px 20px; font-size: 14px;
+}
+
+.cp-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.cp-tile {
+  background: #1a1f28; border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px; overflow: hidden;
+}
+.cp-tile img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+.cp-tile-meta { padding: 8px 10px; }
+.cp-tile-name { font-size: 12px; font-weight: 600; color: #ffb84d; }
+.cp-tile-caption { font-size: 12px; color: #ccc; margin-top: 2px; line-height: 1.4; }
