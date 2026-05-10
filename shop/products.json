@@ -12,6 +12,7 @@
       "slug": "the-axis",
       "name": "The AXIS",
       "subtitle": "Wind Flag Alignment System",
+      "customerPictures": true,
       "cardImage": "/shop/images/the-axis/01-gunsmith-1.png",
       "stripePriceId": "price_1TU8xZIfCMZaSnjC17yZUqDb",
       "priceUsd": 175,
@@ -82,6 +83,7 @@
       "slug": "the-stack",
       "name": "The Stack",
       "subtitle": "Gravity Feed Ammo Block",
+      "customerPictures": true,
       "cardImage": "/shop/images/the-stack/01-bench-1.png",
       "images": [
         "/shop/images/the-stack/01-bench-1.png",
