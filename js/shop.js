@@ -150,14 +150,33 @@
       var rateSeen = {};
       var items = cart.map(function (i) {
         var p = findProductByStripePriceId(products, i.stripePriceId);
-        if (p && p.shippingRateId && !rateSeen[p.shippingRateId]) {
-          rateIds.push(p.shippingRateId);
-          rateSeen[p.shippingRateId] = true;
+        // Resolve shipping rate from the most specific match available:
+        // 1. replacementPlate (when this line is the plate-only line)
+        // 2. matching variant's shippingRateId
+        // 3. product top-level shippingRateId (legacy / simple products)
+        var rateId = null;
+        if (p) {
+          if (p.replacementPlate && p.replacementPlate.stripePriceId === i.stripePriceId
+              && p.replacementPlate.shippingRateId) {
+            rateId = p.replacementPlate.shippingRateId;
+          } else {
+            var v = findVariantByStripePriceId(p, i.stripePriceId);
+            if (v && v.shippingRateId) {
+              rateId = v.shippingRateId;
+            } else if (p.shippingRateId) {
+              rateId = p.shippingRateId;
+            }
+          }
+        }
+        if (rateId && !rateSeen[rateId]) {
+          rateIds.push(rateId);
+          rateSeen[rateId] = true;
         }
         return {
           stripePriceId: i.stripePriceId,
           qty: i.qty,
-          selections: i.selections || null
+          selections: i.selections || null,
+          metadata: i.metadata || null
         };
       });
 
@@ -827,11 +846,24 @@
         if (!p) { missing.push(line.stripePriceId); return; }
         var v = findVariantByStripePriceId(p, line.stripePriceId);
         var unitPrice = v ? v.priceUsd : p.priceUsd;
+        // For the replacement plate line (no variant), use replacementPlate.priceUsd
+        if (!v && p.replacementPlate && p.replacementPlate.stripePriceId === line.stripePriceId) {
+          unitPrice = p.replacementPlate.priceUsd;
+        }
         // Prefer line.selections (captures color too) over variant.selections (price only)
         var displayParts = '';
         if (line.selections) displayParts = selectionsDisplayName(p, line.selections);
         if (!displayParts) displayParts = variantDisplayName(p, v);
-        var displayName = displayParts ? (p.name + ' — ' + displayParts) : p.name;
+        // For the replacement-plate line, show the displayName from the rp block
+        var baseName = p.name;
+        if (!v && p.replacementPlate && p.replacementPlate.stripePriceId === line.stripePriceId) {
+          baseName = p.replacementPlate.displayName || (p.name + ' Replacement Plate');
+        }
+        var displayName = displayParts ? (baseName + ' — ' + displayParts) : baseName;
+        // Append plate size suffix when the line carries plate metadata
+        if (line.metadata && typeof line.metadata.plate_size === 'string' && line.metadata.plate_size) {
+          displayName = displayName + ' · ' + line.metadata.plate_size + ' mm plate';
+        }
         var lineTotal = unitPrice * line.qty;
         subtotalCents += lineTotal;
         var img = (p.images && p.images[0]) || '/shop/images/placeholder-1.svg';
