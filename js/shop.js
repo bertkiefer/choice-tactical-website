@@ -696,7 +696,14 @@
       '<button type="button" class="add-to-cart-btn" id="rpAddBtn" disabled ' +
         'title="Pick your plate size to continue">Add Plate to Cart</button>';
 
-    container.appendChild(section);
+    // Insert directly after the main Add to Cart button so the section sits
+    // in the right-hand info column right under the AXIS purchase flow.
+    var mainAddBtn = container.querySelector('#addToCartBtn');
+    if (mainAddBtn && mainAddBtn.parentNode) {
+      mainAddBtn.parentNode.insertBefore(section, mainAddBtn.nextSibling);
+    } else {
+      container.appendChild(section);
+    }
 
     var sel = section.querySelector('#rp_plate_size');
     var btn = section.querySelector('#rpAddBtn');
