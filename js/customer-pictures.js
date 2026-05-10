@@ -25,15 +25,18 @@
     }
     var grid = el('div', 'cp-grid');
     items.forEach(function (item) {
-      var url = item.photoUrls[0];
-      var tile = el('div', 'cp-tile');
-      tile.innerHTML =
-        '<img src="' + escapeAttr(url) + '" alt="" loading="lazy">' +
-        '<div class="cp-tile-meta">' +
-          '<div class="cp-tile-name">' + escapeAttr(item.name) + '</div>' +
-          '<div class="cp-tile-caption">' + escapeAttr(item.caption) + '</div>' +
-        '</div>';
-      grid.appendChild(tile);
+      (item.photoUrls || []).forEach(function (url) {
+        var tile = el('div', 'cp-tile');
+        tile.innerHTML =
+          '<a href="' + escapeAttr(url) + '" target="_blank" rel="noopener" class="cp-tile-link">' +
+            '<img src="' + escapeAttr(url) + '" alt="" loading="lazy">' +
+          '</a>' +
+          '<div class="cp-tile-meta">' +
+            '<div class="cp-tile-name">' + escapeAttr(item.name) + '</div>' +
+            '<div class="cp-tile-caption">' + escapeAttr(item.caption) + '</div>' +
+          '</div>';
+        grid.appendChild(tile);
+      });
     });
     return grid;
   }

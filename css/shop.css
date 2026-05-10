@@ -729,6 +729,7 @@
   background: #1a1f28; border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 6px; overflow: hidden;
 }
+.cp-tile-link { display: block; cursor: zoom-in; }
 .cp-tile img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
 .cp-tile-meta { padding: 8px 10px; }
 .cp-tile-name { font-size: 12px; font-weight: 600; color: #ffb84d; }

@@ -17,7 +17,7 @@ export function buildModerationEmail({
   rejectUrl,
 }) {
   const photoTags = photoUrls.map(url =>
-    `<img src="${escapeHtml(url)}" alt="" style="width:160px;height:160px;object-fit:cover;border-radius:6px;margin-right:8px;border:1px solid #ddd">`
+    `<a href="${escapeHtml(url)}" target="_blank" rel="noopener" style="display:inline-block;margin-right:8px;margin-bottom:8px"><img src="${escapeHtml(url)}" alt="Click to view full size" style="width:160px;height:160px;object-fit:cover;border-radius:6px;border:1px solid #ddd;display:block"></a>`
   ).join('');
 
   const html = `<!doctype html>
