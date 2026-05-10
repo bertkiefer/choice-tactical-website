@@ -650,3 +650,101 @@
   margin: 16px 0;
   font-size: 14px;
 }
+
+/* ── Customer Pictures button ───────────────────── */
+.customer-pictures-button-wrap {
+  margin-top: 12px;
+  text-align: center;
+}
+.customer-pictures-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #ffb84d;
+  border: 1px solid #ffb84d;
+  border-radius: 4px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: inherit;
+}
+.customer-pictures-button:hover {
+  background: #ffb84d;
+  color: #000;
+}
+.customer-pictures-icon { font-size: 14px; }
+
+/* ── Customer Pictures lightbox ─────────────────── */
+.cp-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.cp-box {
+  background: #14181f;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  width: 100%; max-width: 960px;
+  max-height: 90vh;
+  display: flex; flex-direction: column;
+  color: #e4e4e4;
+}
+.cp-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.cp-header h2 { margin: 0; font-size: 18px; color: #fff; }
+.cp-close {
+  background: none; border: none; color: #ccc; font-size: 24px; cursor: pointer;
+  padding: 0 8px; line-height: 1;
+}
+.cp-close:hover { color: #fff; }
+.cp-content { padding: 20px; overflow-y: auto; flex: 1; }
+.cp-footer {
+  padding: 16px 20px; border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+.cp-submit-btn {
+  background: #ffb84d; color: #000; border: none; border-radius: 4px;
+  padding: 12px 24px; font-size: 14px; font-weight: 700; cursor: pointer;
+  font-family: inherit;
+}
+.cp-submit-btn:hover { background: #ffc266; }
+
+.cp-empty {
+  text-align: center; color: #888; padding: 60px 20px; font-size: 14px;
+}
+
+.cp-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.cp-tile {
+  background: #1a1f28; border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px; overflow: hidden;
+}
+.cp-tile img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+.cp-tile-meta { padding: 8px 10px; }
+.cp-tile-name { font-size: 12px; font-weight: 600; color: #ffb84d; }
+.cp-tile-caption { font-size: 12px; color: #ccc; margin-top: 2px; line-height: 1.4; }
+
+/* ── Customer Pictures Submit Form ─────────────────────────────────────────── */
+.cp-form { display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin: 0 auto; }
+.cp-label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #ccc; text-transform: uppercase; letter-spacing: 0.5px; }
+.cp-hint { color: #777; text-transform: none; letter-spacing: 0; font-size: 11px; }
+.cp-label input[type="text"], .cp-label input[type="email"], .cp-label input[type="file"] {
+  background: #0e1116; color: #e4e4e4;
+  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 4px;
+  padding: 10px 12px; font-size: 14px; font-family: inherit;
+}
+.cp-label input:focus { outline: none; border-color: #ffb84d; }
+.cp-form-status { color: #f0a020; font-size: 13px; min-height: 18px; }
+.cp-thanks { text-align: center; padding: 40px 20px; }
+.cp-thanks h3 { color: #4caf50; margin: 0 0 8px; font-size: 20px; }
+.cp-thanks p { color: #ccc; }
