@@ -80,7 +80,7 @@
         {
           "selections": { "laser": "hitekk" },
           "priceUsd": 195,
-          "stripePriceId": "price_AXIS_HITEKK_PLACEHOLDER",
+          "stripePriceId": "price_1TTVIjIfCMZaSnjC1yqmcydR",
           "shippingRateId": "shr_1TTc20IfCMZaSnjCSSpSB0ti",
           "bundledPlate": "25.4"
         },
@@ -94,13 +94,13 @@
         {
           "selections": { "laser": "none" },
           "priceUsd": 165,
-          "stripePriceId": "price_AXIS_NOLASER_PLACEHOLDER",
+          "stripePriceId": "price_1TVVtcIfCMZaSnjCb1RiQdjw",
           "shippingRateId": "shr_1TTc20IfCMZaSnjCSSpSB0ti"
         }
       ],
       "replacementPlate": {
-        "stripePriceId": "price_AXIS_PLATE_12_PLACEHOLDER",
-        "shippingRateId": "shr_FREE_PLATE_PLACEHOLDER",
+        "stripePriceId": "price_1TVVynIfCMZaSnjCJsAXYTiC",
+        "shippingRateId": "shr_1TVW5rIfCMZaSnjCCcBx3UX3",
         "priceUsd": 12,
         "displayName": "AXIS Replacement Plate",
         "plateSizes": [
