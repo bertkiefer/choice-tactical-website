@@ -223,6 +223,9 @@ function findProductByPriceId(products, priceId) {
         if (v.stripePriceId === priceId) return { product: p, variant: v };
       }
     }
+    if (p.replacementPlate && p.replacementPlate.stripePriceId === priceId) {
+      return { product: p, variant: null };
+    }
   }
   return null;
 }

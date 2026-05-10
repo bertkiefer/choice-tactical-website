@@ -244,6 +244,9 @@
           if (vs[j].stripePriceId === priceId) return products[i];
         }
       }
+      if (products[i].replacementPlate && products[i].replacementPlate.stripePriceId === priceId) {
+        return products[i];
+      }
     }
     return null;
   }
