@@ -31,6 +31,7 @@ describe('token', () => {
     const tampered = token.replace(/approve/g, 'reject');
     const result = await verifyToken(tampered, SECRET);
     expect(result.ok).toBe(false);
+    expect(result.reason).toBe('invalid_signature');
   });
 
   it('rejects a malformed token', async () => {
