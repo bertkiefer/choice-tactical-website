@@ -14,9 +14,6 @@
       "subtitle": "Wind Flag Alignment System",
       "customerPictures": true,
       "cardImage": "/shop/images/the-axis/01-gunsmith-1.png",
-      "stripePriceId": "price_1TU8xZIfCMZaSnjC17yZUqDb",
-      "priceUsd": 175,
-      "shippingRateId": "shr_1TTc20IfCMZaSnjCSSpSB0ti",
       "images": [
         "/shop/images/the-axis/00-hero-branded.png",
         "/shop/images/the-axis/01-gunsmith-1.png",
@@ -68,6 +65,51 @@
           ]
         }
       ],
+      "options": [
+        {
+          "id": "laser",
+          "name": "Configuration",
+          "values": [
+            { "id": "hitekk",  "name": "HITEKK 5W Green Laser",  "default": true },
+            { "id": "miprezt", "name": "MIPREZT 2W Green Laser" },
+            { "id": "none",    "name": "No Laser (use my own)", "plateSelectable": true }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "selections": { "laser": "hitekk" },
+          "priceUsd": 195,
+          "stripePriceId": "price_AXIS_HITEKK_PLACEHOLDER",
+          "shippingRateId": "shr_1TTc20IfCMZaSnjCSSpSB0ti",
+          "bundledPlate": "25.4"
+        },
+        {
+          "selections": { "laser": "miprezt" },
+          "priceUsd": 175,
+          "stripePriceId": "price_1TU8xZIfCMZaSnjC17yZUqDb",
+          "shippingRateId": "shr_1TTc20IfCMZaSnjCSSpSB0ti",
+          "bundledPlate": "20.5"
+        },
+        {
+          "selections": { "laser": "none" },
+          "priceUsd": 165,
+          "stripePriceId": "price_AXIS_NOLASER_PLACEHOLDER",
+          "shippingRateId": "shr_1TTc20IfCMZaSnjCSSpSB0ti"
+        }
+      ],
+      "replacementPlate": {
+        "stripePriceId": "price_AXIS_PLATE_12_PLACEHOLDER",
+        "shippingRateId": "shr_FREE_PLATE_PLACEHOLDER",
+        "priceUsd": 12,
+        "displayName": "AXIS Replacement Plate",
+        "plateSizes": [
+          "12", "12.5", "13", "13.5", "14", "14.5", "15", "15.5",
+          "16", "16.5", "17", "17.5", "18", "18.5", "19", "19.5",
+          "20", "20.5", "21", "21.5", "22", "22.5", "23", "23.5",
+          "24", "24.5", "25", "25.4"
+        ]
+      },
       "inStock": true,
       "comingSoon": false
     },
