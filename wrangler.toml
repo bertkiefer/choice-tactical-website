@@ -5,7 +5,7 @@ pages_build_output_dir = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "customer_pictures"
-database_id = "REPLACE_WITH_PRODUCTION_ID"
+database_id = "969948af-0d37-49e4-b5df-6977e90d918e"
 
 [[r2_buckets]]
 binding = "CUSTOMER_PICTURES"
