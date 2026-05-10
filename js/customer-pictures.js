@@ -17,7 +17,7 @@
     });
   }
 
-  function buildGrid(items) {
+  function buildGrid(items, allPhotos) {
     if (!items.length) {
       var empty = el('div', 'cp-empty');
       empty.textContent = 'No customer pictures yet — be the first to share!';
@@ -25,20 +25,97 @@
     }
     var grid = el('div', 'cp-grid');
     items.forEach(function (item) {
+      var card = el('div', 'cp-submission');
+
+      var photosWrap = el('div', 'cp-submission-photos');
       (item.photoUrls || []).forEach(function (url) {
-        var tile = el('div', 'cp-tile');
-        tile.innerHTML =
-          '<a href="' + escapeAttr(url) + '" target="_blank" rel="noopener" class="cp-tile-link">' +
-            '<img src="' + escapeAttr(url) + '" alt="" loading="lazy">' +
-          '</a>' +
-          '<div class="cp-tile-meta">' +
-            '<div class="cp-tile-name">' + escapeAttr(item.name) + '</div>' +
-            '<div class="cp-tile-caption">' + escapeAttr(item.caption) + '</div>' +
-          '</div>';
-        grid.appendChild(tile);
+        var idx = allPhotos.findIndex(function (p) { return p.url === url; });
+        var link = el('a', 'cp-photo-link');
+        link.href = url;
+        link.setAttribute('aria-label', 'View larger');
+        link.innerHTML = '<img src="' + escapeAttr(url) + '" alt="" loading="lazy">';
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          openPhotoZoom(allPhotos, idx);
+        });
+        photosWrap.appendChild(link);
       });
+
+      var meta = el('div', 'cp-submission-meta');
+      meta.innerHTML =
+        '<div class="cp-submission-name">' + escapeAttr(item.name) + '</div>' +
+        '<div class="cp-submission-caption">' + escapeAttr(item.caption) + '</div>';
+
+      card.appendChild(photosWrap);
+      card.appendChild(meta);
+      grid.appendChild(card);
     });
     return grid;
+  }
+
+  function openPhotoZoom(allPhotos, startIdx) {
+    if (!allPhotos.length) return;
+    var idx = startIdx;
+
+    var zoom = el('div', 'cp-zoom-overlay');
+    zoom.innerHTML =
+      '<button type="button" class="cp-zoom-close" aria-label="Close">×</button>' +
+      '<button type="button" class="cp-zoom-nav cp-zoom-prev" aria-label="Previous">‹</button>' +
+      '<button type="button" class="cp-zoom-nav cp-zoom-next" aria-label="Next">›</button>' +
+      '<img class="cp-zoom-img" alt="">' +
+      '<div class="cp-zoom-meta">' +
+        '<div class="cp-zoom-name"></div>' +
+        '<div class="cp-zoom-caption"></div>' +
+      '</div>' +
+      '<div class="cp-zoom-counter"></div>';
+
+    var img = zoom.querySelector('.cp-zoom-img');
+    var nameEl = zoom.querySelector('.cp-zoom-name');
+    var captionEl = zoom.querySelector('.cp-zoom-caption');
+    var counterEl = zoom.querySelector('.cp-zoom-counter');
+    var prevBtn = zoom.querySelector('.cp-zoom-prev');
+    var nextBtn = zoom.querySelector('.cp-zoom-next');
+
+    function render() {
+      var p = allPhotos[idx];
+      img.src = p.url;
+      nameEl.textContent = p.name;
+      captionEl.textContent = p.caption;
+      counterEl.textContent = (idx + 1) + ' / ' + allPhotos.length;
+      var single = allPhotos.length <= 1;
+      prevBtn.style.display = single ? 'none' : '';
+      nextBtn.style.display = single ? 'none' : '';
+    }
+
+    function step(delta) {
+      idx = (idx + delta + allPhotos.length) % allPhotos.length;
+      render();
+    }
+
+    function closeZoom() {
+      document.removeEventListener('keydown', zoomKey);
+      zoom.remove();
+    }
+
+    function zoomKey(e) {
+      if (e.key === 'Escape') { e.stopPropagation(); closeZoom(); }
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    }
+
+    prevBtn.addEventListener('click', function (e) { e.stopPropagation(); step(-1); });
+    nextBtn.addEventListener('click', function (e) { e.stopPropagation(); step(1); });
+    zoom.querySelector('.cp-zoom-close').addEventListener('click', function (e) {
+      e.stopPropagation(); closeZoom();
+    });
+    zoom.addEventListener('click', function (e) {
+      // Click on backdrop (anywhere outside the image / controls) closes.
+      if (e.target === zoom) closeZoom();
+    });
+    document.addEventListener('keydown', zoomKey);
+
+    render();
+    document.body.appendChild(zoom);
   }
 
   var TURNSTILE_SITE_KEY = window.CT_TURNSTILE_SITE_KEY || '';
@@ -153,8 +230,16 @@
       '<button type="button" class="cp-close" aria-label="Close">×</button>';
     header.querySelector('.cp-close').addEventListener('click', function () { close(overlay); });
 
+    // Flatten all photos across submissions for zoom navigation
+    var allPhotos = [];
+    (data.items || []).forEach(function (item) {
+      (item.photoUrls || []).forEach(function (url) {
+        allPhotos.push({ url: url, name: item.name, caption: item.caption });
+      });
+    });
+
     var content = el('div', 'cp-content');
-    content.appendChild(buildGrid(data.items || []));
+    content.appendChild(buildGrid(data.items || [], allPhotos));
 
     var footer = el('div', 'cp-footer');
     var submitBtn = el('button', 'cp-submit-btn');
