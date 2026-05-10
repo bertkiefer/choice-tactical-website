@@ -7,7 +7,7 @@ import { cleanupOldPending } from '../../_lib/cleanup.js';
 
 const ALLOWED_SLUGS = ['the-axis', 'the-stack'];
 const PRODUCT_NAMES = { 'the-axis': 'The AXIS', 'the-stack': 'The Stack' };
-const MAX_PHOTOS = 3;
+const MAX_PHOTOS = 5;
 const RATE_LIMIT_WINDOW_SECONDS = 3600;
 const RATE_LIMIT_MAX = 3;
 const TOKEN_EXPIRY_SECONDS = 24 * 60 * 60;
@@ -57,8 +57,8 @@ export async function onRequestPost(context) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail) || customerEmail.length > 120) {
     return json({ error: 'Invalid email address' }, 400);
   }
-  if (caption.length < 1 || caption.length > 140) {
-    return json({ error: 'Caption must be 1–140 characters' }, 400);
+  if (caption.length < 1 || caption.length > 300) {
+    return json({ error: 'Caption must be 1–300 characters' }, 400);
   }
   if (photos.length < 1 || photos.length > MAX_PHOTOS) {
     return json({ error: `Submit between 1 and ${MAX_PHOTOS} photos` }, 400);

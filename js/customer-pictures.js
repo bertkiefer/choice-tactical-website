@@ -119,7 +119,7 @@
   }
 
   var TURNSTILE_SITE_KEY = window.CT_TURNSTILE_SITE_KEY || '';
-  var MAX_PHOTOS = 3;
+  var MAX_PHOTOS = 5;
   var MAX_DIM = 1600; // resize longest edge to this before upload
 
   async function compressImage(file) {
@@ -146,7 +146,7 @@
 
     var form = el('form', 'cp-form');
     form.innerHTML =
-      '<label class="cp-label">Photos (up to 3)' +
+      '<label class="cp-label">Photos (up to 5)' +
         '<input type="file" name="photo" accept="image/jpeg,image/png,image/webp" multiple required>' +
       '</label>' +
       '<label class="cp-label">Display name' +
@@ -156,7 +156,7 @@
         '<input type="email" name="email" required maxlength="120" placeholder="you@example.com">' +
       '</label>' +
       '<label class="cp-label">Caption' +
-        '<input type="text" name="caption" required maxlength="140" placeholder="Mounted on my Vortex Razor">' +
+        '<input type="text" name="caption" required maxlength="300" placeholder="Mounted on my Vortex Razor">' +
       '</label>' +
       '<div class="cf-turnstile" data-sitekey="' + escapeAttr(TURNSTILE_SITE_KEY) + '"></div>' +
       '<div class="cp-form-status"></div>' +
