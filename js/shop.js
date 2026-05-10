@@ -47,11 +47,13 @@
   }
 
   function lineKey(line) {
-    return (line.stripePriceId || '') + '|' + JSON.stringify(line.selections || {});
+    return (line.stripePriceId || '')
+      + '|' + JSON.stringify(line.selections || {})
+      + '|' + JSON.stringify(line.metadata || {});
   }
 
   function addToCart(item) {
-    // item = { slug, stripePriceId, qty, selections? }
+    // item = { slug, stripePriceId, qty, selections?, metadata? }
     var cart = readCart();
     var newKey = lineKey(item);
     var existing = null;
@@ -68,6 +70,7 @@
         slug: item.slug,
         stripePriceId: item.stripePriceId,
         selections: item.selections || null,
+        metadata: item.metadata || null,
         qty: Math.min(99, Math.max(1, item.qty))
       });
     }
