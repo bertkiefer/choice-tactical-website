@@ -131,7 +131,11 @@ function buildOrderEmail(session) {
       if (m) itemMeta[m[1]] = metadata[k];
     });
     const metaStr = Object.entries(itemMeta)
-      .map(([k, v]) => `${k}: ${v}`).join(', ');
+      .map(([k, v]) => {
+        if (k === 'plate_size') return `Plate: ${v} mm`;
+        return `${k}: ${v}`;
+      })
+      .join(', ');
     return {
       qty: li.quantity || 1,
       name: li.description || 'Item',

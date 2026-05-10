@@ -47,11 +47,13 @@
   }
 
   function lineKey(line) {
-    return (line.stripePriceId || '') + '|' + JSON.stringify(line.selections || {});
+    return (line.stripePriceId || '')
+      + '|' + JSON.stringify(line.selections || {})
+      + '|' + JSON.stringify(line.metadata || {});
   }
 
   function addToCart(item) {
-    // item = { slug, stripePriceId, qty, selections? }
+    // item = { slug, stripePriceId, qty, selections?, metadata? }
     var cart = readCart();
     var newKey = lineKey(item);
     var existing = null;
@@ -68,6 +70,7 @@
         slug: item.slug,
         stripePriceId: item.stripePriceId,
         selections: item.selections || null,
+        metadata: item.metadata || null,
         qty: Math.min(99, Math.max(1, item.qty))
       });
     }
@@ -147,14 +150,33 @@
       var rateSeen = {};
       var items = cart.map(function (i) {
         var p = findProductByStripePriceId(products, i.stripePriceId);
-        if (p && p.shippingRateId && !rateSeen[p.shippingRateId]) {
-          rateIds.push(p.shippingRateId);
-          rateSeen[p.shippingRateId] = true;
+        // Resolve shipping rate from the most specific match available:
+        // 1. replacementPlate (when this line is the plate-only line)
+        // 2. matching variant's shippingRateId
+        // 3. product top-level shippingRateId (legacy / simple products)
+        var rateId = null;
+        if (p) {
+          if (p.replacementPlate && p.replacementPlate.stripePriceId === i.stripePriceId
+              && p.replacementPlate.shippingRateId) {
+            rateId = p.replacementPlate.shippingRateId;
+          } else {
+            var v = findVariantByStripePriceId(p, i.stripePriceId);
+            if (v && v.shippingRateId) {
+              rateId = v.shippingRateId;
+            } else if (p.shippingRateId) {
+              rateId = p.shippingRateId;
+            }
+          }
+        }
+        if (rateId && !rateSeen[rateId]) {
+          rateIds.push(rateId);
+          rateSeen[rateId] = true;
         }
         return {
           stripePriceId: i.stripePriceId,
           qty: i.qty,
-          selections: i.selections || null
+          selections: i.selections || null,
+          metadata: i.metadata || null
         };
       });
 
@@ -392,29 +414,50 @@
       var initialPriceId = product.stripePriceId || '';
 
       if (hasOptions) {
-        var initialSelections = {};
+        // Pick the default-flagged value, or fall back to the first one
+        var defaultValueIdByOption = {};
         product.options.forEach(function (opt) {
-          if (opt.values && opt.values.length) initialSelections[opt.id] = opt.values[0].id;
+          var def = (opt.values || []).find(function (v) { return v.default; });
+          defaultValueIdByOption[opt.id] = def
+            ? def.id
+            : (opt.values && opt.values[0] && opt.values[0].id);
+        });
+
+        var initialSelections = {};
+        Object.keys(defaultValueIdByOption).forEach(function (k) {
+          initialSelections[k] = defaultValueIdByOption[k];
         });
         initialVariant = findVariantBySelections(product, initialSelections) || product.variants[0];
         initialPrice = initialVariant.priceUsd;
         initialPriceId = initialVariant.stripePriceId;
+
         variantPicker = '<div class="variant-picker">' +
           product.options.map(function (opt) {
+            var defId = defaultValueIdByOption[opt.id];
             return '<div class="variant-option-group">' +
               '<label class="variant-option-label" for="opt_' + escapeHtml(opt.id) + '">' +
                 escapeHtml(opt.name) +
               '</label>' +
               '<select class="variant-option-select" id="opt_' + escapeHtml(opt.id) + '" ' +
                 'data-option-id="' + escapeHtml(opt.id) + '">' +
-                (opt.values || []).map(function (val, i) {
+                (opt.values || []).map(function (val) {
                   var label = val.name + (val.subtitle ? ' (' + val.subtitle + ')' : '');
                   return '<option value="' + escapeHtml(val.id) + '"' +
-                    (i === 0 ? ' selected' : '') + '>' + escapeHtml(label) + '</option>';
+                    (val.id === defId ? ' selected' : '') + '>' + escapeHtml(label) + '</option>';
                 }).join('') +
               '</select>' +
             '</div>';
           }).join('') +
+          // Plate-size dropdown — hidden by default, shown when active option value has plateSelectable
+          '<div class="variant-option-group plate-size-group" id="plateSizeGroup" style="display:none">' +
+            '<label class="variant-option-label" for="opt_plate_size">Plate Size — match your laser\'s diameter</label>' +
+            '<select class="variant-option-select" id="opt_plate_size" data-plate-size="1">' +
+              '<option value="">Pick a size</option>' +
+              ((product.replacementPlate && product.replacementPlate.plateSizes) || []).map(function (s) {
+                return '<option value="' + escapeHtml(s) + '">' + escapeHtml(s) + ' mm</option>';
+              }).join('') +
+            '</select>' +
+          '</div>' +
         '</div>';
       } else if (hasFlatVariants) {
         initialVariant = product.variants[0];
@@ -465,6 +508,16 @@
       var addBtnEl = document.getElementById('addToCartBtn');
       var selects = container.querySelectorAll('.variant-option-select');
 
+      var plateGroup = container.querySelector('#plateSizeGroup');
+      var plateSelect = container.querySelector('#opt_plate_size');
+      var allowedPlates = (product.replacementPlate && product.replacementPlate.plateSizes) || [];
+
+      function activeOptionValue(optId, sels) {
+        var opt = (product.options || []).find(function (o) { return o.id === optId; });
+        if (!opt) return null;
+        return (opt.values || []).find(function (v) { return v.id === sels[optId]; });
+      }
+
       function applyVariant(v) {
         if (!v) return;
         if (priceLabel) {
@@ -473,27 +526,52 @@
         if (addBtnEl) addBtnEl.setAttribute('data-price-id', v.stripePriceId);
       }
 
-      function refresh() {
+      function refreshPlateGate() {
         if (hasOptions) {
-          var sel = {};
-          selects.forEach(function (s) {
-            sel[s.getAttribute('data-option-id')] = s.value;
+          var sels = {};
+          selects.forEach(function (s) { sels[s.getAttribute('data-option-id')] = s.value; });
+          applyVariant(findVariantBySelections(product, sels));
+
+          // Decide whether plate dropdown is required (any selected option value has plateSelectable)
+          var plateRequired = false;
+          Object.keys(sels).forEach(function (optId) {
+            var val = activeOptionValue(optId, sels);
+            if (val && val.plateSelectable) plateRequired = true;
           });
-          applyVariant(findVariantBySelections(product, sel));
+
+          if (plateGroup) {
+            if (plateRequired) {
+              plateGroup.style.display = '';
+            } else {
+              plateGroup.style.display = 'none';
+              if (plateSelect) plateSelect.value = '';
+            }
+          }
+
+          // Gate Add to Cart button
+          if (addBtnEl) {
+            var plateOk = !plateRequired
+              || (plateSelect && allowedPlates.indexOf(plateSelect.value) !== -1);
+            addBtnEl.disabled = !plateOk;
+            addBtnEl.title = plateOk ? '' : 'Pick your plate size to continue';
+          }
         } else {
           var idx = Number(selects[0] && selects[0].value);
           applyVariant(product.variants[idx]);
         }
       }
 
-      selects.forEach(function (s) {
-        s.addEventListener('change', refresh);
+      selects.forEach(function (sel) {
+        sel.addEventListener('change', refreshPlateGate);
       });
+      if (plateSelect) plateSelect.addEventListener('change', refreshPlateGate);
+      refreshPlateGate(); // initial state
     }
 
     var btn = document.getElementById('addToCartBtn');
     if (btn) {
       btn.addEventListener('click', function () {
+        if (btn.disabled) return;
         var qtyInput = document.getElementById('qtyInput');
         var qty = Math.max(1, Math.min(10, parseInt(qtyInput && qtyInput.value, 10) || 1));
         var priceId = btn.getAttribute('data-price-id');
@@ -505,11 +583,16 @@
             sel[s.getAttribute('data-option-id')] = s.value;
           });
         }
+        var meta = null;
+        if (plateGroup && plateGroup.style.display !== 'none' && plateSelect && plateSelect.value) {
+          meta = { plate_size: plateSelect.value };
+        }
         addToCart({
           slug: product.slug,
           stripePriceId: priceId,
           selections: sel,
-          qty: qty
+          qty: qty,
+          metadata: meta
         });
         showToast('Added to cart');
       });
@@ -517,6 +600,7 @@
 
     bindGalleryInteractions(container, images, product.name);
     setupCustomerPicturesButton(container, product);
+    renderReplacementPlateSection(container, product);
   }
 
   // ── Product gallery — hero swap + lightbox ─────
@@ -583,6 +667,55 @@
         }
         btn.addEventListener('click', function () { openLightbox(data); });
       });
+  }
+
+  function renderReplacementPlateSection(container, product) {
+    var rp = product.replacementPlate;
+    if (!rp || !Array.isArray(rp.plateSizes) || !rp.plateSizes.length) return;
+
+    var section = document.createElement('div');
+    section.className = 'replacement-plate-section';
+    section.innerHTML =
+      '<hr class="replacement-plate-divider">' +
+      '<h2 class="replacement-plate-h">Already own an AXIS?</h2>' +
+      '<p class="replacement-plate-blurb">Need a different plate to fit a different laser? ' +
+        'Replacement plates ship in a small padded envelope, free shipping included.</p>' +
+      '<div class="variant-option-group">' +
+        '<label class="variant-option-label" for="rp_plate_size">Plate Size</label>' +
+        '<select class="variant-option-select" id="rp_plate_size">' +
+          '<option value="">Pick a size</option>' +
+          rp.plateSizes.map(function (s) {
+            return '<option value="' + escapeHtml(s) + '">' + escapeHtml(s) + ' mm</option>';
+          }).join('') +
+        '</select>' +
+      '</div>' +
+      '<p class="replacement-plate-price">' + formatUSD(rp.priceUsd) + ' (shipping included)</p>' +
+      '<button type="button" class="add-to-cart-btn" id="rpAddBtn" disabled ' +
+        'title="Pick your plate size to continue">Add Plate to Cart</button>';
+
+    container.appendChild(section);
+
+    var sel = section.querySelector('#rp_plate_size');
+    var btn = section.querySelector('#rpAddBtn');
+    var allowed = rp.plateSizes;
+
+    sel.addEventListener('change', function () {
+      var ok = allowed.indexOf(sel.value) !== -1;
+      btn.disabled = !ok;
+      btn.title = ok ? '' : 'Pick your plate size to continue';
+    });
+
+    btn.addEventListener('click', function () {
+      if (btn.disabled) return;
+      addToCart({
+        slug: product.slug,
+        stripePriceId: rp.stripePriceId,
+        qty: 1,
+        selections: null,
+        metadata: { plate_size: sel.value }
+      });
+      showToast('Added to cart');
+    });
   }
 
   function ensureProductLightbox() {
@@ -713,11 +846,24 @@
         if (!p) { missing.push(line.stripePriceId); return; }
         var v = findVariantByStripePriceId(p, line.stripePriceId);
         var unitPrice = v ? v.priceUsd : p.priceUsd;
+        // For the replacement plate line (no variant), use replacementPlate.priceUsd
+        if (!v && p.replacementPlate && p.replacementPlate.stripePriceId === line.stripePriceId) {
+          unitPrice = p.replacementPlate.priceUsd;
+        }
         // Prefer line.selections (captures color too) over variant.selections (price only)
         var displayParts = '';
         if (line.selections) displayParts = selectionsDisplayName(p, line.selections);
         if (!displayParts) displayParts = variantDisplayName(p, v);
-        var displayName = displayParts ? (p.name + ' — ' + displayParts) : p.name;
+        // For the replacement-plate line, show the displayName from the rp block
+        var baseName = p.name;
+        if (!v && p.replacementPlate && p.replacementPlate.stripePriceId === line.stripePriceId) {
+          baseName = p.replacementPlate.displayName || (p.name + ' Replacement Plate');
+        }
+        var displayName = displayParts ? (baseName + ' — ' + displayParts) : baseName;
+        // Append plate size suffix when the line carries plate metadata
+        if (line.metadata && typeof line.metadata.plate_size === 'string' && line.metadata.plate_size) {
+          displayName = displayName + ' · ' + line.metadata.plate_size + ' mm plate';
+        }
         var lineTotal = unitPrice * line.qty;
         subtotalCents += lineTotal;
         var img = (p.images && p.images[0]) || '/shop/images/placeholder-1.svg';

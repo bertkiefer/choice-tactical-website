@@ -800,3 +800,51 @@
 .cp-thanks { text-align: center; padding: 40px 20px; }
 .cp-thanks h3 { color: #4caf50; margin: 0 0 8px; font-size: 20px; }
 .cp-thanks p { color: #ccc; }
+
+/* ── Replacement Plate section (AXIS detail page) ────────────── */
+.replacement-plate-divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 40px 0 24px;
+}
+.replacement-plate-section .replacement-plate-h {
+  font-size: 18px;
+  color: #ffb84d;
+  margin: 0 0 8px;
+  letter-spacing: 0.5px;
+}
+.replacement-plate-section .replacement-plate-blurb {
+  color: #ccc;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 16px;
+  max-width: 480px;
+}
+.replacement-plate-section .replacement-plate-price {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 12px 0 14px;
+}
+.replacement-plate-section .add-to-cart-btn:disabled {
+  background: rgba(255, 184, 77, 0.3);
+  cursor: not-allowed;
+}
+
+/* Plate-size dropdown when revealed by plateSelectable option value */
+.plate-size-group {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: rgba(255, 184, 77, 0.05);
+  border: 1px dashed rgba(255, 184, 77, 0.3);
+  border-radius: 4px;
+}
+.plate-size-group .variant-option-label {
+  color: #ffb84d;
+}
+
+/* Disabled Add to Cart in main configurator (when plate not picked) */
+.add-to-cart-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
