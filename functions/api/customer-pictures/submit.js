@@ -1,5 +1,5 @@
 // functions/api/customer-pictures/submit.js
-import { validateImage, MAX_PHOTO_BYTES } from '../../_lib/image-validation.js';
+import { validateImage } from '../../_lib/image-validation.js';
 import { verifyTurnstile } from '../../_lib/turnstile.js';
 import { signToken } from '../../_lib/token.js';
 import { buildModerationEmail, sendModerationEmail } from '../../_lib/email.js';
