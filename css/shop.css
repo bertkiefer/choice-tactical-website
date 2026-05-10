@@ -733,3 +733,18 @@
 .cp-tile-meta { padding: 8px 10px; }
 .cp-tile-name { font-size: 12px; font-weight: 600; color: #ffb84d; }
 .cp-tile-caption { font-size: 12px; color: #ccc; margin-top: 2px; line-height: 1.4; }
+
+/* ── Customer Pictures Submit Form ─────────────────────────────────────────── */
+.cp-form { display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin: 0 auto; }
+.cp-label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #ccc; text-transform: uppercase; letter-spacing: 0.5px; }
+.cp-hint { color: #777; text-transform: none; letter-spacing: 0; font-size: 11px; }
+.cp-label input[type="text"], .cp-label input[type="email"], .cp-label input[type="file"] {
+  background: #0e1116; color: #e4e4e4;
+  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 4px;
+  padding: 10px 12px; font-size: 14px; font-family: inherit;
+}
+.cp-label input:focus { outline: none; border-color: #ffb84d; }
+.cp-form-status { color: #f0a020; font-size: 13px; min-height: 18px; }
+.cp-thanks { text-align: center; padding: 40px 20px; }
+.cp-thanks h3 { color: #4caf50; margin: 0 0 8px; font-size: 20px; }
+.cp-thanks p { color: #ccc; }
