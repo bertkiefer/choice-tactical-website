@@ -1,0 +1,150 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Orders — Choice Tactical Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --gold: #CBB589; --bg: #0e1116; --card: #181d24; --txt: #e4e4e4; --muted: #999; --ok: #4caf50; --err: #f44336; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--txt); margin: 0; padding: 24px; }
+  h1 { color: var(--gold); margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 24px; font-size: 14px; }
+  .toolbar { display: flex; gap: 12px; margin: 0 0 16px; flex-wrap: wrap; }
+  select, input, button {
+    background: var(--card); color: var(--txt); border: 1px solid #2a2f38;
+    padding: 10px 14px; border-radius: 6px; font-size: 14px;
+  }
+  button { cursor: pointer; background: var(--gold); color: #12161A; font-weight: 600; border: none; }
+  button:hover { filter: brightness(1.1); }
+  .order { background: var(--card); border-radius: 10px; padding: 18px; margin: 0 0 14px; }
+  .order-header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin: 0 0 10px; }
+  .order-id { font-family: monospace; color: var(--gold); font-size: 13px; }
+  .order-cust { font-weight: 600; }
+  .order-total { font-size: 18px; font-weight: 700; }
+  .status { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+  .status.pending { background: #4a3c12; color: #ffd866; }
+  .status.shipped { background: #1b3d20; color: #6bd97a; }
+  .items, .addr { color: #bbb; font-size: 13px; margin: 4px 0; }
+  .ship-form { display: flex; gap: 8px; margin: 12px 0 0; flex-wrap: wrap; align-items: center; }
+  .ship-form select { min-width: 100px; }
+  .ship-form input { flex: 1; min-width: 200px; }
+  .msg { margin: 8px 0 0; font-size: 13px; }
+  .msg.ok { color: var(--ok); } .msg.err { color: var(--err); }
+  .empty { color: var(--muted); text-align: center; padding: 60px 20px; }
+</style></head>
+<body>
+  <h1>Orders</h1>
+  <p class="sub">Choice Tactical admin · <a href="ship.html" id="phoneLink" style="color:var(--gold)">Phone-friendly form →</a></p>
+
+  <div class="toolbar">
+    <select id="filter">
+      <option value="pending">Pending (need to ship)</option>
+      <option value="shipped">Shipped</option>
+      <option value="">All</option>
+    </select>
+    <button onclick="loadOrders()">Refresh</button>
+  </div>
+
+  <div id="orders"><div class="empty">Loading…</div></div>
+
+<script>
+  const urlParams = new URLSearchParams(location.search);
+  const adminKey = urlParams.get('key') || '';
+
+  // Carry the admin key into the phone-form sibling link
+  const phoneLink = document.getElementById('phoneLink');
+  if (phoneLink && adminKey) {
+    phoneLink.href = 'ship.html?key=' + encodeURIComponent(adminKey);
+  }
+
+  if (!adminKey) {
+    document.getElementById('orders').innerHTML =
+      '<div class="empty">Missing ?key=… in URL. Use the bookmarked admin URL.</div>';
+  }
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, m =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+  function fmtMoney(cents) { return '$' + (cents / 100).toFixed(2); }
+  function fmtDate(ms) { return new Date(ms).toLocaleString(); }
+
+  async function loadOrders() {
+    if (!adminKey) return;
+    const status = document.getElementById('filter').value;
+    const qs = new URLSearchParams({ key: adminKey });
+    if (status) qs.set('status', status);
+    const r = await fetch('/api/orders/list?' + qs.toString());
+    if (!r.ok) {
+      document.getElementById('orders').innerHTML =
+        '<div class="empty">Failed to load: ' + r.status + '</div>';
+      return;
+    }
+    const { orders } = await r.json();
+    renderOrders(orders);
+  }
+
+  function renderOrders(orders) {
+    if (!orders.length) {
+      document.getElementById('orders').innerHTML = '<div class="empty">No orders.</div>';
+      return;
+    }
+    document.getElementById('orders').innerHTML = orders.map(o => {
+      const addr = o.shipping_address || {};
+      const itemsText = (o.line_items || [])
+        .map(i => `${i.qty}× ${i.name}${i.meta ? ` (${i.meta})` : ''}`).join(', ');
+      const isPending = o.status === 'pending';
+      const trackingLine = isPending ? '' : `
+        <div class="items">Tracking: <strong>${esc(o.carrier || '')}</strong> ${esc(o.tracking_number || '')} — shipped ${o.shipped_at ? fmtDate(o.shipped_at) : ''}</div>`;
+      const shipForm = isPending ? `
+        <form class="ship-form" onsubmit="event.preventDefault(); shipIt(this, '${esc(o.id)}')">
+          <select name="carrier" required>
+            <option value="">Carrier…</option>
+            <option value="USPS">USPS</option>
+            <option value="UPS">UPS</option>
+          </select>
+          <input name="tracking" placeholder="Tracking number" required autocomplete="off">
+          <button type="submit">Mark Shipped + Email Customer</button>
+          <span class="msg"></span>
+        </form>` : '';
+      return `
+        <div class="order">
+          <div class="order-header">
+            <div>
+              <div class="order-id">${esc(o.short_id)} · ${fmtDate(o.paid_at)}</div>
+              <div class="order-cust">${esc(o.customer_name)} &lt;${esc(o.customer_email)}&gt;</div>
+            </div>
+            <div style="text-align:right">
+              <span class="status ${esc(o.status)}">${esc(o.status)}</span>
+              <div class="order-total">${fmtMoney(o.amount_total)}</div>
+            </div>
+          </div>
+          <div class="items">${esc(itemsText)}</div>
+          <div class="addr">Ship to: ${esc(addr.line1 || '')}${addr.line2 ? ', ' + esc(addr.line2) : ''}, ${esc(addr.city || '')}, ${esc(addr.state || '')} ${esc(addr.postal_code || '')} ${esc(addr.country || '')}</div>
+          ${trackingLine}
+          ${shipForm}
+        </div>`;
+    }).join('');
+  }
+
+  async function shipIt(form, orderId) {
+    const carrier = form.carrier.value;
+    const tracking = form.tracking.value.trim();
+    const msg = form.querySelector('.msg');
+    msg.className = 'msg'; msg.textContent = 'Sending…';
+    const r = await fetch('/api/orders/ship', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-admin-key': adminKey },
+      body: JSON.stringify({ order_id: orderId, carrier, tracking_number: tracking }),
+    });
+    if (r.ok) {
+      msg.className = 'msg ok';
+      msg.textContent = 'Shipped and emailed.';
+      setTimeout(loadOrders, 800);
+    } else {
+      const t = await r.text();
+      msg.className = 'msg err';
+      msg.textContent = 'Failed: ' + t;
+    }
+  }
+
+  document.getElementById('filter').addEventListener('change', loadOrders);
+  loadOrders();
+</script>
+</body></html>
