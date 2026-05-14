@@ -12,6 +12,102 @@
  *   ORDER_EMAIL_TO           — defaults to "orders@choice-tactical.com"
  */
 
+import { buildOrderConfirmationEmail } from '../_lib/email-order-confirmation.js';
+
+// Convert a Stripe session into a plain order object matching the D1 schema.
+function sessionToOrder(session) {
+  const customer = session.customer_details || {};
+  const shipping = customer.address || {};
+  const shippingRate = session.shipping_cost && session.shipping_cost.shipping_rate;
+  const metadata = session.metadata || {};
+
+  const lineItems = ((session.line_items && session.line_items.data) || []).map((li, i) => {
+    const num = i + 1;
+    const itemMeta = {};
+    Object.keys(metadata).forEach(k => {
+      const m = k.match(new RegExp(`^line_${num}_(.+)$`));
+      if (m) itemMeta[m[1]] = metadata[k];
+    });
+    const metaStr = Object.entries(itemMeta)
+      .map(([k, v]) => (k === 'plate_size' ? `Plate: ${v} mm` : `${k}: ${v}`))
+      .join(', ');
+    return {
+      qty: li.quantity || 1,
+      name: li.description || 'Item',
+      meta: metaStr,
+      total_cents: li.amount_total || 0,
+    };
+  });
+
+  return {
+    id: session.id,
+    short_id: (session.id || '').slice(-10),
+    customer_email: customer.email || '',
+    customer_name: customer.name || '',
+    amount_total: session.amount_total || 0,
+    amount_shipping: (session.shipping_cost && session.shipping_cost.amount_total) || 0,
+    amount_tax: (session.total_details && session.total_details.amount_tax) || 0,
+    currency: session.currency || 'usd',
+    line_items: lineItems,
+    shipping_address: {
+      line1: shipping.line1 || '',
+      line2: shipping.line2 || '',
+      city:  shipping.city  || '',
+      state: shipping.state || '',
+      postal_code: shipping.postal_code || '',
+      country: shipping.country || '',
+    },
+    shipping_rate_name: (shippingRate && shippingRate.display_name) || null,
+    payment_intent_id: session.payment_intent || null,
+    paid_at: Date.now(),
+  };
+}
+
+async function insertOrderIfNew(db, order) {
+  // Returns true if a NEW row was inserted, false if it already existed.
+  const result = await db.prepare(
+    `INSERT OR IGNORE INTO orders (
+       id, short_id, customer_email, customer_name,
+       amount_total, amount_shipping, amount_tax, currency,
+       line_items_json, shipping_address_json, shipping_rate_name,
+       status, payment_intent_id, paid_at
+     ) VALUES (?,?,?,?,?,?,?,?,?,?,?, 'pending', ?, ?)`
+  ).bind(
+    order.id, order.short_id, order.customer_email, order.customer_name,
+    order.amount_total, order.amount_shipping, order.amount_tax, order.currency,
+    JSON.stringify(order.line_items),
+    JSON.stringify(order.shipping_address),
+    order.shipping_rate_name,
+    order.payment_intent_id,
+    order.paid_at,
+  ).run();
+  return (result && result.meta && result.meta.changes) === 1;
+}
+
+async function sendCustomerConfirmation(env, order) {
+  const fromAddr = env.CUSTOMER_EMAIL_FROM || 'Choice Tactical <orders@choice-tactical.com>';
+  const replyTo  = env.REPLY_TO_EMAIL      || 'orders@choice-tactical.com';
+  const { subject, html, text } = buildOrderConfirmationEmail(order);
+
+  const r = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: fromAddr,
+      to: [order.customer_email],
+      reply_to: replyTo,
+      subject, html, text,
+    }),
+  });
+  if (!r.ok) {
+    const errText = await r.text();
+    console.error('Customer confirmation send failed', r.status, errText);
+  }
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
 
@@ -56,8 +152,23 @@ export async function onRequestPost(context) {
   }
   const session = await sr.json();
 
-  const { html, text, subject } = buildOrderEmail(session);
+  // Build the normalized order object (used for both D1 insert and customer email)
+  const order = sessionToOrder(session);
 
+  // Insert into D1 — idempotent on session id (INSERT OR IGNORE)
+  let isNewOrder = false;
+  if (env.DB) {
+    try {
+      isNewOrder = await insertOrderIfNew(env.DB, order);
+    } catch (e) {
+      console.error('D1 insert failed', e);
+    }
+  } else {
+    console.warn('env.DB not bound — skipping order persistence');
+  }
+
+  // Build and send the MERCHANT notification (existing behavior, keep working)
+  const { html, text, subject } = buildOrderEmail(session);
   const fromAddr = env.ORDER_EMAIL_FROM || 'Choice Tactical Orders <onboarding@resend.dev>';
   const toAddr   = env.ORDER_EMAIL_TO   || 'orders@choice-tactical.com';
 
@@ -72,19 +183,21 @@ export async function onRequestPost(context) {
       'Authorization': `Bearer ${env.RESEND_API_KEY}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      from: fromAddr,
-      to: [toAddr],
-      subject,
-      html,
-      text
-    })
+    body: JSON.stringify({ from: fromAddr, to: [toAddr], subject, html, text })
   });
-
   if (!er.ok) {
     const errText = await er.text();
-    console.error('Resend send failed', er.status, errText);
-    return new Response('Email send failed', { status: 500 });
+    console.error('Resend merchant send failed', er.status, errText);
+    // Continue — we still want to try the customer email
+  }
+
+  // Send CUSTOMER confirmation email (only on NEW order, not on webhook retries)
+  if (isNewOrder && order.customer_email) {
+    try {
+      await sendCustomerConfirmation(env, order);
+    } catch (e) {
+      console.error('Customer confirmation threw', e);
+    }
   }
 
   return new Response('OK', { status: 200 });
