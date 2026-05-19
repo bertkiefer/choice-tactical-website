@@ -442,6 +442,49 @@
       "comingSoon": false
     },
     {
+      "slug": "the-match",
+      "name": "The MATCH",
+      "subtitle": "Premium 12-round benchrest loading block",
+      "customerPictures": true,
+      "cardImage": "/shop/images/the-match/01-open.png",
+      "images": [
+        "/shop/images/the-match/01-open.png",
+        "/shop/images/the-match/02-closed.png"
+      ],
+      "priceUsd": 55.00,
+      "stripePriceId": "price_1TYtZ4IfCMZaSnjCO7S1cv4B",
+      "shippingRateId": "shr_1TYXH4IfCMZaSnjClnG1ZrlJ",
+      "description": [
+        {
+          "heading": "PREMIUM BENCHREST LOADING BLOCK",
+          "body": "The MATCH is a premium 12-round benchrest loading block built for shooters who load at the range and prepare only the rounds needed for a single match relay."
+        },
+        {
+          "heading": "BUILT FOR PRECISION RELOADERS",
+          "body": "Designed for precision reloaders, The MATCH keeps your cartridges organized, upright, protected, and ready on the bench. Its solid weighted feel helps it stay planted during use, while anti-slip feet keep it from moving around on the loading bench."
+        },
+        {
+          "heading": "MAGNETIC LID & PREMIUM FINISH",
+          "body": "The fitted magnetic lid snaps securely into place, protecting your rounds during transport and giving the box a clean, finished feel. Finished in matte black with copper accents, The MATCH combines function, stability, and premium presentation in one compact range-ready box."
+        },
+        {
+          "heading": "KEY FEATURES",
+          "items": [
+            "Holds 12 precision rifle cartridges",
+            "Magnetic protective lid",
+            "Built for benchrest and range-side reloading",
+            "Compact single-match ammo preparation design",
+            "Matte black finish with copper accents",
+            "Heavy, stable feel",
+            "Anti-slip feet",
+            "Premium Choice Tactical design"
+          ]
+        }
+      ],
+      "inStock": true,
+      "comingSoon": false
+    },
+    {
       "slug": "the-drift",
       "name": "The DRIFT",
       "subtitle": "Precision Wind Flags",
