@@ -446,9 +446,40 @@
         "/shop/images/the-match/01-open.png",
         "/shop/images/the-match/02-closed.png"
       ],
-      "priceUsd": 55.00,
-      "stripePriceId": "price_1TYtZ4IfCMZaSnjCO7S1cv4B",
+      "options": [
+        {
+          "id": "caliber",
+          "name": "Caliber",
+          "values": [
+            {
+              "id": "6ppc",
+              "name": "6PPC Class",
+              "default": true
+            },
+            {
+              "id": "30br",
+              "name": "30BR"
+            }
+          ]
+        }
+      ],
       "shippingRateId": "shr_1TYXH4IfCMZaSnjClnG1ZrlJ",
+      "variants": [
+        {
+          "selections": {
+            "caliber": "6ppc"
+          },
+          "priceUsd": 55.00,
+          "stripePriceId": "price_1TYtZ4IfCMZaSnjCO7S1cv4B"
+        },
+        {
+          "selections": {
+            "caliber": "30br"
+          },
+          "priceUsd": 55.00,
+          "stripePriceId": "price_1TYtZ4IfCMZaSnjCO7S1cv4B"
+        }
+      ],
       "description": [
         {
           "heading": "PREMIUM BENCHREST LOADING BLOCK",
