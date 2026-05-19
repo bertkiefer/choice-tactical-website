@@ -1,5 +1,3 @@
-const ALLOWED_SLUGS = ['the-axis', 'the-stack'];
-
 function json(data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data), {
     status,
@@ -15,8 +13,8 @@ export async function onRequestGet(context) {
   const { params, env } = context;
   const slug = String(params.slug || '');
 
-  if (!ALLOWED_SLUGS.includes(slug)) {
-    return json({ error: 'Unknown product' }, 404);
+  if (!slug) {
+    return json({ items: [], count: 0 });
   }
 
   const { results } = await env.DB

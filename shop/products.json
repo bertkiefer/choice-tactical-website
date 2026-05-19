@@ -4,7 +4,6 @@
       "slug": "the-element",
       "name": "The ELEMENT",
       "subtitle": "for the FN-120i with V4 AutoTrickler",
-      "customerPictures": true,
       "cardImage": "/shop/images/the-element/01-hero.png",
       "images": [
         "/shop/images/the-element/01-hero.png",
@@ -115,7 +114,6 @@
       "slug": "the-axis",
       "name": "The AXIS",
       "subtitle": "Wind Flag Alignment System",
-      "customerPictures": true,
       "cardImage": "/shop/images/the-axis/01-gunsmith-1.png",
       "images": [
         "/shop/images/the-axis/00-hero-branded.png",
@@ -261,7 +259,6 @@
       "slug": "the-stack",
       "name": "The STACK",
       "subtitle": "Gravity Feed Ammo Block",
-      "customerPictures": true,
       "cardImage": "/shop/images/the-stack/01-bench-1.png",
       "images": [
         "/shop/images/the-stack/01-bench-1.png",
@@ -373,7 +370,6 @@
       "slug": "the-lattice",
       "name": "The LATTICE",
       "subtitle": "Reloading block for 6PPC class and 30BR",
-      "customerPictures": true,
       "cardImage": "/shop/images/the-lattice/01-hero.png",
       "images": [
         "/shop/images/the-lattice/01-hero.png"
@@ -445,7 +441,6 @@
       "slug": "the-match",
       "name": "The MATCH",
       "subtitle": "Premium 12-round benchrest loading block",
-      "customerPictures": true,
       "cardImage": "/shop/images/the-match/01-open.png",
       "images": [
         "/shop/images/the-match/01-open.png",

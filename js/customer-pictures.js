@@ -2,8 +2,6 @@
 (function () {
   'use strict';
 
-  var SLUG_TO_NAME = { 'the-axis': 'The AXIS', 'the-stack': 'The STACK' };
-
   function el(tag, className, text) {
     var n = document.createElement(tag);
     if (className) n.className = className;
@@ -219,14 +217,14 @@
     content.appendChild(form);
   }
 
-  function open(slug, data) {
+  function open(slug, data, productName) {
     var overlay = el('div', 'cp-overlay');
     overlay.addEventListener('click', function (e) { if (e.target === overlay) close(overlay); });
 
     var box = el('div', 'cp-box');
     var header = el('div', 'cp-header');
     header.innerHTML =
-      '<h2>Customer Pictures — ' + escapeAttr(SLUG_TO_NAME[slug] || slug) + '</h2>' +
+      '<h2>Customer Pictures — ' + escapeAttr(productName || slug) + '</h2>' +
       '<button type="button" class="cp-close" aria-label="Close">×</button>';
     header.querySelector('.cp-close').addEventListener('click', function () { close(overlay); });
 

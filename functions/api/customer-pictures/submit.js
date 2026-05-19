@@ -5,8 +5,6 @@ import { signToken } from '../../_lib/token.js';
 import { buildModerationEmail, sendModerationEmail } from '../../_lib/email.js';
 import { cleanupOldPending } from '../../_lib/cleanup.js';
 
-const ALLOWED_SLUGS = ['the-axis', 'the-stack'];
-const PRODUCT_NAMES = { 'the-axis': 'The AXIS', 'the-stack': 'The STACK' };
 const MAX_PHOTOS = 5;
 const RATE_LIMIT_WINDOW_SECONDS = 3600;
 const RATE_LIMIT_MAX = 3;
@@ -47,8 +45,20 @@ export async function onRequestPost(context) {
   const turnstileToken = String(form.get('turnstileToken') || '');
   const photos = form.getAll('photo').filter(p => p && typeof p === 'object' && 'arrayBuffer' in p);
 
+  // ── Load catalog (canonical source of allowed slugs + names) ─
+  let catalogProducts = [];
+  try {
+    const catalogUrl = new URL('/shop/products.json?ts=' + Date.now(), request.url);
+    const cr = await fetch(catalogUrl.toString());
+    if (cr.ok) {
+      const data = await cr.json();
+      catalogProducts = Array.isArray(data.products) ? data.products : [];
+    }
+  } catch (_) { catalogProducts = []; }
+  const matchedProduct = catalogProducts.find(p => p && p.slug === productSlug);
+
   // ── Field validation ─────────────────────────────
-  if (!ALLOWED_SLUGS.includes(productSlug)) {
+  if (!matchedProduct) {
     return json({ error: 'Unknown product' }, 400);
   }
   if (customerName.length < 2 || customerName.length > 60) {
@@ -119,7 +129,7 @@ export async function onRequestPost(context) {
   const photoUrls = photoKeys.map(key => `${env.R2_PUBLIC_BASE_URL}/${key}`);
 
   const { subject, html } = buildModerationEmail({
-    productName: PRODUCT_NAMES[productSlug],
+    productName: matchedProduct.name,
     customerName,
     customerEmail,
     caption,

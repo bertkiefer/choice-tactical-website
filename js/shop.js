@@ -372,15 +372,13 @@
   function renderProductDetail(container, product) {
     var images = (product.images && product.images.length)
       ? product.images : ['/shop/images/placeholder-1.svg'];
-    var galleryButton = product.customerPictures
-      ? '<div class="customer-pictures-button-wrap">' +
-          '<button type="button" class="customer-pictures-button" data-slug="' +
-            escapeHtml(product.slug) + '">' +
-            '<span class="customer-pictures-icon">📷</span>' +
-            '<span class="customer-pictures-label">Customer Pictures</span>' +
-          '</button>' +
-        '</div>'
-      : '';
+    var galleryButton = '<div class="customer-pictures-button-wrap">' +
+      '<button type="button" class="customer-pictures-button" data-slug="' +
+        escapeHtml(product.slug) + '">' +
+        '<span class="customer-pictures-icon">📷</span>' +
+        '<span class="customer-pictures-label">Customer Pictures</span>' +
+      '</button>' +
+    '</div>';
 
     var gallery = '<div class="product-gallery">' +
       '<img class="product-gallery-hero no-zoom" id="productHero" ' +
@@ -642,7 +640,6 @@
   }
 
   function setupCustomerPicturesButton(container, product) {
-    if (!product.customerPictures) return;
     var btn = container.querySelector(
       '.customer-pictures-button[data-slug="' + product.slug + '"]'
     );
@@ -653,7 +650,7 @@
 
     function openLightbox(data) {
       if (window.CustomerPictures && typeof window.CustomerPictures.open === 'function') {
-        window.CustomerPictures.open(product.slug, data);
+        window.CustomerPictures.open(product.slug, data, product.name);
       }
     }
 
