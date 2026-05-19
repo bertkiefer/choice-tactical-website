@@ -2,11 +2,114 @@
   "products": [
     {
       "slug": "the-element",
-      "name": "The Element",
-      "subtitle": "V4 AutoTrickler Wind Shield",
-      "images": ["/shop/images/placeholder-1.svg"],
-      "inStock": false,
-      "comingSoon": true
+      "name": "The ELEMENT",
+      "subtitle": "for the FN-120i with V4 AutoTrickler",
+      "customerPictures": true,
+      "cardImage": "/shop/images/the-element/01-hero.png",
+      "images": [
+        "/shop/images/the-element/01-hero.png",
+        "/shop/images/the-element/02-angle.png",
+        "/shop/images/the-element/03-front-2.png",
+        "/shop/images/the-element/04-angle-2.png",
+        "/shop/images/the-element/05-interior-blue.png",
+        "/shop/images/the-element/06-led-detail.png",
+        "/shop/images/the-element/07-rear-power.png"
+      ],
+      "priceUsd": 425,
+      "stripePriceId": "price_1TYVRmIfCMZaSnjC8m0TahaB",
+      "shippingRateId": "shr_1TYVTdIfCMZaSnjCAq04PqTN",
+      "description": [
+        {
+          "heading": "PROTECT YOUR SCALE. STABILIZE YOUR MEASUREMENTS. LOAD WITH CONFIDENCE.",
+          "body": "When you are working with highly sensitive powder scales, even the smallest draft, vibration, uneven surface, or lighting issue can affect consistency. The Choice Tactical Precision Scale Enclosure is built specifically for reloaders who demand repeatable, stable, and accurate powder measurement in real-world loading environments. Designed around precision scales and AutoTrickler-style powder dispensing systems, this enclosure creates a controlled workspace around your scale while keeping access fast, clean, and practical. Whether you are loading at home, in a garage, or preparing precision rifle ammunition for match use, this enclosure helps protect your scale from airflow, movement, and environmental interference \u2014 so you can focus on building better ammo."
+        },
+        {
+          "heading": "BUILT FOR SENSITIVE RELOADING SCALES",
+          "body": "Highly sensitive scales are excellent tools, but they are also vulnerable to air movement, bench vibration, and inconsistent setup conditions. This enclosure helps create a more stable measuring environment by surrounding the scale with clear acrylic walls while still giving you full visibility and easy access. The result is a cleaner, more controlled powder measuring station that looks professional and functions like it belongs on a serious reloading bench."
+        },
+        {
+          "heading": "KEY FEATURES",
+          "items": [
+            "Clear acrylic protection \u2014 full visibility of scale, powder chamber, trickler, and display",
+            "Removable magnetic lid \u2014 secure during use, lifts off in seconds",
+            "Slide-up front access panel \u2014 dispense, adjust, and remove cases without opening the box",
+            "Adjustable leveling feet \u2014 fine-tune for any bench surface",
+            "Built-in bubble level \u2014 quick visual confirmation of level setup",
+            "Secure custom foam scale bed \u2014 holds the scale firmly in place",
+            "Rear power access \u2014 clean cable routing, no reaching inside",
+            "Dual 10-inch LED light bars with white-balance control",
+            "Motion sensor lighting \u2014 lights up the inside when you need it",
+            "Powder chamber lid access \u2014 built for AutoTrickler-style systems",
+            "Custom V4 AutoTrickler lid included \u2014 keeps the lid from flying away in windy conditions"
+          ]
+        },
+        {
+          "heading": "CLEAR ACRYLIC PROTECTION",
+          "body": "The enclosure uses clear acrylic walls to help shield the scale from drafts while keeping the entire weighing and dispensing process visible. You can monitor the scale, powder chamber, trickler, and display without opening the box or disturbing the setup."
+        },
+        {
+          "heading": "REMOVABLE MAGNETIC LID",
+          "body": "The top lid is removable and secured with magnets, making setup, cleaning, and adjustment simple. It stays in place during use but can be removed quickly when needed."
+        },
+        {
+          "heading": "SLIDE-UP FRONT ACCESS PANEL",
+          "body": "The front panel slides upward to give you direct access to the scale and powder area without removing the entire enclosure. This makes it easy to dispense powder, adjust components, or remove cases while keeping the rest of the setup protected."
+        },
+        {
+          "heading": "ADJUSTABLE LEVELING FEET",
+          "body": "Precision starts with a level platform. Adjustable feet allow you to fine-tune the enclosure so your scale sits properly and consistently, even if your bench surface is not perfectly flat."
+        },
+        {
+          "heading": "BUILT-IN BUBBLE LEVEL",
+          "body": "A bubble level on top gives you a quick visual reference so you can confirm the box is level before loading. This helps support consistent scale performance and repeatable setup from session to session."
+        },
+        {
+          "heading": "SECURE CUSTOM FOAM SCALE BED",
+          "body": "Inside the enclosure is a custom foam bed designed to hold the scale securely in position. This helps reduce movement and keeps the scale properly placed inside the box."
+        },
+        {
+          "heading": "REAR POWER ACCESS",
+          "body": "All scale power is extended to the back of the enclosure for easy plug-in access. No more awkward cable routing or reaching inside the box to connect power."
+        },
+        {
+          "heading": "DUAL 10-INCH LED LIGHT BARS",
+          "body": "Two built-in 10-inch LED lights illuminate the inside of the enclosure with clean daylight-style lighting. The lights include white balance control, allowing you to adjust the lighting to your preference and improve visibility around the scale and powder area."
+        },
+        {
+          "heading": "MOTION SENSOR LIGHTING",
+          "body": "The integrated motion sensors make the lighting more convenient during use. The inside of the box lights up when you need it, giving you better visibility without extra switches or clutter."
+        },
+        {
+          "heading": "POWDER CHAMBER LID ACCESS",
+          "body": "A dedicated hole in the lid allows proper access for the powder chamber setup, keeping the enclosure functional with AutoTrickler-style systems while still maintaining a protected environment."
+        },
+        {
+          "heading": "CUSTOM V4 AUTOTRICKLER LID INCLUDED",
+          "body": "The enclosure includes a custom V4 AutoTrickler lid designed to help keep the lid from flying away in windy conditions. This is especially useful for reloaders who have experienced lightweight lids moving, shifting, or being blown off during use."
+        },
+        {
+          "heading": "WHY IT MATTERS",
+          "body": "Reloading precision ammunition is about controlling variables. Powder charge consistency is one of the most important parts of that process, and your scale is one of the most sensitive tools on the bench. This enclosure helps reduce common problems that can affect scale readings:"
+        },
+        {
+          "heading": "PROBLEMS IT SOLVES",
+          "items": [
+            "Air drafts from fans, HVAC, open doors, or movement around the bench",
+            "Uneven bench surfaces",
+            "Poor lighting around the scale",
+            "Loose or exposed cables",
+            "Scale movement during setup or use",
+            "Lightweight AutoTrickler lids shifting in windy conditions",
+            "Cluttered or unprotected powder measuring stations"
+          ]
+        },
+        {
+          "heading": "BUILT IN THE USA",
+          "body": "By creating a dedicated protected space for your scale and powder dispensing system, the Choice Tactical Precision Scale Enclosure helps bring more consistency and confidence to your loading process. Built in the USA by Choice Tactical."
+        }
+      ],
+      "inStock": true,
+      "comingSoon": false
     },
     {
       "slug": "the-axis",
@@ -27,27 +130,27 @@
       "description": [
         {
           "heading": "BUILT FOR PRECISION",
-          "body": "A precision benchtop tool that projects a green laser along your shooting lane — giving you a visible reference for placing wind flags exactly on the line of fire and at consistent heights."
+          "body": "A precision benchtop tool that projects a green laser along your shooting lane \u2014 giving you a visible reference for placing wind flags exactly on the line of fire and at consistent heights."
         },
         {
           "heading": "AT THE RANGE",
           "items": [
-            "Sight your scope on the target — line of fire locked in.",
-            "Turn on the laser — projects parallel to the scope, straight through the air.",
+            "Sight your scope on the target \u2014 line of fire locked in.",
+            "Turn on the laser \u2014 projects parallel to the scope, straight through the air.",
             "Walk downrange with a board, your body, or the flag stand itself.",
             "The green dot shows exactly where the line of fire passes at that distance.",
-            "Use the dot height to set the stand — flag goes on-line AND on elevation."
+            "Use the dot height to set the stand \u2014 flag goes on-line AND on elevation."
           ]
         },
         {
           "heading": "WHY IT MATTERS",
-          "body": "Most shooters get wind flags close, not exact. A flag five yards off the line of fire — or sitting at a different height than the next flag — gives you the wrong wind read. The AXIS makes every flag, at every distance, identically aligned. Trust your wind call."
+          "body": "Most shooters get wind flags close, not exact. A flag five yards off the line of fire \u2014 or sitting at a different height than the next flag \u2014 gives you the wrong wind read. The AXIS makes every flag, at every distance, identically aligned. Trust your wind call."
         },
         {
           "heading": "KEY FEATURES",
           "items": [
             "5W Green Laser",
-            "Picatinny rail — fits any standard scope",
+            "Picatinny rail \u2014 fits any standard scope",
             "Integrated bubble level",
             "Adjustable leveling feet",
             "Knurled on/off dial for one-handed use",
@@ -58,7 +161,7 @@
         {
           "heading": "WHY YOU'LL LOVE IT",
           "items": [
-            "Set your flags in minutes — no string lines",
+            "Set your flags in minutes \u2014 no string lines",
             "Same exact flag layout, range after range",
             "Confidence in every wind call",
             "Built in the USA by Choice Tactical"
@@ -70,29 +173,46 @@
           "id": "laser",
           "name": "Configuration",
           "values": [
-            { "id": "hitekk",  "name": "HITEKK 5W Green Laser",  "default": true },
-            { "id": "miprezt", "name": "MIPREZT 2W Green Laser" },
-            { "id": "none",    "name": "No Laser (use my own)", "plateSelectable": true }
+            {
+              "id": "hitekk",
+              "name": "HITEKK 5W Green Laser",
+              "default": true
+            },
+            {
+              "id": "miprezt",
+              "name": "MIPREZT 2W Green Laser"
+            },
+            {
+              "id": "none",
+              "name": "No Laser (use my own)",
+              "plateSelectable": true
+            }
           ]
         }
       ],
       "variants": [
         {
-          "selections": { "laser": "hitekk" },
+          "selections": {
+            "laser": "hitekk"
+          },
           "priceUsd": 195,
           "stripePriceId": "price_1TTVIjIfCMZaSnjC1yqmcydR",
           "shippingRateId": "shr_1TTc20IfCMZaSnjCSSpSB0ti",
           "bundledPlate": "25.4"
         },
         {
-          "selections": { "laser": "miprezt" },
+          "selections": {
+            "laser": "miprezt"
+          },
           "priceUsd": 175,
           "stripePriceId": "price_1TU8xZIfCMZaSnjC17yZUqDb",
           "shippingRateId": "shr_1TTc20IfCMZaSnjCSSpSB0ti",
           "bundledPlate": "20.5"
         },
         {
-          "selections": { "laser": "none" },
+          "selections": {
+            "laser": "none"
+          },
           "priceUsd": 165,
           "stripePriceId": "price_1TVVtcIfCMZaSnjCb1RiQdjw",
           "shippingRateId": "shr_1TTc20IfCMZaSnjCSSpSB0ti"
@@ -104,22 +224,38 @@
         "priceUsd": 12,
         "displayName": "AXIS Replacement Plate",
         "plateSizes": [
-          "12", "12.5", "13", "13.5", "14", "14.5", "15", "15.5",
-          "16", "16.5", "17", "17.5", "18", "18.5", "19", "19.5",
-          "20", "20.5", "21", "21.5", "22", "22.5", "23", "23.5",
-          "24", "24.5", "25", "25.4"
+          "12",
+          "12.5",
+          "13",
+          "13.5",
+          "14",
+          "14.5",
+          "15",
+          "15.5",
+          "16",
+          "16.5",
+          "17",
+          "17.5",
+          "18",
+          "18.5",
+          "19",
+          "19.5",
+          "20",
+          "20.5",
+          "21",
+          "21.5",
+          "22",
+          "22.5",
+          "23",
+          "23.5",
+          "24",
+          "24.5",
+          "25",
+          "25.4"
         ]
       },
       "inStock": true,
       "comingSoon": false
-    },
-    {
-      "slug": "the-drift",
-      "name": "The Drift",
-      "subtitle": "Precision Wind Flags",
-      "images": ["/shop/images/placeholder-3.svg"],
-      "inStock": false,
-      "comingSoon": true
     },
     {
       "slug": "the-stack",
@@ -139,24 +275,56 @@
           "id": "capacity",
           "name": "Capacity",
           "values": [
-            { "id": "single", "name": "Single Stack", "description": "Holds 10 cartridges. One gravity-feed column with hex base." },
-            { "id": "double", "name": "Double Stack", "description": "Holds 20 cartridges. Two gravity-feed columns with hex base." }
+            {
+              "id": "single",
+              "name": "Single Stack",
+              "description": "Holds 10 cartridges. One gravity-feed column with hex base."
+            },
+            {
+              "id": "double",
+              "name": "Double Stack",
+              "description": "Holds 20 cartridges. Two gravity-feed columns with hex base."
+            }
           ]
         },
         {
           "id": "color",
           "name": "Color",
           "values": [
-            { "id": "black", "name": "Black", "subtitle": "Black Base" },
-            { "id": "burnt-titanium", "name": "Burnt Titanium", "subtitle": "Burnt Titanium Base" },
-            { "id": "copper", "name": "Copper", "subtitle": "Black Base" }
+            {
+              "id": "black",
+              "name": "Black",
+              "subtitle": "Black Base"
+            },
+            {
+              "id": "burnt-titanium",
+              "name": "Burnt Titanium",
+              "subtitle": "Burnt Titanium Base"
+            },
+            {
+              "id": "copper",
+              "name": "Copper",
+              "subtitle": "Black Base"
+            }
           ]
         }
       ],
       "shippingRateId": "shr_1TTk8JIfCMZaSnjCFrASdj7N",
       "variants": [
-        { "selections": { "capacity": "single" }, "priceUsd": 70, "stripePriceId": "price_1TTk0rIfCMZaSnjCtyrqaY47" },
-        { "selections": { "capacity": "double" }, "priceUsd": 90, "stripePriceId": "price_1TTgyqIfCMZaSnjC7rYVSHRP" }
+        {
+          "selections": {
+            "capacity": "single"
+          },
+          "priceUsd": 70,
+          "stripePriceId": "price_1TTk0rIfCMZaSnjCtyrqaY47"
+        },
+        {
+          "selections": {
+            "capacity": "double"
+          },
+          "priceUsd": 90,
+          "stripePriceId": "price_1TTgyqIfCMZaSnjC7rYVSHRP"
+        }
       ],
       "description": [
         {
@@ -167,7 +335,7 @@
           "heading": "AT THE RANGE",
           "items": [
             "Add the flexible arm and the bracket to mount the Stack to the thumbscrew of your front rest.",
-            "Drop prepared rounds into the slots — gravity holds them in column.",
+            "Drop prepared rounds into the slots \u2014 gravity holds them in column.",
             "Reach in, grab the next round nose-up, chamber, fire.",
             "Use the six base receivers for fouling shots, sighters, or a staged reload.",
             "Wipe clean. Pack up. Repeat next match."
@@ -175,16 +343,16 @@
         },
         {
           "heading": "WHY IT MATTERS",
-          "body": "At a precision match the difference between a .25 MOA group and a .45 MOA group is often just rhythm — and rhythm breaks the moment you fumble for a round. Loose ammo rolls. Pocket carry dings bullet tips. Plastic boxes are slow and force you to look down. The Stack keeps your rounds in the same spot, in the same order, every shot, every relay. Eyes stay on the rifle. Cadence stays smooth."
+          "body": "At a precision match the difference between a .25 MOA group and a .45 MOA group is often just rhythm \u2014 and rhythm breaks the moment you fumble for a round. Loose ammo rolls. Pocket carry dings bullet tips. Plastic boxes are slow and force you to look down. The Stack keeps your rounds in the same spot, in the same order, every shot, every relay. Eyes stay on the rifle. Cadence stays smooth."
         },
         {
           "heading": "KEY FEATURES",
           "items": [
-            "Single or Twin gravity-feed columns — rounds dispense in load order",
-            "Six-position perimeter base — for sighters, fouling shots, or a quick reload stage",
-            "Flexible arm with bracket mount — locks rock-solid to a front rest",
+            "Single or Twin gravity-feed columns \u2014 rounds dispense in load order",
+            "Six-position perimeter base \u2014 for sighters, fouling shots, or a quick reload stage",
+            "Flexible arm with bracket mount \u2014 locks rock-solid to a front rest",
             "Sized for common benchrest rifle cartridges (6PPC, 6BR, 30BR or any variant of 6mm)",
-            "Matte finish — won't reflect into your scope or your neighbor's",
+            "Matte finish \u2014 won't reflect into your scope or your neighbor's",
             "Built in the USA by Choice Tactical",
             "** Cartridges and rifle not included"
           ]
@@ -202,10 +370,94 @@
       "comingSoon": false
     },
     {
+      "slug": "the-lattice",
+      "name": "The LATTICE",
+      "subtitle": "Reloading block for 6PPC class and 30BR",
+      "customerPictures": true,
+      "cardImage": "/shop/images/the-lattice/01-hero.png",
+      "images": [
+        "/shop/images/the-lattice/01-hero.png"
+      ],
+      "options": [
+        {
+          "id": "caliber",
+          "name": "Caliber",
+          "values": [
+            {
+              "id": "6ppc",
+              "name": "6PPC Class",
+              "default": true
+            },
+            {
+              "id": "30br",
+              "name": "30BR"
+            }
+          ]
+        }
+      ],
+      "shippingRateId": "shr_1TYXH4IfCMZaSnjClnG1ZrlJ",
+      "variants": [
+        {
+          "selections": {
+            "caliber": "6ppc"
+          },
+          "priceUsd": 49.95,
+          "stripePriceId": "price_1TYXEyIfCMZaSnjCL2fCVnPq"
+        },
+        {
+          "selections": {
+            "caliber": "30br"
+          },
+          "priceUsd": 49.95,
+          "stripePriceId": "price_1TYXEyIfCMZaSnjCL2fCVnPq"
+        }
+      ],
+      "description": [
+        {
+          "heading": "CUSTOM RELOADING BLOCK FOR 6PPC CLASS & 30BR",
+          "body": "Built for precision reloaders who want a cleaner, heavier, more stable way to organize brass at the bench, this custom reloading block is designed specifically for 6PPC Class and 30BR caliber brass. With a premium matte black body, copper-accented pockets, and a bold Choice Tactical front logo, it brings both function and a high-end custom look to any reloading setup."
+        },
+        {
+          "heading": "AT THE BENCH",
+          "body": "This block holds 50 pieces of brass securely in a clean, organized layout, making it ideal for load development, match prep, case sorting, powder charging, and benchrest ammunition workflow. The anti-slip feet keep it from sliding around during use."
+        },
+        {
+          "heading": "WHY IT MATTERS",
+          "body": "The pocket layout is designed for easy access and clear visibility, helping you keep your brass controlled and separated through each step of the reloading process. Whether you are preparing rounds for a match, working through a load development ladder, or keeping fired and prepped brass organized, this block gives you a solid, professional work surface that looks as good as it performs."
+        },
+        {
+          "heading": "KEY FEATURES",
+          "items": [
+            "Designed for 6PPC Class and 30BR brass",
+            "Holds 50 pieces of brass",
+            "Anti-slip feet help prevent movement while working",
+            "Premium matte black and copper color combination",
+            "Clean, professional look for precision reloading benches",
+            "Ideal for benchrest shooters, load development, match prep, and brass organization",
+            "Engraved Choice Tactical branding for a custom, high-end finish"
+          ]
+        }
+      ],
+      "inStock": true,
+      "comingSoon": false
+    },
+    {
+      "slug": "the-drift",
+      "name": "The Drift",
+      "subtitle": "Precision Wind Flags",
+      "images": [
+        "/shop/images/placeholder-3.svg"
+      ],
+      "inStock": false,
+      "comingSoon": true
+    },
+    {
       "slug": "the-artisan",
       "name": "The Artisan",
       "subtitle": "Handcrafted Reloading Range Box",
-      "images": ["/shop/images/placeholder-5.svg"],
+      "images": [
+        "/shop/images/placeholder-5.svg"
+      ],
       "inStock": false,
       "comingSoon": true
     }

@@ -242,31 +242,16 @@ function findProductByPriceId(products, priceId) {
 function buildLineDisplay(product, variant, selections) {
   const parts = [product.name];
   const opts = Array.isArray(product.options) ? product.options : [];
-
-  // Variant-driven option labels (e.g. capacity)
-  if (variant && variant.selections) {
-    const vNames = [];
-    for (const opt of opts) {
-      const id = variant.selections[opt.id];
-      if (!id) continue;
-      const val = (opt.values || []).find(v => v.id === id);
-      if (val) vNames.push(val.name);
-    }
-    if (vNames.length) parts.push(vNames.join(', '));
+  const names = [];
+  // Cart's explicit selection wins (handles variants that share a Stripe price ID,
+  // e.g. LATTICE caliber). Variant's pinned selection is the fallback.
+  for (const opt of opts) {
+    const id = (selections && selections[opt.id])
+      || (variant && variant.selections && variant.selections[opt.id]);
+    if (!id) continue;
+    const val = (opt.values || []).find(v => v.id === id);
+    if (val) names.push(val.name);
   }
-
-  // Extra selections from the cart line that variant didn't cover (e.g. color)
-  if (selections) {
-    const extra = [];
-    for (const opt of opts) {
-      if (variant && variant.selections && variant.selections[opt.id]) continue;
-      const id = selections[opt.id];
-      if (!id) continue;
-      const val = (opt.values || []).find(v => v.id === id);
-      if (val) extra.push(val.name);
-    }
-    if (extra.length) parts.push(extra.join(', '));
-  }
-
+  if (names.length) parts.push(names.join(', '));
   return parts.join(' — ');
 }
