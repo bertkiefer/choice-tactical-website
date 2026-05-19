@@ -259,7 +259,7 @@
     },
     {
       "slug": "the-stack",
-      "name": "The Stack",
+      "name": "The STACK",
       "subtitle": "Gravity Feed Ammo Block",
       "customerPictures": true,
       "cardImage": "/shop/images/the-stack/01-bench-1.png",
@@ -343,7 +343,7 @@
         },
         {
           "heading": "WHY IT MATTERS",
-          "body": "At a precision match the difference between a .25 MOA group and a .45 MOA group is often just rhythm \u2014 and rhythm breaks the moment you fumble for a round. Loose ammo rolls. Pocket carry dings bullet tips. Plastic boxes are slow and force you to look down. The Stack keeps your rounds in the same spot, in the same order, every shot, every relay. Eyes stay on the rifle. Cadence stays smooth."
+          "body": "At a precision match the difference between a .25 MOA group and a .45 MOA group is often just rhythm \u2014 and rhythm breaks the moment you fumble for a round. Loose ammo rolls. Pocket carry dings bullet tips. Plastic boxes are slow and force you to look down. The STACK keeps your rounds in the same spot, in the same order, every shot, every relay. Eyes stay on the rifle. Cadence stays smooth."
         },
         {
           "heading": "KEY FEATURES",
@@ -401,14 +401,14 @@
           "selections": {
             "caliber": "6ppc"
           },
-          "priceUsd": 49.95,
+          "priceUsd": 45.00,
           "stripePriceId": "price_1TYXEyIfCMZaSnjCL2fCVnPq"
         },
         {
           "selections": {
             "caliber": "30br"
           },
-          "priceUsd": 49.95,
+          "priceUsd": 45.00,
           "stripePriceId": "price_1TYXEyIfCMZaSnjCL2fCVnPq"
         }
       ],
@@ -443,20 +443,10 @@
     },
     {
       "slug": "the-drift",
-      "name": "The Drift",
+      "name": "The DRIFT",
       "subtitle": "Precision Wind Flags",
       "images": [
         "/shop/images/placeholder-3.svg"
-      ],
-      "inStock": false,
-      "comingSoon": true
-    },
-    {
-      "slug": "the-artisan",
-      "name": "The Artisan",
-      "subtitle": "Handcrafted Reloading Range Box",
-      "images": [
-        "/shop/images/placeholder-5.svg"
       ],
       "inStock": false,
       "comingSoon": true

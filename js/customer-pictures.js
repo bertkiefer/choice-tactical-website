@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  var SLUG_TO_NAME = { 'the-axis': 'The AXIS', 'the-stack': 'The Stack' };
+  var SLUG_TO_NAME = { 'the-axis': 'The AXIS', 'the-stack': 'The STACK' };
 
   function el(tag, className, text) {
     var n = document.createElement(tag);

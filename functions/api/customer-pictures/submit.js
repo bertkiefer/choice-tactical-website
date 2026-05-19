@@ -6,7 +6,7 @@ import { buildModerationEmail, sendModerationEmail } from '../../_lib/email.js';
 import { cleanupOldPending } from '../../_lib/cleanup.js';
 
 const ALLOWED_SLUGS = ['the-axis', 'the-stack'];
-const PRODUCT_NAMES = { 'the-axis': 'The AXIS', 'the-stack': 'The Stack' };
+const PRODUCT_NAMES = { 'the-axis': 'The AXIS', 'the-stack': 'The STACK' };
 const MAX_PHOTOS = 5;
 const RATE_LIMIT_WINDOW_SECONDS = 3600;
 const RATE_LIMIT_MAX = 3;
