@@ -309,6 +309,7 @@ function buildOrderEmail(session) {
   const total = ((session.amount_total || 0) / 100).toFixed(2);
   const customerName = customer.name || '';
   const customerEmail = customer.email || '';
+  const customerPhone = customer.phone || '';
   const orderShortId = (session.id || '').slice(-10);
 
   const subject = `New order ${orderShortId} — ${customerName || 'Customer'} — $${total}`;
@@ -318,7 +319,7 @@ function buildOrderEmail(session) {
     `New Choice Tactical order`,
     ``,
     `Order: ${session.id}`,
-    `Customer: ${customerName} <${customerEmail}>`,
+    `Customer: ${customerName} <${customerEmail}>${customerPhone ? ` — ${customerPhone}` : ''}`,
     ``,
     `SHIP TO:`,
     `  ${customerName}`,
@@ -363,7 +364,8 @@ function buildOrderEmail(session) {
 
     <h3 style="font-size:12px;letter-spacing:.1em;color:#888;margin:0 0 6px;text-transform:uppercase">Customer</h3>
     <p style="margin:0 0 4px"><strong>${esc(customerName)}</strong></p>
-    <p style="margin:0 0 24px;color:#444"><a href="mailto:${esc(customerEmail)}" style="color:#444;text-decoration:none">${esc(customerEmail)}</a></p>
+    <p style="margin:0 0 4px;color:#444"><a href="mailto:${esc(customerEmail)}" style="color:#444;text-decoration:none">${esc(customerEmail)}</a></p>
+    ${customerPhone ? `<p style="margin:0 0 24px;color:#444"><a href="tel:${esc(customerPhone)}" style="color:#444;text-decoration:none">${esc(customerPhone)}</a></p>` : '<p style="margin:0 0 24px"></p>'}
 
     <h3 style="font-size:12px;letter-spacing:.1em;color:#888;margin:0 0 6px;text-transform:uppercase">Ship To</h3>
     <p style="margin:0 0 24px;line-height:1.6">

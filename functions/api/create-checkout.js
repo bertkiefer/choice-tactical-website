@@ -119,6 +119,8 @@ export async function onRequestPost(context) {
   form.append('mode', 'payment');
   form.append('automatic_tax[enabled]', 'true');
   form.append('shipping_address_collection[allowed_countries][0]', 'US');
+  form.append('allow_promotion_codes', 'true');
+  form.append('phone_number_collection[enabled]', 'true');
 
   if (winner && winner.kind === 'flat' && winner.rateId) {
     form.append('shipping_options[0][shipping_rate]', winner.rateId);
