@@ -17,6 +17,7 @@
       "priceUsd": 495,
       "stripePriceId": "price_1TYVRmIfCMZaSnjC8m0TahaB",
       "shippingRateId": "shr_1TYVTdIfCMZaSnjCAq04PqTN",
+      "bulkyShipping": true,
       "description": [
         {
           "heading": "PROTECT YOUR SCALE. STABILIZE YOUR MEASUREMENTS. LOAD WITH CONFIDENCE.",
@@ -573,6 +574,7 @@
       "priceUsd": 105.0,
       "video": "/shop/videos/the-drift/wind-flag-demo.mp4",
       "stripePriceId": "price_1TxMVZIfCMZaSnjC4XZF8te3",
+      "bulkyShipping": true,
       "shippingPerUnit": {
         "baseUsd": 34.99,
         "additionalUsd": 5.0

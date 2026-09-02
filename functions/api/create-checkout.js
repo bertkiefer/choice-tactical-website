@@ -58,18 +58,43 @@ export async function onRequestPost(context) {
   } catch (_) { products = []; }
 
   // ── Resolve shipping rate ──────────────────────
-  // Gather every shipping candidate implied by this cart, then charge the customer
-  // the HIGHEST one — same "worst case wins" rule as before, just generalized to
-  // include per-unit (quantity-scaled) shipping alongside flat Stripe shipping_rate
-  // objects. A product opts into per-unit shipping via a `shippingPerUnit` block in
-  // products.json: { "baseUsd": 34.99, "additionalUsd": 5.00 } — 1st unit costs
-  // baseUsd, each additional unit of that SAME product adds additionalUsd.
-  // Everything else (flat shippingRateId products) is untouched.
-  const candidates = []; // { amountCents, kind: 'flat'|'dynamic', rateId? }
+  // Gather every shipping candidate implied by this cart. A product opts into
+  // per-unit shipping via a `shippingPerUnit` block in products.json:
+  // { "baseUsd": 34.99, "additionalUsd": 5.00 } — 1st unit costs baseUsd, each
+  // additional unit of that SAME product adds additionalUsd. Everything else
+  // uses a flat Stripe shipping_rate object.
+  //
+  // Bulky-item rule (products.json `bulkyShipping: true` — currently The
+  // ELEMENT and The DRIFT): when a bulky item is ordered ALONGSIDE other
+  // (non-bulky) products, the customer is charged that bulky item's own
+  // shipping cost PLUS the single highest-cost non-bulky item's shipping —
+  // not just the single highest candidate overall. This replaced "highest
+  // candidate in the whole cart wins" after a customer paid only $39.99
+  // shipping on an ELEMENT + 8 other items order. A cart with NO bulky items,
+  // or with a bulky item and nothing else, is unaffected — same single-
+  // highest-wins behavior as before. DRIFT's own per-unit scaling still
+  // applies first; the resulting per-unit total is what gets added in.
+  const candidates = []; // { amountCents, kind: 'flat'|'dynamic', rateId?, bulky }
+
+  // Look up which shipping rate IDs belong to a bulky-shipping product, so a
+  // flat-rate candidate (built from body.shippingRateIds, which doesn't carry
+  // product identity) can still be flagged correctly.
+  const bulkyRateIds = new Set();
+  for (const p of products) {
+    if (!p.bulkyShipping) continue;
+    if (p.shippingRateId) bulkyRateIds.add(p.shippingRateId);
+    if (Array.isArray(p.variants)) {
+      for (const v of p.variants) { if (v.shippingRateId) bulkyRateIds.add(v.shippingRateId); }
+    }
+    if (p.replacementPlate && p.replacementPlate.shippingRateId) {
+      bulkyRateIds.add(p.replacementPlate.shippingRateId);
+    }
+  }
 
   const cartRateIds = Array.isArray(body.shippingRateIds)
     ? body.shippingRateIds.filter(s => typeof s === 'string' && s.trim()).map(s => s.trim())
     : [];
+  let rateLookupFailed = false;
   if (cartRateIds.length) {
     try {
       const rates = await Promise.all(cartRateIds.map(async (id) => {
@@ -81,12 +106,15 @@ export async function onRequestPost(context) {
       for (const rate of rates) {
         if (!rate || !rate.id) continue;
         const amt = (rate.fixed_amount && rate.fixed_amount.amount) || 0;
-        candidates.push({ amountCents: amt, kind: 'flat', rateId: rate.id });
+        candidates.push({ amountCents: amt, kind: 'flat', rateId: rate.id, bulky: bulkyRateIds.has(rate.id) });
       }
     } catch (_) {
       // Fetch failed — fall back to the first cart-supplied rate ID as-is,
       // matching the previous behavior when the lookup couldn't complete.
-      candidates.push({ amountCents: -1, kind: 'flat', rateId: cartRateIds[0] });
+      // Amount is unknown, so the bulky additive rule can't be computed —
+      // rateLookupFailed forces the old single-winner passthrough below.
+      rateLookupFailed = true;
+      candidates.push({ amountCents: -1, kind: 'flat', rateId: cartRateIds[0], bulky: false });
     }
   }
 
@@ -97,18 +125,36 @@ export async function onRequestPost(context) {
       const additionalUsd = typeof perUnit.additionalUsd === 'number' ? perUnit.additionalUsd : 0;
       const qty = Number(item.qty) || 1;
       const usd = perUnit.baseUsd + additionalUsd * Math.max(0, qty - 1);
-      candidates.push({ amountCents: Math.round(usd * 100), kind: 'dynamic' });
+      candidates.push({
+        amountCents: Math.round(usd * 100),
+        kind: 'dynamic',
+        bulky: !!(found.product && found.product.bulkyShipping)
+      });
     }
   }
 
   let winner = null;
-  for (const c of candidates) {
-    if (!winner || c.amountCents > winner.amountCents) winner = c;
+  let mixedBulkyCents = null; // set only when the additive bulky-item rule applies
+
+  const bulkyCandidates = candidates.filter(c => c.bulky);
+  const regularCandidates = candidates.filter(c => !c.bulky);
+
+  if (!rateLookupFailed && bulkyCandidates.length && regularCandidates.length) {
+    const bulkySum = bulkyCandidates.reduce((sum, c) => sum + c.amountCents, 0);
+    const regularMax = Math.max(...regularCandidates.map(c => c.amountCents));
+    mixedBulkyCents = bulkySum + regularMax;
+  } else {
+    // Original behavior: a single highest-cost candidate wins. Applies to
+    // pure-regular carts, pure-bulky carts (incl. DRIFT-only, per-unit-scaled),
+    // and the Stripe-lookup-failure fallback.
+    for (const c of candidates) {
+      if (!winner || c.amountCents > winner.amountCents) winner = c;
+    }
   }
 
   // Fallback: env var (legacy / single-rate mode) — only when the cart gave us
   // nothing to compare (no flat rates, no per-unit-shipping products).
-  if (!winner) {
+  if (mixedBulkyCents === null && !winner) {
     const envIds = (env.STRIPE_SHIPPING_RATE_IDS || '')
       .split(',').map(s => s.trim()).filter(Boolean);
     if (envIds[0]) winner = { amountCents: -1, kind: 'flat', rateId: envIds[0] };
@@ -122,7 +168,14 @@ export async function onRequestPost(context) {
   form.append('allow_promotion_codes', 'true');
   form.append('phone_number_collection[enabled]', 'true');
 
-  if (winner && winner.kind === 'flat' && winner.rateId) {
+  if (mixedBulkyCents !== null) {
+    // Additive bulky-item total — no single existing Stripe Rate object
+    // represents a sum, so this always goes through shipping_rate_data.
+    form.append('shipping_options[0][shipping_rate_data][type]', 'fixed_amount');
+    form.append('shipping_options[0][shipping_rate_data][fixed_amount][amount]', String(mixedBulkyCents));
+    form.append('shipping_options[0][shipping_rate_data][fixed_amount][currency]', 'usd');
+    form.append('shipping_options[0][shipping_rate_data][display_name]', 'Shipping');
+  } else if (winner && winner.kind === 'flat' && winner.rateId) {
     form.append('shipping_options[0][shipping_rate]', winner.rateId);
   } else if (winner && winner.kind === 'dynamic') {
     form.append('shipping_options[0][shipping_rate_data][type]', 'fixed_amount');
