@@ -855,6 +855,18 @@
   color: #CBB589;
 }
 
+/* Custom-color picker when revealed by revealsColorPicker option value */
+.custom-color-group {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: rgba(203, 181, 137, 0.06);
+  border: 1px dashed rgba(203, 181, 137, 0.35);
+  border-radius: 4px;
+}
+.custom-color-group .variant-option-label {
+  color: #CBB589;
+}
+
 /* Logo-upload field when revealed by logoUploadRequired option value */
 .logo-upload-group {
   margin-top: 12px;

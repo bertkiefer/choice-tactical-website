@@ -177,6 +177,12 @@ export async function onRequestPost(context) {
       });
     }
 
+    // Custom color pick (e.g. STACK "Custom Color" reveal) — free-text-ish but
+    // constrained to the known palette client-side; still cap length defensively.
+    if (item.metadata && typeof item.metadata.custom_color === 'string' && item.metadata.custom_color) {
+      form.append(`metadata[line_${i + 1}_custom_color]`, item.metadata.custom_color.slice(0, 60));
+    }
+
     // Custom logo upload: item.metadata.logo_key references an R2 object
     // uploaded via /api/logo-upload (Full Custom tier). Forward it — after
     // validating the key shape — so the order webhook can pull the file back

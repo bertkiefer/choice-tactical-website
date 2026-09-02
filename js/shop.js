@@ -6,7 +6,14 @@
   'use strict';
 
   var CART_KEY = 'ct_cart';
-  var PRODUCTS_URL = '/shop/products.json?v=28';
+  var PRODUCTS_URL = '/shop/products.json?v=29';
+
+  // Standard 14-color palette used by "Custom Color" reveal pickers
+  // (e.g. The STACK). Purely descriptive — does not affect price/variant.
+  var STANDARD_COLORS = [
+    'Black', 'Red', 'Royal Blue', 'Yellow', 'Silver', 'Pink', 'Green',
+    'Orange', 'White', 'Copper', 'Gold', 'Brass', 'Flat Green', 'Purple'
+  ];
 
   // ── Utilities ──────────────────────────────────
   function formatUSD(cents) {
@@ -482,6 +489,16 @@
               }).join('') +
             '</select>' +
           '</div>' +
+          // Custom color picker — hidden by default, shown when active option value has revealsColorPicker
+          '<div class="variant-option-group custom-color-group" id="customColorGroup" style="display:none">' +
+            '<label class="variant-option-label" for="opt_custom_color">Custom Color</label>' +
+            '<select class="variant-option-select" id="opt_custom_color">' +
+              '<option value="">Pick a color</option>' +
+              STANDARD_COLORS.map(function (c) {
+                return '<option value="' + escapeHtml(c) + '">' + escapeHtml(c) + '</option>';
+              }).join('') +
+            '</select>' +
+          '</div>' +
           // Logo upload — hidden by default, shown when active option value has logoUploadRequired
           '<div class="variant-option-group logo-upload-group" id="logoUploadGroup" style="display:none">' +
             '<label class="variant-option-label" for="opt_logo_upload">Upload Your Logo</label>' +
@@ -542,6 +559,9 @@
       var plateSelect = container.querySelector('#opt_plate_size');
       var allowedPlates = (product.replacementPlate && product.replacementPlate.plateSizes) || [];
 
+      var colorGroup = container.querySelector('#customColorGroup');
+      var colorSelect = container.querySelector('#opt_custom_color');
+
       var logoGroup = container.querySelector('#logoUploadGroup');
       var logoInput = container.querySelector('#opt_logo_upload');
       var logoStatus = container.querySelector('#logoUploadStatus');
@@ -584,6 +604,22 @@
             }
           }
 
+          // Decide whether the custom-color picker is required (e.g. STACK "Custom Color")
+          var colorRequired = false;
+          Object.keys(sels).forEach(function (optId) {
+            var val = activeOptionValue(optId, sels);
+            if (val && val.revealsColorPicker) colorRequired = true;
+          });
+
+          if (colorGroup) {
+            if (colorRequired) {
+              colorGroup.style.display = '';
+            } else {
+              colorGroup.style.display = 'none';
+              if (colorSelect) colorSelect.value = '';
+            }
+          }
+
           // Decide whether the logo upload field is required (e.g. MARCH "Full Custom" tier)
           var logoRequired = false;
           Object.keys(sels).forEach(function (optId) {
@@ -608,11 +644,13 @@
             var plateOk = !plateRequired
               || (plateSelect && allowedPlates.indexOf(plateSelect.value) !== -1);
             var logoOk = !logoRequired || (!logoUploading && uploadedLogo);
-            var ok = plateOk && logoOk;
+            var colorOk = !colorRequired || (colorSelect && colorSelect.value);
+            var ok = plateOk && logoOk && colorOk;
             addBtnEl.disabled = !ok;
             addBtnEl.title = !plateOk
               ? 'Pick your plate size to continue'
-              : (!logoOk ? 'Upload your logo to continue' : '');
+              : (!colorOk ? 'Pick your custom color to continue'
+                : (!logoOk ? 'Upload your logo to continue' : ''));
           }
         } else {
           var idx = Number(selects[0] && selects[0].value);
@@ -624,6 +662,7 @@
         sel.addEventListener('change', refreshPlateGate);
       });
       if (plateSelect) plateSelect.addEventListener('change', refreshPlateGate);
+      if (colorSelect) colorSelect.addEventListener('change', refreshPlateGate);
 
       if (logoInput) {
         logoInput.addEventListener('change', function () {
@@ -683,6 +722,10 @@
         var meta = null;
         if (plateGroup && plateGroup.style.display !== 'none' && plateSelect && plateSelect.value) {
           meta = { plate_size: plateSelect.value };
+        }
+        if (colorGroup && colorGroup.style.display !== 'none' && colorSelect && colorSelect.value) {
+          meta = meta || {};
+          meta.custom_color = colorSelect.value;
         }
         if (logoGroup && logoGroup.style.display !== 'none' && uploadedLogo) {
           meta = meta || {};
@@ -971,6 +1014,9 @@
         // Append plate size suffix when the line carries plate metadata
         if (line.metadata && typeof line.metadata.plate_size === 'string' && line.metadata.plate_size) {
           displayName = displayName + ' · ' + line.metadata.plate_size + ' mm plate';
+        }
+        if (line.metadata && typeof line.metadata.custom_color === 'string' && line.metadata.custom_color) {
+          displayName = displayName + ' · custom color: ' + line.metadata.custom_color;
         }
         if (line.metadata && typeof line.metadata.logo_filename === 'string' && line.metadata.logo_filename) {
           displayName = displayName + ' · logo: ' + line.metadata.logo_filename;

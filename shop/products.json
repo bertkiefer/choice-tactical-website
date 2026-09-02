@@ -302,12 +302,49 @@
               "id": "copper",
               "name": "Copper",
               "subtitle": "Black Base"
+            },
+            {
+              "id": "custom-color",
+              "name": "Custom Color",
+              "revealsColorPicker": true
+            }
+          ]
+        },
+        {
+          "id": "logoOption",
+          "name": "Logo",
+          "values": [
+            {
+              "id": "standard",
+              "name": "Choice Tactical Logo",
+              "default": true
+            },
+            {
+              "id": "custom-logo",
+              "name": "Custom Logo",
+              "logoUploadRequired": true
             }
           ]
         }
       ],
       "shippingRateId": "shr_1TTk8JIfCMZaSnjCFrASdj7N",
       "variants": [
+        {
+          "selections": {
+            "capacity": "single",
+            "logoOption": "custom-logo"
+          },
+          "priceUsd": 95,
+          "stripePriceId": "price_1UBIGLIfCMZaSnjCi0amZe7C"
+        },
+        {
+          "selections": {
+            "capacity": "double",
+            "logoOption": "custom-logo"
+          },
+          "priceUsd": 115,
+          "stripePriceId": "price_1UBIHSIfCMZaSnjC0D64I7tm"
+        },
         {
           "selections": {
             "capacity": "single"
@@ -361,6 +398,9 @@
             "12\" Flexible arm",
             "Front Rest Bracket"
           ]
+        },
+        {
+          "body": "** Custom logos will be DEBOSSED on the opposite side of the Choice Tactical Logo."
         }
       ],
       "inStock": true,

@@ -33,6 +33,7 @@ function sessionToOrder(session) {
       .map(([k, v]) => {
         if (k === 'plate_size') return `Plate: ${v} mm`;
         if (k === 'logo_filename') return `Logo: ${v}`;
+        if (k === 'custom_color') return `Custom Color: ${v}`;
         return `${k}: ${v}`;
       })
       .join(', ');
@@ -291,6 +292,7 @@ function buildOrderEmail(session) {
       .map(([k, v]) => {
         if (k === 'plate_size') return `Plate: ${v} mm`;
         if (k === 'logo_filename') return `Logo: ${v} (attached below)`;
+        if (k === 'custom_color') return `Custom Color: ${v}`;
         return `${k}: ${v}`;
       })
       .join(', ');
