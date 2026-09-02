@@ -731,7 +731,8 @@
       "subtitle": "Cleaning Caddy inspired by \"Speedy\"",
       "cardImage": "/shop/images/the-speedy-caddy/01-hero.png",
       "images": [
-        "/shop/images/the-speedy-caddy/01-hero.png"
+        "/shop/images/the-speedy-caddy/01-hero.png",
+        "/shop/images/the-speedy-caddy/02-angle.png"
       ],
       "priceUsd": 50,
       "stripePriceId": "price_1UBGOwIfCMZaSnjCDdMb7XCu",
@@ -768,6 +769,9 @@
         {
           "heading": "WHY IT MATTERS",
           "body": "Precision shooting rewards consistency, and that includes how you maintain the bore between strings or between relays. The CADDY keeps every piece of your cleaning routine organized and in the same place every time, so you can clean fast and get back to shooting."
+        },
+        {
+          "body": "** Clean bottles before returning to caddy to eliminate any discoloring to the caddy."
         }
       ],
       "inStock": true,
