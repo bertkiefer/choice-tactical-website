@@ -776,6 +776,150 @@
       ],
       "inStock": true,
       "comingSoon": false
+    },
+    {
+      "slug": "the-march",
+      "name": "The MARCH ™",
+      "subtitle": "Custom MARCH Scope Covers",
+      "cardImage": "/shop/images/the-march/01-hero.png",
+      "images": [
+        "/shop/images/the-march/01-hero.png",
+        "/shop/images/the-march/02-sog.png",
+        "/shop/images/the-march/03-plain.png",
+        "/shop/images/the-march/04-6ppc.png"
+      ],
+      "shippingRateId": "shr_1TYXH4IfCMZaSnjClnG1ZrlJ",
+      "options": [
+        {
+          "id": "tier",
+          "name": "Customization",
+          "values": [
+            {
+              "id": "standard",
+              "name": "Standard",
+              "default": true
+            },
+            {
+              "id": "test-only",
+              "name": "Test Only"
+            },
+            {
+              "id": "full-custom",
+              "name": "Full Custom"
+            },
+            {
+              "id": "choice-tactical-brand",
+              "name": "Choice Tactical Brand"
+            }
+          ]
+        },
+        {
+          "id": "capColor",
+          "name": "Cap Color",
+          "values": [
+            { "id": "black", "name": "Black" },
+            { "id": "red", "name": "Red" },
+            { "id": "royal-blue", "name": "Royal Blue" },
+            { "id": "yellow", "name": "Yellow" },
+            { "id": "silver", "name": "Silver" },
+            { "id": "pink", "name": "Pink" },
+            { "id": "green", "name": "Green" },
+            { "id": "orange", "name": "Orange" },
+            { "id": "white", "name": "White" },
+            { "id": "copper", "name": "Copper" },
+            { "id": "gold", "name": "Gold" },
+            { "id": "brass", "name": "Brass" },
+            { "id": "flat-green", "name": "Flat Green" },
+            { "id": "purple", "name": "Purple" }
+          ]
+        },
+        {
+          "id": "textColor",
+          "name": "Logo/Text Color",
+          "values": [
+            { "id": "black", "name": "Black" },
+            { "id": "red", "name": "Red" },
+            { "id": "royal-blue", "name": "Royal Blue" },
+            { "id": "yellow", "name": "Yellow" },
+            { "id": "silver", "name": "Silver" },
+            { "id": "pink", "name": "Pink" },
+            { "id": "green", "name": "Green" },
+            { "id": "orange", "name": "Orange" },
+            { "id": "white", "name": "White" },
+            { "id": "copper", "name": "Copper" },
+            { "id": "gold", "name": "Gold" },
+            { "id": "brass", "name": "Brass" },
+            { "id": "flat-green", "name": "Flat Green" },
+            { "id": "purple", "name": "Purple" }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "selections": { "tier": "standard" },
+          "priceUsd": 20,
+          "stripePriceId": "price_1UBHDQIfCMZaSnjC0dpnr4Cw"
+        },
+        {
+          "selections": { "tier": "test-only" },
+          "priceUsd": 30,
+          "stripePriceId": "price_1UBHVpIfCMZaSnjCGWbmtqAI"
+        },
+        {
+          "selections": { "tier": "full-custom" },
+          "priceUsd": 50,
+          "stripePriceId": "price_1UBHWyIfCMZaSnjCsmehvxci"
+        },
+        {
+          "selections": { "tier": "choice-tactical-brand" },
+          "priceUsd": 40,
+          "stripePriceId": "price_1UBHWUIfCMZaSnjCkgxNKFwe"
+        }
+      ],
+      "description": [
+        {
+          "heading": "CUSTOM SCOPE CAPS FOR MARCH OPTICS",
+          "body": "The MARCH ™ is a precision-fit set of scope covers built specifically for MARCH riflescopes. They protect your objective and ocular lenses on the bench and in transport, with a level of customization to match your rifle, your team, or your own personal style."
+        },
+        {
+          "heading": "FITS THE FOLLOWING MARCH MODELS",
+          "items": [
+            "48×52 High Master — D48F52",
+            "40–60×52 High Master EP Zoom — D60EV52",
+            "2.5–25×52",
+            "3–24×52",
+            "10–60×52",
+            "4.5–28×52",
+            "4–40×52"
+          ]
+        },
+        {
+          "heading": "CHOOSE YOUR LEVEL OF CUSTOMIZATION",
+          "items": [
+            "Standard — plain caps in your choice of color",
+            "Test Only — add your own text",
+            "Full Custom — your own logo and text combination",
+            "Choice Tactical Brand — finished with the Choice Tactical logo"
+          ]
+        },
+        {
+          "heading": "KEY FEATURES",
+          "items": [
+            "Precision fit for the MARCH scope models listed above",
+            "14 cap color options",
+            "14 logo/text color options",
+            "Four levels of customization, from plain to fully custom",
+            "Built in the USA by Choice Tactical",
+            "** Scope not included"
+          ]
+        },
+        {
+          "heading": "WHY IT MATTERS",
+          "body": "A well-fitted scope cover keeps dust, debris, and impacts off your glass between strings and during transport. The MARCH ™ gives you that protection with a finish that matches your rifle and your brand."
+        }
+      ],
+      "inStock": true,
+      "comingSoon": false
     }
   ]
 }
