@@ -139,14 +139,24 @@ export async function onRequestPost(context) {
   const bulkyCandidates = candidates.filter(c => c.bulky);
   const regularCandidates = candidates.filter(c => !c.bulky);
 
-  if (!rateLookupFailed && bulkyCandidates.length && regularCandidates.length) {
+  // Additive path triggers whenever at least one bulky item is present AND
+  // there's more than one candidate total in the cart — this covers a bulky
+  // item mixed with regular products, AND multiple bulky items ordered
+  // together (e.g. The DRIFT + The ELEMENT, with nothing else): every bulky
+  // candidate is summed in full (DRIFT's per-unit total included, computed
+  // above — its own scaling rule is unaffected), plus the single highest
+  // regular candidate if any exist. A single item alone in the cart (bulky
+  // or not) always keeps the old passthrough behavior — nothing to add to.
+  if (!rateLookupFailed && bulkyCandidates.length >= 1 && candidates.length > 1) {
     const bulkySum = bulkyCandidates.reduce((sum, c) => sum + c.amountCents, 0);
-    const regularMax = Math.max(...regularCandidates.map(c => c.amountCents));
+    const regularMax = regularCandidates.length
+      ? Math.max(...regularCandidates.map(c => c.amountCents))
+      : 0;
     mixedBulkyCents = bulkySum + regularMax;
   } else {
     // Original behavior: a single highest-cost candidate wins. Applies to
-    // pure-regular carts, pure-bulky carts (incl. DRIFT-only, per-unit-scaled),
-    // and the Stripe-lookup-failure fallback.
+    // pure-regular carts, a single bulky item alone (incl. DRIFT-only,
+    // per-unit-scaled), and the Stripe-lookup-failure fallback.
     for (const c of candidates) {
       if (!winner || c.amountCents > winner.amountCents) winner = c;
     }
