@@ -6,7 +6,7 @@
   'use strict';
 
   var CART_KEY = 'ct_cart';
-  var PRODUCTS_URL = '/shop/products.json?v=21';
+  var PRODUCTS_URL = '/shop/products.json?v=22';
 
   // ── Utilities ──────────────────────────────────
   function formatUSD(cents) {
@@ -305,6 +305,18 @@
     return min;
   }
 
+  // "From $X" only makes sense when variants actually have different prices —
+  // several products use variants purely for option selection (caliber, etc.)
+  // with every variant priced the same.
+  function hasVariablePricing(product) {
+    if (!Array.isArray(product.variants) || product.variants.length < 2) return false;
+    var first = product.variants[0].priceUsd;
+    for (var i = 1; i < product.variants.length; i++) {
+      if (product.variants[i].priceUsd !== first) return true;
+    }
+    return false;
+  }
+
   // ── Grid rendering ─────────────────────────────
   function renderProductGrid(container, products) {
     if (!products.length) {
@@ -322,7 +334,8 @@
       } else if (!p.inStock) {
         status = '<span class="product-card-sold-out">Sold Out</span>';
       } else if (Array.isArray(p.variants) && p.variants.length) {
-        status = '<p class="product-card-price"><span class="price-from">from</span> ' + formatUSD(lowestVariantPrice(p)) + '</p>';
+        var fromPrefix = hasVariablePricing(p) ? '<span class="price-from">from</span> ' : '';
+        status = '<p class="product-card-price">' + fromPrefix + formatUSD(lowestVariantPrice(p)) + '</p>';
       } else {
         status = '<p class="product-card-price">' + formatUSD(p.priceUsd) + '</p>';
       }
@@ -380,6 +393,15 @@
       '</button>' +
     '</div>';
 
+    var videoBlock = product.video
+      ? '<div class="product-video-wrap">' +
+          '<video class="product-video" controls playsinline preload="metadata" ' +
+            'poster="' + escapeHtml(images[0]) + '">' +
+            '<source src="' + escapeHtml(product.video) + '" type="video/mp4">' +
+          '</video>' +
+        '</div>'
+      : '';
+
     var gallery = '<div class="product-gallery">' +
       '<img class="product-gallery-hero no-zoom" id="productHero" ' +
         'data-index="0" src="' + escapeHtml(images[0]) +
@@ -393,6 +415,7 @@
           '</button>';
         }).join('') +
       '</div>' +
+      videoBlock +
       galleryButton +
     '</div>';
 
@@ -477,7 +500,7 @@
         '</div>';
       }
 
-      var pricePrefix = (hasOptions || hasFlatVariants)
+      var pricePrefix = hasVariablePricing(product)
         ? '<span class="price-from">from</span> ' : '';
       statusBlock = '<p class="product-detail-price" id="productPrice">' +
         pricePrefix + formatUSD(initialPrice) + '</p>';
@@ -522,7 +545,7 @@
       function applyVariant(v) {
         if (!v) return;
         if (priceLabel) {
-          priceLabel.innerHTML = '<span class="price-from">from</span> ' + formatUSD(v.priceUsd);
+          priceLabel.innerHTML = pricePrefix + formatUSD(v.priceUsd);
         }
         if (addBtnEl) addBtnEl.setAttribute('data-price-id', v.stripePriceId);
       }
