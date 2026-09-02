@@ -855,6 +855,30 @@
   color: #CBB589;
 }
 
+/* Logo-upload field when revealed by logoUploadRequired option value */
+.logo-upload-group {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: rgba(203, 181, 137, 0.06);
+  border: 1px dashed rgba(203, 181, 137, 0.35);
+  border-radius: 4px;
+}
+.logo-upload-group .variant-option-label {
+  color: #CBB589;
+}
+.variant-option-file {
+  width: 100%;
+  padding: 10px 0;
+  color: #ccc;
+  font-size: 14px;
+  font-family: inherit;
+}
+.logo-upload-status {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #B0B0B0;
+}
+
 /* Disabled Add to Cart in main configurator (when plate not picked) */
 .add-to-cart-btn:disabled {
   opacity: 0.5;

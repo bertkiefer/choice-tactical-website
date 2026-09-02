@@ -805,7 +805,8 @@
             },
             {
               "id": "full-custom",
-              "name": "Full Custom"
+              "name": "Full Custom - Custom Logo",
+              "logoUploadRequired": true
             },
             {
               "id": "choice-tactical-brand",

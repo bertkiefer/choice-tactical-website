@@ -177,6 +177,20 @@ export async function onRequestPost(context) {
       });
     }
 
+    // Custom logo upload: item.metadata.logo_key references an R2 object
+    // uploaded via /api/logo-upload (Full Custom tier). Forward it — after
+    // validating the key shape — so the order webhook can pull the file back
+    // out of R2 and attach it to the merchant order email.
+    if (item.metadata && typeof item.metadata.logo_key === 'string') {
+      const logoKey = item.metadata.logo_key;
+      if (/^order-logos\/[a-f0-9-]{36}\.[a-zA-Z0-9]{1,10}$/.test(logoKey)) {
+        form.append(`metadata[line_${i + 1}_logo_key]`, logoKey);
+        if (typeof item.metadata.logo_filename === 'string' && item.metadata.logo_filename) {
+          form.append(`metadata[line_${i + 1}_logo_filename]`, item.metadata.logo_filename.slice(0, 200));
+        }
+      }
+    }
+
     // Plate size: server-controlled.
     // - Laser bundles: server forces variant.bundledPlate, ignoring any client value.
     // - No-laser AXIS / replacement plate: validate client-supplied metadata.plate_size

@@ -29,7 +29,12 @@ function sessionToOrder(session) {
       if (m) itemMeta[m[1]] = metadata[k];
     });
     const metaStr = Object.entries(itemMeta)
-      .map(([k, v]) => (k === 'plate_size' ? `Plate: ${v} mm` : `${k}: ${v}`))
+      .filter(([k]) => k !== 'logo_key')
+      .map(([k, v]) => {
+        if (k === 'plate_size') return `Plate: ${v} mm`;
+        if (k === 'logo_filename') return `Logo: ${v}`;
+        return `${k}: ${v}`;
+      })
       .join(', ');
     return {
       qty: li.quantity || 1,
@@ -82,6 +87,39 @@ async function insertOrderIfNew(db, order) {
     order.paid_at,
   ).run();
   return (result && result.meta && result.meta.changes) === 1;
+}
+
+// Pull any uploaded logo files (Full Custom tier) back out of R2 so they can
+// be attached to the merchant order email. Metadata keys are line_<n>_logo_key
+// / line_<n>_logo_filename, written by create-checkout.js.
+async function collectLogoAttachments(env, session) {
+  const metadata = session.metadata || {};
+  const lineCount = (session.line_items && session.line_items.data && session.line_items.data.length) || 0;
+  const attachments = [];
+  for (let i = 1; i <= lineCount; i++) {
+    const key = metadata[`line_${i}_logo_key`];
+    if (!key || !env.CUSTOMER_PICTURES) continue;
+    try {
+      const obj = await env.CUSTOMER_PICTURES.get(key);
+      if (!obj) continue;
+      const buf = await obj.arrayBuffer();
+      const filename = metadata[`line_${i}_logo_filename`] || key.split('/').pop();
+      attachments.push({ filename, content: arrayBufferToBase64(buf) });
+    } catch (e) {
+      console.error('Failed to fetch logo attachment', key, e);
+    }
+  }
+  return attachments;
+}
+
+function arrayBufferToBase64(buf) {
+  let binary = '';
+  const bytes = new Uint8Array(buf);
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+  }
+  return btoa(binary);
 }
 
 async function sendCustomerConfirmation(env, order) {
@@ -177,13 +215,18 @@ export async function onRequestPost(context) {
     return new Response('Email not configured', { status: 500 });
   }
 
+  const logoAttachments = await collectLogoAttachments(env, session);
+
   const er = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${env.RESEND_API_KEY}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ from: fromAddr, to: [toAddr], subject, html, text })
+    body: JSON.stringify({
+      from: fromAddr, to: [toAddr], subject, html, text,
+      ...(logoAttachments.length ? { attachments: logoAttachments } : {})
+    })
   });
   if (!er.ok) {
     const errText = await er.text();
@@ -244,8 +287,10 @@ function buildOrderEmail(session) {
       if (m) itemMeta[m[1]] = metadata[k];
     });
     const metaStr = Object.entries(itemMeta)
+      .filter(([k]) => k !== 'logo_key')
       .map(([k, v]) => {
         if (k === 'plate_size') return `Plate: ${v} mm`;
+        if (k === 'logo_filename') return `Logo: ${v} (attached below)`;
         return `${k}: ${v}`;
       })
       .join(', ');

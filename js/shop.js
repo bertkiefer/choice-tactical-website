@@ -6,7 +6,7 @@
   'use strict';
 
   var CART_KEY = 'ct_cart';
-  var PRODUCTS_URL = '/shop/products.json?v=27';
+  var PRODUCTS_URL = '/shop/products.json?v=28';
 
   // ── Utilities ──────────────────────────────────
   function formatUSD(cents) {
@@ -482,6 +482,12 @@
               }).join('') +
             '</select>' +
           '</div>' +
+          // Logo upload — hidden by default, shown when active option value has logoUploadRequired
+          '<div class="variant-option-group logo-upload-group" id="logoUploadGroup" style="display:none">' +
+            '<label class="variant-option-label" for="opt_logo_upload">Upload Your Logo</label>' +
+            '<input class="variant-option-file" id="opt_logo_upload" type="file">' +
+            '<p class="logo-upload-status" id="logoUploadStatus"></p>' +
+          '</div>' +
         '</div>';
       } else if (hasFlatVariants) {
         initialVariant = product.variants[0];
@@ -536,6 +542,12 @@
       var plateSelect = container.querySelector('#opt_plate_size');
       var allowedPlates = (product.replacementPlate && product.replacementPlate.plateSizes) || [];
 
+      var logoGroup = container.querySelector('#logoUploadGroup');
+      var logoInput = container.querySelector('#opt_logo_upload');
+      var logoStatus = container.querySelector('#logoUploadStatus');
+      var uploadedLogo = null; // { key, filename }
+      var logoUploading = false;
+
       function activeOptionValue(optId, sels) {
         var opt = (product.options || []).find(function (o) { return o.id === optId; });
         if (!opt) return null;
@@ -572,12 +584,35 @@
             }
           }
 
+          // Decide whether the logo upload field is required (e.g. MARCH "Full Custom" tier)
+          var logoRequired = false;
+          Object.keys(sels).forEach(function (optId) {
+            var val = activeOptionValue(optId, sels);
+            if (val && val.logoUploadRequired) logoRequired = true;
+          });
+
+          if (logoGroup) {
+            if (logoRequired) {
+              logoGroup.style.display = '';
+            } else {
+              logoGroup.style.display = 'none';
+              if (logoInput) logoInput.value = '';
+              uploadedLogo = null;
+              logoUploading = false;
+              if (logoStatus) logoStatus.textContent = '';
+            }
+          }
+
           // Gate Add to Cart button
           if (addBtnEl) {
             var plateOk = !plateRequired
               || (plateSelect && allowedPlates.indexOf(plateSelect.value) !== -1);
-            addBtnEl.disabled = !plateOk;
-            addBtnEl.title = plateOk ? '' : 'Pick your plate size to continue';
+            var logoOk = !logoRequired || (!logoUploading && uploadedLogo);
+            var ok = plateOk && logoOk;
+            addBtnEl.disabled = !ok;
+            addBtnEl.title = !plateOk
+              ? 'Pick your plate size to continue'
+              : (!logoOk ? 'Upload your logo to continue' : '');
           }
         } else {
           var idx = Number(selects[0] && selects[0].value);
@@ -589,6 +624,44 @@
         sel.addEventListener('change', refreshPlateGate);
       });
       if (plateSelect) plateSelect.addEventListener('change', refreshPlateGate);
+
+      if (logoInput) {
+        logoInput.addEventListener('change', function () {
+          uploadedLogo = null;
+          var file = logoInput.files && logoInput.files[0];
+          if (!file) {
+            if (logoStatus) logoStatus.textContent = '';
+            refreshPlateGate();
+            return;
+          }
+          logoUploading = true;
+          if (logoStatus) logoStatus.textContent = 'Uploading ' + file.name + '…';
+          refreshPlateGate();
+
+          var fd = new FormData();
+          fd.append('logo', file);
+          fetch('/api/logo-upload', { method: 'POST', body: fd })
+            .then(function (r) { return r.json().then(function (data) { return { ok: r.ok, data: data }; }); })
+            .then(function (res) {
+              logoUploading = false;
+              if (res.ok && res.data && res.data.key) {
+                uploadedLogo = { key: res.data.key, filename: res.data.filename || file.name };
+                if (logoStatus) logoStatus.textContent = '✓ ' + uploadedLogo.filename + ' uploaded';
+              } else {
+                uploadedLogo = null;
+                if (logoStatus) logoStatus.textContent = (res.data && res.data.error) || 'Upload failed — try again';
+              }
+              refreshPlateGate();
+            })
+            .catch(function () {
+              logoUploading = false;
+              uploadedLogo = null;
+              if (logoStatus) logoStatus.textContent = 'Upload failed — try again';
+              refreshPlateGate();
+            });
+        });
+      }
+
       refreshPlateGate(); // initial state
     }
 
@@ -610,6 +683,11 @@
         var meta = null;
         if (plateGroup && plateGroup.style.display !== 'none' && plateSelect && plateSelect.value) {
           meta = { plate_size: plateSelect.value };
+        }
+        if (logoGroup && logoGroup.style.display !== 'none' && uploadedLogo) {
+          meta = meta || {};
+          meta.logo_key = uploadedLogo.key;
+          meta.logo_filename = uploadedLogo.filename;
         }
         addToCart({
           slug: product.slug,
@@ -893,6 +971,9 @@
         // Append plate size suffix when the line carries plate metadata
         if (line.metadata && typeof line.metadata.plate_size === 'string' && line.metadata.plate_size) {
           displayName = displayName + ' · ' + line.metadata.plate_size + ' mm plate';
+        }
+        if (line.metadata && typeof line.metadata.logo_filename === 'string' && line.metadata.logo_filename) {
+          displayName = displayName + ' · logo: ' + line.metadata.logo_filename;
         }
         var lineTotal = unitPrice * line.qty;
         subtotalCents += lineTotal;
