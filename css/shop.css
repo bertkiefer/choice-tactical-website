@@ -474,6 +474,23 @@
   border-color: #CBB589;
 }
 
+.checkbox-option-group { flex-direction: row; }
+.checkbox-option-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+}
+.checkbox-option-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #CBB589;
+  cursor: pointer;
+}
+
 .qty-row {
   display: flex;
   align-items: center;

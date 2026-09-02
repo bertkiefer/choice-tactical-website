@@ -6,7 +6,7 @@
   'use strict';
 
   var CART_KEY = 'ct_cart';
-  var PRODUCTS_URL = '/shop/products.json?v=29';
+  var PRODUCTS_URL = '/shop/products.json?v=30';
 
   // Standard 14-color palette used by "Custom Color" reveal pickers
   // (e.g. The STACK). Purely descriptive — does not affect price/variant.
@@ -465,6 +465,24 @@
         variantPicker = '<div class="variant-picker">' +
           product.options.map(function (opt) {
             var defId = defaultValueIdByOption[opt.id];
+            if (opt.renderAs === 'checkbox') {
+              // Two-value option rendered as a single checkbox — used when one
+              // value is always true in the background (e.g. the Choice Tactical
+              // logo is always present) and shouldn't be listed as if choosing
+              // the other value removes it.
+              var falseVal = (opt.values || []).find(function (v) { return v.id === defId; }) || opt.values[0];
+              var trueVal = (opt.values || []).find(function (v) { return v.id !== falseVal.id; }) || opt.values[0];
+              var checkboxLabel = trueVal.checkboxLabel || trueVal.name;
+              return '<div class="variant-option-group checkbox-option-group">' +
+                '<label class="checkbox-option-label" for="opt_' + escapeHtml(opt.id) + '">' +
+                  '<input type="checkbox" class="variant-option-checkbox" id="opt_' + escapeHtml(opt.id) + '" ' +
+                    'data-option-id="' + escapeHtml(opt.id) + '" ' +
+                    'data-true-value="' + escapeHtml(trueVal.id) + '" ' +
+                    'data-false-value="' + escapeHtml(falseVal.id) + '">' +
+                  '<span>' + escapeHtml(checkboxLabel) + '</span>' +
+                '</label>' +
+              '</div>';
+            }
             return '<div class="variant-option-group">' +
               '<label class="variant-option-label" for="opt_' + escapeHtml(opt.id) + '">' +
                 escapeHtml(opt.name) +
@@ -554,6 +572,7 @@
       var priceLabel = document.getElementById('productPrice');
       var addBtnEl = document.getElementById('addToCartBtn');
       var selects = container.querySelectorAll('.variant-option-select');
+      var checkboxes = container.querySelectorAll('.variant-option-checkbox');
 
       var plateGroup = container.querySelector('#plateSizeGroup');
       var plateSelect = container.querySelector('#opt_plate_size');
@@ -586,6 +605,10 @@
         if (hasOptions) {
           var sels = {};
           selects.forEach(function (s) { sels[s.getAttribute('data-option-id')] = s.value; });
+          checkboxes.forEach(function (cb) {
+            sels[cb.getAttribute('data-option-id')] = cb.checked
+              ? cb.getAttribute('data-true-value') : cb.getAttribute('data-false-value');
+          });
           applyVariant(findVariantBySelections(product, sels));
 
           // Decide whether plate dropdown is required (any selected option value has plateSelectable)
@@ -661,6 +684,9 @@
       selects.forEach(function (sel) {
         sel.addEventListener('change', refreshPlateGate);
       });
+      checkboxes.forEach(function (cb) {
+        cb.addEventListener('change', refreshPlateGate);
+      });
       if (plateSelect) plateSelect.addEventListener('change', refreshPlateGate);
       if (colorSelect) colorSelect.addEventListener('change', refreshPlateGate);
 
@@ -717,6 +743,11 @@
           var pickerSelects = container.querySelectorAll('.variant-option-select');
           pickerSelects.forEach(function (s) {
             sel[s.getAttribute('data-option-id')] = s.value;
+          });
+          var pickerCheckboxes = container.querySelectorAll('.variant-option-checkbox');
+          pickerCheckboxes.forEach(function (cb) {
+            sel[cb.getAttribute('data-option-id')] = cb.checked
+              ? cb.getAttribute('data-true-value') : cb.getAttribute('data-false-value');
           });
         }
         var meta = null;

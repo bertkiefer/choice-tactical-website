@@ -313,6 +313,7 @@
         {
           "id": "logoOption",
           "name": "Logo",
+          "renderAs": "checkbox",
           "values": [
             {
               "id": "standard",
@@ -322,6 +323,7 @@
             {
               "id": "custom-logo",
               "name": "Custom Logo",
+              "checkboxLabel": "Add a Custom Logo",
               "logoUploadRequired": true
             }
           ]
