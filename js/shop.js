@@ -6,7 +6,7 @@
   'use strict';
 
   var CART_KEY = 'ct_cart';
-  var PRODUCTS_URL = '/shop/products.json?v=22';
+  var PRODUCTS_URL = '/shop/products.json?v=23';
 
   // ── Utilities ──────────────────────────────────
   function formatUSD(cents) {
