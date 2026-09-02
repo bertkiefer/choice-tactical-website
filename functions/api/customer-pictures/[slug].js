@@ -3,7 +3,7 @@ function json(data, status = 200, extraHeaders = {}) {
     status,
     headers: {
       'content-type': 'application/json',
-      'cache-control': 'public, max-age=300, s-maxage=300',
+      'cache-control': 'public, max-age=30, s-maxage=30',
       ...extraHeaders,
     },
   });

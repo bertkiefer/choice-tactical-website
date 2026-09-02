@@ -246,6 +246,18 @@
 .product-gallery-thumb:hover { border-color: #5a5a5a; }
 .product-gallery-thumb.active { border-color: #CBB589; }
 
+.product-video-wrap {
+  width: 100%;
+}
+
+.product-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #0c0c0c;
+  border-radius: 12px;
+}
+
 @media (max-width: 720px) {
   .product-gallery { position: static; }
 }

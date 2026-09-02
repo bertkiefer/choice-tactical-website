@@ -46,50 +46,6 @@ export async function onRequestPost(context) {
     return json({ error: 'Checkout unavailable — server not configured' }, 500);
   }
 
-  // ── Resolve shipping rate ──────────────────────
-  // Prefer cart-driven rates (sent by client). With multiple distinct rates in the
-  // cart, pick the one with the highest unit_amount so the customer pays the higher
-  // shipping cost when their order spans different-size boxes.
-  let chosenRateId = null;
-  const cartRateIds = Array.isArray(body.shippingRateIds)
-    ? body.shippingRateIds.filter(s => typeof s === 'string' && s.trim()).map(s => s.trim())
-    : [];
-
-  if (cartRateIds.length === 1) {
-    chosenRateId = cartRateIds[0];
-  } else if (cartRateIds.length > 1) {
-    try {
-      const rates = await Promise.all(cartRateIds.map(async (id) => {
-        const r = await fetch(`https://api.stripe.com/v1/shipping_rates/${id}`, {
-          headers: { 'Authorization': `Bearer ${secret}` }
-        });
-        return await r.json();
-      }));
-      let max = -1;
-      for (const rate of rates) {
-        const amt = (rate && rate.fixed_amount && rate.fixed_amount.amount) || 0;
-        if (amt > max) { max = amt; chosenRateId = rate.id; }
-      }
-    } catch (_) { chosenRateId = cartRateIds[0]; }
-  }
-
-  // Fallback: env var (legacy / single-rate mode)
-  if (!chosenRateId) {
-    const envIds = (env.STRIPE_SHIPPING_RATE_IDS || '')
-      .split(',').map(s => s.trim()).filter(Boolean);
-    chosenRateId = envIds[0] || null;
-  }
-
-  // ── Build form-encoded Stripe request ──────────
-  const form = new URLSearchParams();
-  form.append('mode', 'payment');
-  form.append('automatic_tax[enabled]', 'true');
-  form.append('shipping_address_collection[allowed_countries][0]', 'US');
-
-  if (chosenRateId) {
-    form.append('shipping_options[0][shipping_rate]', chosenRateId);
-  }
-
   // ── Load product catalog (canonical source of names + amounts) ─
   let products = [];
   try {
@@ -100,6 +56,78 @@ export async function onRequestPost(context) {
       products = Array.isArray(data.products) ? data.products : [];
     }
   } catch (_) { products = []; }
+
+  // ── Resolve shipping rate ──────────────────────
+  // Gather every shipping candidate implied by this cart, then charge the customer
+  // the HIGHEST one — same "worst case wins" rule as before, just generalized to
+  // include per-unit (quantity-scaled) shipping alongside flat Stripe shipping_rate
+  // objects. A product opts into per-unit shipping via a `shippingPerUnit` block in
+  // products.json: { "baseUsd": 34.99, "additionalUsd": 5.00 } — 1st unit costs
+  // baseUsd, each additional unit of that SAME product adds additionalUsd.
+  // Everything else (flat shippingRateId products) is untouched.
+  const candidates = []; // { amountCents, kind: 'flat'|'dynamic', rateId? }
+
+  const cartRateIds = Array.isArray(body.shippingRateIds)
+    ? body.shippingRateIds.filter(s => typeof s === 'string' && s.trim()).map(s => s.trim())
+    : [];
+  if (cartRateIds.length) {
+    try {
+      const rates = await Promise.all(cartRateIds.map(async (id) => {
+        const r = await fetch(`https://api.stripe.com/v1/shipping_rates/${id}`, {
+          headers: { 'Authorization': `Bearer ${secret}` }
+        });
+        return await r.json();
+      }));
+      for (const rate of rates) {
+        if (!rate || !rate.id) continue;
+        const amt = (rate.fixed_amount && rate.fixed_amount.amount) || 0;
+        candidates.push({ amountCents: amt, kind: 'flat', rateId: rate.id });
+      }
+    } catch (_) {
+      // Fetch failed — fall back to the first cart-supplied rate ID as-is,
+      // matching the previous behavior when the lookup couldn't complete.
+      candidates.push({ amountCents: -1, kind: 'flat', rateId: cartRateIds[0] });
+    }
+  }
+
+  for (const item of items) {
+    const found = findProductByPriceId(products, item.stripePriceId);
+    const perUnit = found && found.product && found.product.shippingPerUnit;
+    if (perUnit && typeof perUnit.baseUsd === 'number') {
+      const additionalUsd = typeof perUnit.additionalUsd === 'number' ? perUnit.additionalUsd : 0;
+      const qty = Number(item.qty) || 1;
+      const usd = perUnit.baseUsd + additionalUsd * Math.max(0, qty - 1);
+      candidates.push({ amountCents: Math.round(usd * 100), kind: 'dynamic' });
+    }
+  }
+
+  let winner = null;
+  for (const c of candidates) {
+    if (!winner || c.amountCents > winner.amountCents) winner = c;
+  }
+
+  // Fallback: env var (legacy / single-rate mode) — only when the cart gave us
+  // nothing to compare (no flat rates, no per-unit-shipping products).
+  if (!winner) {
+    const envIds = (env.STRIPE_SHIPPING_RATE_IDS || '')
+      .split(',').map(s => s.trim()).filter(Boolean);
+    if (envIds[0]) winner = { amountCents: -1, kind: 'flat', rateId: envIds[0] };
+  }
+
+  // ── Build form-encoded Stripe request ──────────
+  const form = new URLSearchParams();
+  form.append('mode', 'payment');
+  form.append('automatic_tax[enabled]', 'true');
+  form.append('shipping_address_collection[allowed_countries][0]', 'US');
+
+  if (winner && winner.kind === 'flat' && winner.rateId) {
+    form.append('shipping_options[0][shipping_rate]', winner.rateId);
+  } else if (winner && winner.kind === 'dynamic') {
+    form.append('shipping_options[0][shipping_rate_data][type]', 'fixed_amount');
+    form.append('shipping_options[0][shipping_rate_data][fixed_amount][amount]', String(winner.amountCents));
+    form.append('shipping_options[0][shipping_rate_data][fixed_amount][currency]', 'usd');
+    form.append('shipping_options[0][shipping_rate_data][display_name]', 'Shipping');
+  }
 
   // Line items — use price_data with custom name (so capacity + color appear on
   // the Stripe checkout page) when we can resolve the product, otherwise fall
